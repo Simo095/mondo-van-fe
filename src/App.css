@@ -9,3 +9,11 @@
   background: rgb(33, 28, 30);
   background: radial-gradient(circle, rgba(33, 28, 30, 1) 0%, rgba(10, 31, 56, 1) 100%);
 }
+.btn-radius-start-0 {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.btn-radius-end-0 {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
