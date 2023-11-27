@@ -1,20 +1,16 @@
-import { Button, Col, Form, Image, InputGroup } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import placeholderUser from "../assets/user_placeholder.png";
 import { useSelector } from "react-redux";
-import logo from "../assets/LogoCapstone.png";
 const NavBar = () => {
   const user = useSelector(state => state.login.user);
   return (
     <div className="NavBar">
       <Navbar
-        bg="dark"
-        data-bs-theme="dark"
         expand="lg"
-        className="bg-body-tertiary">
+        className="bg-white">
         <Container>
           <Navbar.Brand href="/">
             {/* <Image
@@ -25,13 +21,12 @@ const NavBar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/idea">L'idea</Nav.Link>
-              <Nav.Link href="/van">Mezzi</Nav.Link>
+            <Nav className="me-auto d-flex justify-content-center flex-grow-1">
+              <Nav.Link href="/register_user">Prenota un Van</Nav.Link>
+              <Nav.Link href="/register_van">Iscrivi il tuo mezzo</Nav.Link>
+              <Nav.Link href="/rules">Come funziona?</Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link href="/register">Sign in</Nav.Link>
               {user ? (
                 <>
                   <Image
@@ -50,7 +45,8 @@ const NavBar = () => {
                 </>
               ) : (
                 <>
-                  <Nav.Link href="/Login">Login</Nav.Link>
+                  <Nav.Link href="/register_user">Sign in</Nav.Link>
+                  <Nav.Link href="/login">Login</Nav.Link>
                 </>
               )}
             </Nav>
