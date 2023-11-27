@@ -10,22 +10,54 @@ const NavBar = () => {
     <div className="NavBar">
       <Navbar
         expand="lg"
-        className="bg-white">
+        data-bs-theme="dark"
+        className="shadow-home">
         <Container>
-          <Navbar.Brand href="/">
+          <Navbar.Brand
+            href="/"
+            className="logo">
             {/* <Image
             src={logo}
             width={250}
           /> */}
-            MONDO VAN
+            VAN WORLD
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            className="nav-toggler"
+          />
+          <Nav className="d-flex flex-row gap-5 btn-nav-none">
+            <Nav.Link
+              className="text-white"
+              href="/register_user">
+              Sign in
+            </Nav.Link>
+            <Nav.Link
+              className="text-white"
+              href="/login">
+              Login
+            </Nav.Link>
+          </Nav>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto d-flex justify-content-center flex-grow-1">
-              <Nav.Link href="/register_user">Prenota un Van</Nav.Link>
-              <Nav.Link href="/register_van">Iscrivi il tuo mezzo</Nav.Link>
-              <Nav.Link href="/rules">Come funziona?</Nav.Link>
+              <Nav.Link
+                className="color-link-nav"
+                href="/register_user">
+                PRENOTA UN VAN
+              </Nav.Link>
+              <Nav.Link
+                className="color-link-nav"
+                href="/register_van">
+                ISCRIVI IL TUO VAN
+              </Nav.Link>
+              <Nav.Link
+                className="color-link-nav"
+                href="/rules">
+                COME FUNZIONA?
+              </Nav.Link>
             </Nav>
+
             <Nav>
               {user ? (
                 <>
@@ -44,10 +76,18 @@ const NavBar = () => {
                   </NavDropdown>
                 </>
               ) : (
-                <>
-                  <Nav.Link href="/register_user">Sign in</Nav.Link>
-                  <Nav.Link href="/login">Login</Nav.Link>
-                </>
+                <div className="d-flex gap-5 btn-nav">
+                  <Nav.Link
+                    className="text-white"
+                    href="/register_user">
+                    Sign in
+                  </Nav.Link>
+                  <Nav.Link
+                    className="text-white"
+                    href="/login">
+                    Login
+                  </Nav.Link>
+                </div>
               )}
             </Nav>
           </Navbar.Collapse>

@@ -46,7 +46,6 @@ const Home = () => {
   }, []);
   return (
     <div className="Home">
-      <NavBar />
       <Row
         className="d-flex flex-row"
         style={{
@@ -55,23 +54,20 @@ const Home = () => {
         {/* <Col sm={3}>
           <SideBar />
         </Col> */}
-        <Col>
-          <Row>
-            <Col
-              className="d-flex flex-column justify-content-center align-items-center"
-              style={{
-                backgroundImage: `url(${sfondoHome})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                backgroundPosition: "bottom",
-                height: "100vh"
-              }}>
-              <p>NOLEGGIA UN VAN PER LA TUA PROSSIMA VACANZA, E VIVI UN AVVENTUA INDIMENTICABILE</p>
-              <p>COMPLETA LE TRE Q SOTTO PER PRENOTARE IL VAN PERFETTO</p>
+        <Col
+          style={{
+            backgroundImage: `url(${sfondoHome})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "bottom",
+            height: "100vh"
+          }}>
+          <NavBar />
+          <Row className="mt-5">
+            <Col className="d-flex flex-column justify-content-center align-items-center">
               <Form
                 onSubmit={handlerSubmit}
-                className="d-flex gap-1"
-                style={{ marginBottom: "30rem" }}>
+                className="d-flex gap-1 mt-5">
                 <Form.Group>
                   <FormSelect
                     className="btn-radius-end-0"
@@ -93,10 +89,6 @@ const Home = () => {
                   </FormSelect>
                 </Form.Group>
                 <Form.Group>
-                  {/* <Form.Control
-                    type="date"
-                    name="andata"
-                    placeholder=""></Form.Control> */}
                   <DatePicker
                     selected={startDate}
                     className="form-control btn-radius-start-0 btn-radius-end-0"
@@ -126,11 +118,24 @@ const Home = () => {
 
                 <Button variant="success btn-radius-start-0">Parti!</Button>
               </Form>
+              <Row style={{ height: "20vh" }}>
+                <Col className="d-flex align-items-center">
+                  <Container
+                    fluid
+                    className="d-flex flex-column align-items-center">
+                    <p className="shadow-p">
+                      NOLEGGIA UN VAN PER LA TUA PROSSIMA VACANZA, E VIVI UN AVVENTUA INDIMENTICABILE
+                    </p>
+                  </Container>
+                </Col>
+              </Row>
             </Col>
           </Row>
-          <Container></Container>
         </Col>
       </Row>
+      <Container>
+        <p>QUI CONTENUTO DEL SITO MAGARI METEO, E POSTI CONSIGLIATI SE TROVO API PER NEWS A RIGUARDO</p>
+      </Container>
       <Footer />
     </div>
   );
