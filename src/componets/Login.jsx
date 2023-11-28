@@ -6,14 +6,18 @@ import Col from "react-bootstrap/Col";
 import { Alert } from "react-bootstrap";
 import { Image } from "react-bootstrap";
 import { VscSignIn } from "react-icons/vsc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import image1 from "../assets/VW-Stars.jpg";
 import image2 from "../assets/VW-Bianco.jpg";
 import image3 from "../assets/VW-Adventure.jpg";
 import image4 from "../assets/VW-Stars-Blue.jpg";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addRole, addToken } from "../redux/actions";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [image, setImage] = useState("");
   const hadlerForm = async event => {
     event.preventDefault();
@@ -33,7 +37,9 @@ const Login = () => {
     });
     if (request.ok) {
       const objResp = await request.json();
-      console.log(objResp);
+      dispatch(addToken(objResp.token));
+      //controllare che l'utente non abbia piu ruoli e loggarlo al piu alto
+      dispatch(addRole(objResp.role[0].authority));
     }
   };
 
@@ -98,8 +104,8 @@ const Login = () => {
               </Form>
               <Row className="d-flex flex-column gap-4">
                 <Col className="d-flex justify-content-center gap-5">
-                  <Link to="/register">Don't have any accounts?</Link>
-                  <Link to="/register">Forgot password?</Link>
+                  <Link to="/">Don't have any accounts?</Link>
+                  <Link to="/">Forgot password?</Link>
                 </Col>
                 <Col className="text-center"></Col>
               </Row>
