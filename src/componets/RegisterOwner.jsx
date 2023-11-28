@@ -4,14 +4,14 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../redux/actions";
 import { useNavigate } from "react-router";
 
-const RegisterCustomer = () => {
+const RegisterOwner = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handlerSubmit = async e => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const risposta = await fetch("http://localhost:8080/sign_in/customer_register", {
+    const risposta = await fetch("http://localhost:8080/sign_in/owner_register", {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -40,7 +40,7 @@ const RegisterCustomer = () => {
         <Row className="d-flex flex-column">
           <p>Vuoi vivere un avventura con uno stupendo van a noleggio registrati</p>
           <Col>
-            <h2>Form Registrazione Utente</h2>
+            <h2>Form Registrazione proprietario</h2>
           </Col>
           <Col>
             <Form onSubmit={handlerSubmit}>
@@ -108,4 +108,4 @@ const RegisterCustomer = () => {
   );
 };
 
-export default RegisterCustomer;
+export default RegisterOwner;

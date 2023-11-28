@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addRole, addUser } from "../redux/action";
+import { addRole, addUser } from "../redux/actions";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 
@@ -8,17 +8,22 @@ const Auth = () => {
   const navigate = useNavigate();
   const token = useSelector(state => state.login.token);
   const fetchAuth = async () => {
-    const rispostaSucces = await fetch("http://localhost:8080/", {
+    const respSucces = await fetch("http://localhost:8080/users/me", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token
       }
     });
-    if (rispostaSucces.ok) {
-      const user = await rispostaSucces.json();
-      dispatch(addRole(user.role));
+    if (respSucces.ok) {
+      const user = await respSucces.json();
+      console.log(user);
       dispatch(addUser(user));
-      //navigate(`/${user.role}`);
+      if (user.role === "CUSTOMER") {
+        navigate("/profile_customer");
+      }
+      if (user.role === "OWNER") {
+        navigate("/profile_owner");
+      }
     } else {
       //componente per errori
     }

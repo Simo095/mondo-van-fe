@@ -6,6 +6,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useSelector } from "react-redux";
 const NavBar = () => {
   const user = useSelector(state => state.login.user);
+  const role = useSelector(state => state.login.role);
   return (
     <div className="NavBar">
       <Navbar
@@ -30,58 +31,73 @@ const NavBar = () => {
           <Nav className="d-flex flex-row gap-5 btn-nav-none">
             <Nav.Link
               className="text-white"
-              href="/register_user">
-              Sign in
-            </Nav.Link>
-            <Nav.Link
-              className="text-white"
               href="/login">
               Login
             </Nav.Link>
           </Nav>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto d-flex justify-content-center flex-grow-1">
-              <Nav.Link
-                className="color-link-nav"
-                href="/register_user">
-                PRENOTA UN VAN
-              </Nav.Link>
-              <Nav.Link
-                className="color-link-nav"
-                href="/register_van">
-                ISCRIVI IL TUO VAN
-              </Nav.Link>
-              <Nav.Link
-                className="color-link-nav"
-                href="/rules">
-                COME FUNZIONA?
-              </Nav.Link>
+              {user ? (
+                <></>
+              ) : (
+                <>
+                  <Nav.Link
+                    className="color-link-nav"
+                    href="/register_user">
+                    PRENOTA UN VAN
+                  </Nav.Link>
+                  <Nav.Link
+                    className="color-link-nav"
+                    href="/register_owner">
+                    ISCRIVI IL TUO VAN
+                  </Nav.Link>
+                  <Nav.Link
+                    className="color-link-nav"
+                    href="/rules">
+                    COME FUNZIONA?
+                  </Nav.Link>
+                </>
+              )}
             </Nav>
-
             <Nav>
               {user ? (
-                <>
-                  <Image
-                    src={user}
-                    alt="image profile"
-                    roundedCircle
-                    style={{ width: "60px", height: "60px", marginInline: "1rem" }}
-                  />
-                  <NavDropdown id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Setting</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Others</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
-                  </NavDropdown>
-                </>
+                role === "CUSTOMER" ? (
+                  <>
+                    <Image
+                      src={user.avatar}
+                      alt="image profile"
+                      roundedCircle
+                      style={{ width: "60px", height: "60px", marginInline: "1rem" }}
+                    />
+                    <NavDropdown id="basic-nav-dropdown">
+                      <NavDropdown.Item href="/profile_customer">Profile</NavDropdown.Item>
+                      <NavDropdown.Item href="#action/3.2">Setting</NavDropdown.Item>
+                      <NavDropdown.Item href="#action/3.3">Others</NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
+                    </NavDropdown>
+                  </>
+                ) : role === "OWNER" ? (
+                  <>
+                    <Image
+                      src={user.avatar}
+                      alt="image profile"
+                      roundedCircle
+                      style={{ width: "60px", height: "60px", marginInline: "1rem" }}
+                    />
+                    <NavDropdown id="basic-nav-dropdown">
+                      <NavDropdown.Item href="/profile_owner">Profile</NavDropdown.Item>
+                      <NavDropdown.Item href="#action/3.2">Setting</NavDropdown.Item>
+                      <NavDropdown.Item href="#action/3.3">Others</NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
+                    </NavDropdown>
+                  </>
+                ) : (
+                  (<>{/* QUI MENU PER ADMIN */}</>)()
+                )
               ) : (
                 <div className="d-flex gap-5 btn-nav">
-                  <Nav.Link
-                    className="text-white"
-                    href="/register_user">
-                    Sign in
-                  </Nav.Link>
                   <Nav.Link
                     className="text-white"
                     href="/login">

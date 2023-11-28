@@ -6,6 +6,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Idea from "./componets/Idea";
 import Mezzi from "./componets/Mezzi";
 import RegisterCustomer from "./componets/RegisterCustomer";
+import RegisterOwner from "./componets/RegisterOwner";
+import ProfileCustomer from "./componets/ProfileCustomer";
+import ProfileOwner from "./componets/ProfileOwner";
+import Auth from "./componets/Auth";
 
 const App = () => {
   return (
@@ -21,8 +25,24 @@ const App = () => {
             element={<Login />}
           />
           <Route
-            path="/register_user"
+            path="/auth"
+            element={<Auth />}
+          />
+          <Route
+            path="/register_customer"
             element={<RegisterCustomer />}
+          />
+          <Route
+            path="/register_owner"
+            element={<RegisterOwner />}
+          />
+          <Route
+            path="/profile_customer"
+            element={<ProfileCustomer />}
+          />
+          <Route
+            path="/profile_owner"
+            element={<ProfileOwner />}
           />
           <Route
             path="/idea"

@@ -24,6 +24,7 @@ const Login = () => {
     const data = new FormData(event.currentTarget);
     data.get("password");
     data.get("email");
+    console.log(data.get("password"));
 
     const request = await fetch("http://localhost:8080/sign_in/login", {
       method: "POST",
@@ -35,11 +36,12 @@ const Login = () => {
         password: data.get("password")
       })
     });
+
     if (request.ok) {
       const objResp = await request.json();
       dispatch(addToken(objResp.token));
-      //controllare che l'utente non abbia piu ruoli e loggarlo al piu alto
-      dispatch(addRole(objResp.role[0].authority));
+      navigate("/auth");
+      //controllare che l'utente non abbia piu ruoli e loggarlo al piu alto?
     }
   };
 
@@ -80,7 +82,7 @@ const Login = () => {
                 <Form.Group
                   className="mb-5"
                   id="email">
-                  <Form.Label>User's Email</Form.Label>
+                  <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter email"
