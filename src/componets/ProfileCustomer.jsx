@@ -3,8 +3,7 @@ import NavBar from "./NavBar";
 const ProfileCustomer = () => {
   return (
     <>
-      <NavBar></NavBar>
-      <></>
+      <NavBar />
     </>
   );
 };

@@ -10,6 +10,7 @@ import RegisterOwner from "./componets/RegisterOwner";
 import ProfileCustomer from "./componets/ProfileCustomer";
 import ProfileOwner from "./componets/ProfileOwner";
 import Auth from "./componets/Auth";
+import OutGone from "./componets/OutGone";
 
 const App = () => {
   return (
@@ -27,6 +28,10 @@ const App = () => {
           <Route
             path="/auth"
             element={<Auth />}
+          />
+          <Route
+            path="/log_out"
+            element={<OutGone />}
           />
           <Route
             path="/register_customer"

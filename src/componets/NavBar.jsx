@@ -43,7 +43,7 @@ const NavBar = () => {
                 <>
                   <Nav.Link
                     className="color-link-nav"
-                    href="/register_user">
+                    href="/register_customer">
                     PRENOTA UN VAN
                   </Nav.Link>
                   <Nav.Link
@@ -74,10 +74,10 @@ const NavBar = () => {
                       <NavDropdown.Item href="#action/3.2">Setting</NavDropdown.Item>
                       <NavDropdown.Item href="#action/3.3">Others</NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
+                      <NavDropdown.Item href="/log_out">Logout</NavDropdown.Item>
                     </NavDropdown>
                   </>
-                ) : role === "OWNER" ? (
+                ) : (
                   <>
                     <Image
                       src={user.avatar}
@@ -90,11 +90,9 @@ const NavBar = () => {
                       <NavDropdown.Item href="#action/3.2">Setting</NavDropdown.Item>
                       <NavDropdown.Item href="#action/3.3">Others</NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item href="#action/3.4">Logout</NavDropdown.Item>
+                      <NavDropdown.Item href="/log_out">Logout</NavDropdown.Item>
                     </NavDropdown>
                   </>
-                ) : (
-                  (<>{/* QUI MENU PER ADMIN */}</>)()
                 )
               ) : (
                 <div className="d-flex gap-5 btn-nav">
