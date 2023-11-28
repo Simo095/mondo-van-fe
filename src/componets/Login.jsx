@@ -14,14 +14,29 @@ import image4 from "../assets/VW-Stars-Blue.jpg";
 import { useEffect, useState } from "react";
 
 const Login = () => {
-  const hadlerForm = event => {
-    const data = new FormData(event.currentTarge);
+  const [image, setImage] = useState("");
+  const hadlerForm = async event => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
     data.get("password");
     data.get("email");
-    console.log(data.get("password") + " password");
-    console.log(data.get("email") + " email");
+
+    const request = await fetch("http://localhost:8080/sign_in/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        email: data.get("email"),
+        password: data.get("password")
+      })
+    });
+    if (request.ok) {
+      const objResp = await request.json();
+      console.log(objResp);
+    }
   };
-  const [image, setImage] = useState("");
+
   useEffect(() => {
     const images = [image1, image2, image3, image4];
     const randomImage = images[Math.floor(Math.random() * images.length)];
@@ -58,7 +73,7 @@ const Login = () => {
                 className="text-start">
                 <Form.Group
                   className="mb-5"
-                  controlId="email">
+                  id="email">
                   <Form.Label>User's Email</Form.Label>
                   <Form.Control
                     type="text"
@@ -68,26 +83,25 @@ const Login = () => {
                 </Form.Group>
                 <Form.Group
                   className="mb-5"
-                  controlId="password">
+                  id="password">
                   <Form.Control
                     type="password"
                     placeholder="Password"
                     name="password"
                   />
                 </Form.Group>
+                <Button
+                  className="registerButton"
+                  type="submit">
+                  Login
+                </Button>
               </Form>
               <Row className="d-flex flex-column gap-4">
                 <Col className="d-flex justify-content-center gap-5">
                   <Link to="/register">Don't have any accounts?</Link>
                   <Link to="/register">Forgot password?</Link>
                 </Col>
-                <Col className="text-center">
-                  <Button
-                    className="registerButton"
-                    type="submit">
-                    Login
-                  </Button>
-                </Col>
+                <Col className="text-center"></Col>
               </Row>
             </Container>
           </Col>

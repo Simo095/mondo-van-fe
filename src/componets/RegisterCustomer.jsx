@@ -2,14 +2,16 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/actions";
+import { useNavigate } from "react-router";
 
-const Register = () => {
+const RegisterCustomer = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handlerSubmit = async e => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const risposta = await fetch("http://localhost:8080/register_" + data.get("uri"), {
+    const risposta = await fetch("http://localhost:8080/sign_in/customer_register", {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -17,14 +19,14 @@ const Register = () => {
       body: JSON.stringify({
         name: data.get("name"),
         surname: data.get("surname"),
-        birthday: data.get("date"),
+        dayOfBirth: data.get("date"),
         email: data.get("email"),
         password: data.get("password")
       })
     });
     if (risposta.ok) {
-      const user = await risposta.json();
-      dispatch(addUser(user));
+      console.log("ehy");
+      navigate("/");
     }
   };
   return (
@@ -74,16 +76,6 @@ const Register = () => {
                       placeholder="Enter your surname"
                     />
                   </Form.Group>
-                  <Form.Label>Come vuoi registrati?</Form.Label>
-                  <Form.Select
-                    className="mb-3"
-                    name="uri"
-                    id="uri"
-                    aria-label="Default select example">
-                    <option></option>
-                    <option value="renter">Voglio rendere disponibile il mio Van</option>
-                    <option value="renterholder">Voglio noleggiare un Van</option>
-                  </Form.Select>
                 </Col>
               </Row>
               <Form.Group>
@@ -104,17 +96,17 @@ const Register = () => {
                   placeholder="Password"
                 />
               </Form.Group>
+              <Button
+                type="submit"
+                className="registerButton">
+                Submit
+              </Button>
             </Form>
           </Col>
-          <Button
-            type="submit"
-            className="registerButton">
-            Submit
-          </Button>
         </Row>
       </Container>
     </div>
   );
 };
 
-export default Register;
+export default RegisterCustomer;

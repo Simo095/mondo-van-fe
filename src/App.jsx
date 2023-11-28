@@ -3,9 +3,9 @@ import "./App.css";
 import Login from "./componets/Login";
 import Home from "./componets/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Register from "./componets/Register";
 import Idea from "./componets/Idea";
 import Mezzi from "./componets/Mezzi";
+import RegisterCustomer from "./componets/RegisterCustomer";
 
 const App = () => {
   return (
@@ -22,7 +22,7 @@ const App = () => {
           />
           <Route
             path="/register_user"
-            element={<Register />}
+            element={<RegisterCustomer />}
           />
           <Route
             path="/idea"
