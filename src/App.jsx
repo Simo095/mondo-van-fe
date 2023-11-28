@@ -1,16 +1,16 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import Login from "./componets/Login";
+import Login from "./componets/login-register-auth/Login";
 import Home from "./componets/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Idea from "./componets/Idea";
 import Mezzi from "./componets/Mezzi";
-import RegisterCustomer from "./componets/RegisterCustomer";
-import RegisterOwner from "./componets/RegisterOwner";
+import RegisterCustomer from "./componets/login-register-auth/RegisterCustomer";
+import RegisterOwner from "./componets/login-register-auth/RegisterOwner";
 import ProfileCustomer from "./componets/ProfileCustomer";
 import ProfileOwner from "./componets/ProfileOwner";
-import Auth from "./componets/Auth";
-import OutGone from "./componets/OutGone";
+import Auth from "./componets/login-register-auth/Auth";
+import OutGone from "./componets/login-register-auth/OutGone";
 
 const App = () => {
   return (

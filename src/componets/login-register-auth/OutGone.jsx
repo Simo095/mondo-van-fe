@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addRole, addToken, addUser } from "../redux/actions";
+import { addRole, addToken, addUser } from "../../redux/actions";
 import { useNavigate } from "react-router";
 
 const OutGone = () => {

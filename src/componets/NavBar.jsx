@@ -28,12 +28,17 @@ const NavBar = () => {
             aria-controls="basic-navbar-nav"
             className="nav-toggler"
           />
+
           <Nav className="d-flex flex-row gap-5 btn-nav-none">
-            <Nav.Link
-              className="text-white"
-              href="/login">
-              Login
-            </Nav.Link>
+            {user ? (
+              <></>
+            ) : (
+              <Nav.Link
+                className="text-white"
+                href="/login">
+                Login
+              </Nav.Link>
+            )}
           </Nav>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto d-flex justify-content-center flex-grow-1">

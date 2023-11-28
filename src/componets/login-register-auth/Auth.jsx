@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addRole, addUser } from "../redux/actions";
+import { addRole, addUser } from "../../redux/actions";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 

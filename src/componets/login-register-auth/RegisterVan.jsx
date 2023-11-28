@@ -1,31 +1,30 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
-import { addUser } from "../redux/actions";
-import { useNavigate } from "react-router";
+import { addUser } from "../../redux/actions";
 
-const RegisterOwner = () => {
+const RegisterVan = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handlerSubmit = async e => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const risposta = await fetch("http://localhost:8080/sign_in/owner_register", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        name: data.get("name"),
-        surname: data.get("surname"),
-        dayOfBirth: data.get("date"),
-        email: data.get("email"),
-        password: data.get("password")
-      })
-    });
+    const risposta = await fetch(
+      "http://localhost:8080/register_van/" +
+        {
+          /*QUI METTERE IL TOKEN PER REGISTRARE IL VAN PER L'UTENTE LOGGATO COME RENTER*/
+        },
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({})
+      }
+    );
     if (risposta.ok) {
-      navigate("/");
+      const user = await risposta.json();
+      dispatch(addUser(user));
     }
   };
   return (
@@ -38,43 +37,56 @@ const RegisterOwner = () => {
       </Button>
       <Container className="mt-5 d-flex justify-content-center">
         <Row className="d-flex flex-column">
-          <p>Vuoi vivere un avventura con uno stupendo van a noleggio registrati</p>
           <Col>
-            <h2>Form Registrazione proprietario</h2>
+            <h2>Form Registrazione Van</h2>
           </Col>
           <Col>
             <Form onSubmit={handlerSubmit}>
               <Row>
                 <Col>
                   <Form.Group className="mb-3">
-                    <Form.Label>Nome</Form.Label>
+                    <Form.Label>Targa</Form.Label>
                     <Form.Control
                       type="text"
-                      name="name"
-                      id="name"
-                      placeholder="Enter your name"
+                      name="targa"
+                      id="targa"
+                      placeholder="Targa..."
                     />
                   </Form.Group>
                   <Form.Group className="mb-3">
-                    <Form.Label>Data di nascita</Form.Label>
+                    <Form.Label>Data d'immatricolazione</Form.Label>
                     <Form.Control
                       type="date"
                       name="date"
                       id="date"
-                      placeholder="Enter your birthday"
                     />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group className="mb-3">
-                    <Form.Label>Cognome</Form.Label>
+                    <Form.Label>Modello</Form.Label>
                     <Form.Control
-                      name="surname"
-                      id="surname"
+                      name="modello"
+                      id="modello"
                       type="text"
-                      placeholder="Enter your surname"
+                      placeholder="Modello..."
                     />
                   </Form.Group>
+                  <Form.Label>Numero di posti</Form.Label>
+                  <Form.Select
+                    className="mb-3"
+                    name="posti"
+                    id="posti"
+                    aria-label="Default select example">
+                    <option></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="">6+</option>
+                  </Form.Select>
                 </Col>
               </Row>
               <Form.Group>
@@ -95,17 +107,17 @@ const RegisterOwner = () => {
                   placeholder="Password"
                 />
               </Form.Group>
-              <Button
-                type="submit"
-                className="registerButton">
-                Submit
-              </Button>
             </Form>
           </Col>
+          <Button
+            type="submit"
+            className="registerButton">
+            Submit
+          </Button>
         </Row>
       </Container>
     </div>
   );
 };
 
-export default RegisterOwner;
+export default RegisterVan;

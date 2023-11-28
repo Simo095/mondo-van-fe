@@ -3,17 +3,15 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Alert } from "react-bootstrap";
-import { Image } from "react-bootstrap";
 import { VscSignIn } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
-import image1 from "../assets/VW-Stars.jpg";
-import image2 from "../assets/VW-Bianco.jpg";
-import image3 from "../assets/VW-Adventure.jpg";
-import image4 from "../assets/VW-Stars-Blue.jpg";
+import image1 from "../../assets/VW-Stars.jpg";
+import image2 from "../../assets/VW-Bianco.jpg";
+import image3 from "../../assets/VW-Adventure.jpg";
+import image4 from "../../assets/VW-Stars-Blue.jpg";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRole, addToken } from "../redux/actions";
+import { addToken } from "../../redux/actions";
 
 const Login = () => {
   const dispatch = useDispatch();

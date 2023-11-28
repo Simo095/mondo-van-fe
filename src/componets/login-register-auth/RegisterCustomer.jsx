@@ -1,7 +1,7 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
-import { addUser } from "../redux/actions";
+import { addUser } from "../../redux/actions";
 import { useNavigate } from "react-router";
 
 const RegisterCustomer = () => {
