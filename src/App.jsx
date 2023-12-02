@@ -7,10 +7,13 @@ import Idea from "./componets/Idea";
 import Mezzi from "./componets/Mezzi";
 import RegisterCustomer from "./componets/login-register-auth/RegisterCustomer";
 import RegisterOwner from "./componets/login-register-auth/RegisterOwner";
-import ProfileCustomer from "./componets/ProfileCustomer";
-import ProfileOwner from "./componets/ProfileOwner";
+import ProfileCustomer from "./componets/profile-page/ProfileCustomer";
+import ProfileOwner from "./componets/profile-page/ProfileOwner";
 import Auth from "./componets/login-register-auth/Auth";
 import OutGone from "./componets/login-register-auth/OutGone";
+import ProfileVehicle from "./componets/veicolo/ProfileVehicle";
+import RegisterVehicle from "./componets/veicolo/RegisterVehicle";
+import UploadDocument from "./componets/veicolo/UploadDocument";
 
 const App = () => {
   return (
@@ -30,6 +33,10 @@ const App = () => {
             element={<Auth />}
           />
           <Route
+            path="/upload_document"
+            element={<UploadDocument />}
+          />
+          <Route
             path="/log_out"
             element={<OutGone />}
           />
@@ -42,12 +49,21 @@ const App = () => {
             element={<RegisterOwner />}
           />
           <Route
+            path="/register_vehicle"
+            element={<RegisterVehicle />}
+          />
+          <Route
             path="/profile_customer"
             element={<ProfileCustomer />}
           />
+
           <Route
             path="/profile_owner"
             element={<ProfileOwner />}
+          />
+          <Route
+            path="/profile_vehicle/:id"
+            element={<ProfileVehicle />}
           />
           <Route
             path="/idea"

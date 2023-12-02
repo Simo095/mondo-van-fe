@@ -19,7 +19,7 @@ const Home = () => {
   //CLICK PROVINCE
   const handleProvinceClick = async e => {
     //e.preventDefault();
-    const risposta = await fetch("http://localhost:8080/auth/prov", {
+    const risposta = await fetch("http://localhost:8080/sign_in/prov", {
       method: "GET"
     });
     if (risposta.ok) {
@@ -42,7 +42,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    //handleProvinceClick();
+    handleProvinceClick();
   }, []);
   return (
     <div className="Home">
@@ -80,7 +80,7 @@ const Home = () => {
                         <option
                           key={index}
                           value={province.abbreviation}>
-                          {province.province}
+                          {province.name}
                         </option>
                       ))
                     ) : (
@@ -107,12 +107,12 @@ const Home = () => {
                     name="letto"
                     className="btn-radius-start-0 btn-radius-end-0">
                     <option defaultValue>Quanti posti letto?</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                    <option value={6}>6</option>
+                    <option value={1}>1 posto letto</option>
+                    <option value={2}>2 posti letto</option>
+                    <option value={3}>3 posti letto</option>
+                    <option value={4}>4 posti letto</option>
+                    <option value={5}>5 posti letto</option>
+                    <option value={6}>6 posti letto</option>
                   </FormSelect>
                 </Form.Group>
 
@@ -134,7 +134,9 @@ const Home = () => {
         </Col>
       </Row>
       <Container>
-        <p>QUI CONTENUTO DEL SITO MAGARI METEO, E POSTI CONSIGLIATI SE TROVO API PER NEWS A RIGUARDO</p>
+        <p className="text-black">
+          QUI CONTENUTO DEL SITO MAGARI METEO, E POSTI CONSIGLIATI SE TROVO API PER NEWS A RIGUARDO
+        </p>
       </Container>
       <Footer />
     </div>

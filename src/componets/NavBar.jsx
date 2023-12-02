@@ -1,4 +1,4 @@
-import { Image } from "react-bootstrap";
+import { Image, NavItem } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -41,26 +41,34 @@ const NavBar = () => {
             )}
           </Nav>
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto d-flex justify-content-center flex-grow-1">
+            <Nav
+              //variant="tabs"
+              className="me-auto d-flex justify-content-center flex-grow-1">
               {user ? (
                 <></>
               ) : (
                 <>
-                  <Nav.Link
-                    className="color-link-nav"
-                    href="/register_customer">
-                    PRENOTA UN VAN
-                  </Nav.Link>
-                  <Nav.Link
-                    className="color-link-nav"
-                    href="/register_owner">
-                    ISCRIVI IL TUO VAN
-                  </Nav.Link>
-                  <Nav.Link
-                    className="color-link-nav"
-                    href="/rules">
-                    COME FUNZIONA?
-                  </Nav.Link>
+                  <NavItem>
+                    <Nav.Link
+                      className="color-link-nav"
+                      href="/register_customer">
+                      PRENOTA UN VAN
+                    </Nav.Link>
+                  </NavItem>
+                  <NavItem>
+                    <Nav.Link
+                      className="color-link-nav"
+                      href="/register_owner">
+                      ISCRIVI IL TUO VAN
+                    </Nav.Link>
+                  </NavItem>
+                  <NavItem>
+                    <Nav.Link
+                      className="color-link-nav"
+                      href="/rules">
+                      COME FUNZIONA?
+                    </Nav.Link>
+                  </NavItem>
                 </>
               )}
             </Nav>
@@ -74,7 +82,9 @@ const NavBar = () => {
                       roundedCircle
                       style={{ width: "60px", height: "60px", marginInline: "1rem" }}
                     />
-                    <NavDropdown id="basic-nav-dropdown">
+                    <NavDropdown
+                      id="basic-nav-dropdown"
+                      align="end">
                       <NavDropdown.Item href="/profile_customer">Profile</NavDropdown.Item>
                       <NavDropdown.Item href="#action/3.2">Setting</NavDropdown.Item>
                       <NavDropdown.Item href="#action/3.3">Others</NavDropdown.Item>
@@ -90,10 +100,12 @@ const NavBar = () => {
                       roundedCircle
                       style={{ width: "60px", height: "60px", marginInline: "1rem" }}
                     />
-                    <NavDropdown id="basic-nav-dropdown">
-                      <NavDropdown.Item href="/profile_owner">Profile</NavDropdown.Item>
-                      <NavDropdown.Item href="#action/3.2">Setting</NavDropdown.Item>
-                      <NavDropdown.Item href="#action/3.3">Others</NavDropdown.Item>
+                    <NavDropdown
+                      id="basic-nav-dropdown"
+                      align="end">
+                      <NavDropdown.Item href="/profile_owner">Profilo</NavDropdown.Item>
+                      <NavDropdown.Item href="#action/3.2">Modifica profilo</NavDropdown.Item>
+                      <NavDropdown.Item href="/profile_vehicle">Veicolo</NavDropdown.Item>
                       <NavDropdown.Divider />
                       <NavDropdown.Item href="/log_out">Logout</NavDropdown.Item>
                     </NavDropdown>

@@ -1,4 +1,5 @@
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 const SideBar = () => {
   const hadlerSubmit = e => {
     e.preventDefault();
@@ -10,11 +11,13 @@ const SideBar = () => {
           <Row
             className="d-flex flex-row"
             style={{
-              height: "70vh"
+              height: "100vh"
             }}>
             <Col className="border">
               <Row className="mt-3 d-flex flex-column g-4">
-                <Col>Elemento 1</Col>
+                <Col>
+                  <Link to="/register_vehicle">Iscrivi il tuo veicolo</Link>
+                </Col>
                 <Col>Elemento 2</Col>
                 <Col>Elemento 3</Col>
                 <Col>Elemento 4</Col>
