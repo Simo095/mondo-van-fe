@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addRole, addUser } from "../../redux/actions";
+import { addUser, addVehicle } from "../../redux/actions";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 
@@ -18,6 +18,19 @@ const Auth = () => {
       const user = await respSucces.json();
       console.log(user);
       dispatch(addUser(user));
+      const objVehicle = await fetch("http://localhost:8080/vehicles/my_vehicle", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (objVehicle.ok) {
+        const vehicle = await objVehicle.json();
+        if (vehicle != null) {
+          dispatch(addVehicle(vehicle));
+        }
+        console.log(vehicle);
+      }
       if (user.role === "CUSTOMER") {
         navigate("/profile_customer");
       }

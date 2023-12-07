@@ -51,7 +51,6 @@ const FlipCard = ({ type, image, i, checked, setChecked, serverEnum, setForm }) 
                 <FaRegCheckSquare
                   id={serverEnum}
                   className="fs-4"
-                  onClick={handlerChecked}
                 />
               ) : (
                 <FaRegSquare

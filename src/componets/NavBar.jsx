@@ -23,12 +23,10 @@ const NavBar = () => {
           /> */}
             VAN WORLD
           </Navbar.Brand>
-
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             className="nav-toggler"
           />
-
           <Nav className="d-flex flex-row gap-5 btn-nav-none">
             {user ? (
               <></>
@@ -43,7 +41,7 @@ const NavBar = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav
               //variant="tabs"
-              className="me-auto d-flex justify-content-center flex-grow-1">
+              className="d-flex  flex-grow-1">
               {user ? (
                 <></>
               ) : (
@@ -65,13 +63,15 @@ const NavBar = () => {
                   <NavItem>
                     <Nav.Link
                       className="color-link-nav"
-                      href="/rules">
+                      href="/rules"
+                      disabled>
                       COME FUNZIONA?
                     </Nav.Link>
                   </NavItem>
                 </>
               )}
             </Nav>
+
             <Nav>
               {user ? (
                 role === "CUSTOMER" ? (

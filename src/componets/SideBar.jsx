@@ -18,10 +18,15 @@ const SideBar = () => {
                 <Col>
                   <Link to="/register_vehicle">Iscrivi il tuo veicolo</Link>
                 </Col>
-                <Col>Elemento 2</Col>
-                <Col>Elemento 3</Col>
-                <Col>Elemento 4</Col>
-                <Col>Elemento 5</Col>
+                <Col>
+                  <Link to="/profile_vehicle">il tuo veicolo</Link>
+                </Col>
+                <Col>
+                  <Link to="/profile_owner">Profile</Link>
+                </Col>
+                <Col>
+                  <Link to="/log_out">Logout</Link>
+                </Col>
               </Row>
             </Col>
           </Row>

@@ -38,13 +38,7 @@ const UploadDocument = () => {
           <Form.Group className="mb-3">
             <Dropzone
               onDrop={acceptedFiles => {
-                setFile(
-                  acceptedFiles.map(file =>
-                    Object.assign(file, {
-                      preview: URL.createObjectURL(file)
-                    })
-                  )
-                );
+                setFile(acceptedFiles);
               }}>
               {({ getRootProps, getInputProps, acceptedFiles }) => (
                 <>

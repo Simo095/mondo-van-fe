@@ -2,7 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <>
+    <div className="Footer">
       <Container
         className="d-flex align-items-center"
         style={{
@@ -43,7 +43,7 @@ const Footer = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   );
 };
 

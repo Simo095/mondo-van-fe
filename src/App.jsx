@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Login from "./componets/login-register-auth/Login";
-import Home from "./componets/Home";
+import Home from "./componets/home/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Idea from "./componets/Idea";
 import Mezzi from "./componets/Mezzi";
@@ -14,6 +14,8 @@ import OutGone from "./componets/login-register-auth/OutGone";
 import ProfileVehicle from "./componets/veicolo/ProfileVehicle";
 import RegisterVehicle from "./componets/veicolo/RegisterVehicle";
 import UploadDocument from "./componets/veicolo/UploadDocument";
+import VehicleArrangement from "./componets/veicolo/VehicleArrangement";
+import ChangeCalendar from "./componets/profile-page/ChangeCalendar";
 
 const App = () => {
   return (
@@ -31,6 +33,10 @@ const App = () => {
           <Route
             path="/auth"
             element={<Auth />}
+          />
+          <Route
+            path="/change_calendar"
+            element={<ChangeCalendar />}
           />
           <Route
             path="/upload_document"
@@ -56,13 +62,17 @@ const App = () => {
             path="/profile_customer"
             element={<ProfileCustomer />}
           />
+          <Route
+            path="/vehicle_arrangement"
+            element={<VehicleArrangement />}
+          />
 
           <Route
             path="/profile_owner"
             element={<ProfileOwner />}
           />
           <Route
-            path="/profile_vehicle/:id"
+            path="/profile_vehicle"
             element={<ProfileVehicle />}
           />
           <Route

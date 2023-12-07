@@ -39,7 +39,6 @@ const Login = () => {
       const objResp = await request.json();
       dispatch(addToken(objResp.token));
       navigate("/auth");
-      //controllare che l'utente non abbia piu ruoli e loggarlo al piu alto?
     }
   };
 
@@ -50,10 +49,8 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="Logn">
-      <Container
-        fluid
-        className="vh-70">
+    <div className="Login">
+      <Container fluid>
         <Row>
           <Col
             style={{
@@ -64,7 +61,7 @@ const Login = () => {
               height: "100vh"
             }}></Col>
           <Col
-            sm={6}
+            sm={4}
             className="d-flex align-items-center">
             <Container>
               <Row>
@@ -76,36 +73,59 @@ const Login = () => {
 
               <Form
                 onSubmit={hadlerForm}
-                className="text-start">
-                <Form.Group
-                  className="mb-5"
-                  id="email">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter email"
-                    name="email"
-                  />
-                </Form.Group>
-                <Form.Group
-                  className="mb-5"
-                  id="password">
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                  />
-                </Form.Group>
-                <Button
-                  className="registerButton"
-                  type="submit">
-                  Login
-                </Button>
+                className="">
+                <Row className="d-flex flex-column justify-content-center">
+                  <Col>
+                    <Form.Group
+                      className="mb-5"
+                      id="email">
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter email"
+                        name="email"
+                      />
+                    </Form.Group>
+                    <Form.Group
+                      className="mb-5"
+                      id="password">
+                      <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col className="d-flex justify-content-center">
+                    <Button
+                      className="registerButton"
+                      type="submit">
+                      Entra!
+                    </Button>
+                  </Col>
+                </Row>
               </Form>
-              <Row className="d-flex flex-column gap-4">
-                <Col className="d-flex justify-content-center gap-5">
-                  <Link to="/">Don't have any accounts?</Link>
-                  <Link to="/">Forgot password?</Link>
+              <Row className="mt-3 d-flex flex-column gap-4">
+                <Col className="d-flex mt-5 justify-content-center gap-5">
+                  <Link
+                    style={{
+                      color: "black",
+                      textDecoration: "none",
+                      fontSize: "1em",
+                      letterSpacing: "1px"
+                    }}
+                    to="/">
+                    Don't have any accounts?
+                  </Link>
+                  <Link
+                    style={{
+                      color: "black",
+                      textDecoration: "none",
+                      fontSize: "1em",
+                      letterSpacing: "1px"
+                    }}
+                    to="/">
+                    Forgot password?
+                  </Link>
                 </Col>
                 <Col className="text-center"></Col>
               </Row>
