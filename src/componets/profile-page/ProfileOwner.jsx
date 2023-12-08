@@ -120,7 +120,6 @@ const ProfileOwner = () => {
 
   useEffect(() => {
     vehicleFetch();
-
     fetchDisponibilita();
   }, []);
   return (
