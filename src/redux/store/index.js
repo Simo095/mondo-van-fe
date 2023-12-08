@@ -4,7 +4,7 @@ import storage from "redux-persist/lib/storage";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 import loginReducer from "../reducers/loginReducer";
 import vehiclesReducer from "../reducers/vehiclesReducer.js";
-
+import resultReducer from "../reducers/resultReducer.js";
 const persistConfig = {
   key: "root",
   storage,
@@ -18,7 +18,8 @@ const persistConfig = {
 const mainReducers = combineReducers({
   //Qui scriverai i reducer di cui hai bisogno
   vehicles: vehiclesReducer,
-  login: loginReducer
+  login: loginReducer,
+  result: resultReducer
 });
 const persistedReducer = persistReducer(persistConfig, mainReducers);
 export const store = configureStore({

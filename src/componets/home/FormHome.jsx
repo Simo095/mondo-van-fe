@@ -3,7 +3,9 @@ import { Button, Form, FormSelect } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { addResult } from "../../redux/actions";
 const FormHome = () => {
   const [provinces, setProvinces] = useState();
   const [province, setProvince] = useState("");
@@ -13,6 +15,7 @@ const FormHome = () => {
   const [isValid, setIsValid] = useState(false);
   const [isValidBad, setIsValidBed] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //FORM
   const handlerSubmit = async e => {
@@ -24,50 +27,53 @@ const FormHome = () => {
 
     if (isValid && isValidBad) {
       console.log(" selezione dei letti e della provincia");
-      const dispo = await fetch(
+      const pageble = await fetch(
         `http://localhost:8080/sign_in/date_prov_beds?start=${start}&end=${end}&beds=${beds}&province=${province}`,
         {
           method: "GET"
         }
       );
-      if (dispo.ok) {
-        const dispo2 = await dispo.json();
-        console.log(dispo2);
+      if (pageble.ok) {
+        const content = await pageble.json();
+        dispatch(addResult(content.content));
+        navigate("/results_page");
       }
     }
 
     if (!isValid && !isValidBad) {
       console.log("nessuna selezione dei letti e della provincia");
-      const dispo = await fetch(`http://localhost:8080/sign_in/date?start=${start}&end=${end}`, {
+      const pageble = await fetch(`http://localhost:8080/sign_in/date?start=${start}&end=${end}`, {
         method: "GET"
       });
-      if (dispo.ok) {
-        const dispo2 = await dispo.json();
-        console.log(dispo2);
+      if (pageble.ok) {
+        const content = await pageble.json();
+        dispatch(addResult(content.content));
+        navigate("/results_page");
       }
     }
     if (!isValid && isValidBad) {
       console.log("nessuna selezione della provincia");
-      const dispo = await fetch(`http://localhost:8080/sign_in/date_beds?start=${start}&end=${end}&beds=${beds}`, {
+      const pageble = await fetch(`http://localhost:8080/sign_in/date_beds?start=${start}&end=${end}&beds=${beds}`, {
         method: "GET"
       });
-      if (dispo.ok) {
-        const dispo2 = await dispo.json();
-        console.log(dispo2);
+      if (pageble.ok) {
+        const content = await pageble.json();
+        dispatch(addResult(content.content));
+        navigate("/results_page");
       }
     }
     if (isValid && !isValidBad) {
       console.log("nessuna selezione e della dei letti");
-      const dispo = await fetch(
+      const pageble = await fetch(
         `http://localhost:8080/sign_in/date_province?start=${start}&end=${end}&province=${province}`,
         {
           method: "GET"
         }
       );
-      if (dispo.ok) {
-        const dispo2 = await dispo.json();
-        console.log(dispo2);
-        navigate("/");
+      if (pageble.ok) {
+        const content = await pageble.json();
+        dispatch(addResult(content.content));
+        navigate("/results_page");
       }
     }
     console.log(beds);
