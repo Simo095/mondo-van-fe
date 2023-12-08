@@ -8,7 +8,7 @@ const resultReducer = (state = initialState, action) => {
     case ADD_RESULT:
       return {
         ...state,
-        vehicles: [action.payload]
+        vehicles: [...action.payload]
       };
     default:
       return state;

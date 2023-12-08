@@ -15,6 +15,7 @@ import UploadDocument from "./componets/veicolo/UploadDocument";
 import VehicleArrangement from "./componets/veicolo/VehicleArrangement";
 import ChangeCalendar from "./componets/profile-page/ChangeCalendar";
 import ResultPage from "./componets/results-page/ResultPage";
+import ChangeImg from "./componets/veicolo/ChangeImg";
 
 const App = () => {
   return (
@@ -36,6 +37,10 @@ const App = () => {
           <Route
             path="/change_calendar"
             element={<ChangeCalendar />}
+          />
+          <Route
+            path="/change"
+            element={<ChangeImg />}
           />
           <Route
             path="/upload_document"

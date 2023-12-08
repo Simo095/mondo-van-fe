@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addRole, addToken, addUser } from "../../redux/actions";
+import { addRole, addToken, addUser, addVehicle } from "../../redux/actions";
 import { useNavigate } from "react-router";
 
 const OutGone = () => {
@@ -10,6 +10,7 @@ const OutGone = () => {
     dispatch(addUser(null));
     dispatch(addRole(""));
     dispatch(addToken(""));
+    dispatch(addVehicle(null));
     navigate("/");
   };
   useEffect(() => {

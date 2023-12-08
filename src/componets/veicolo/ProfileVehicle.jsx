@@ -24,6 +24,7 @@ import Calendario from "../Calendario";
 import { useNavigate } from "react-router";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
+import { HiOutlineTrash } from "react-icons/hi2";
 import Dropzone from "react-dropzone";
 import { addUser } from "../../redux/actions";
 
@@ -47,10 +48,10 @@ const ProfileVehicle = () => {
   const handlerSubmitCover = async e => {
     e.preventDefault();
     const formCover = new FormData();
-    formCover.append("cover", coverImg[0]);
+    formCover.append("img", coverImg[0]);
     setLoading(true);
     if (cover) {
-      const coverfetch = await fetch("http://localhost:8080/users/upload_cover", {
+      const coverfetch = await fetch("http://localhost:8080/vehicles/upload_img", {
         method: "PATCH",
         headers: {
           Authorization: "Bearer " + token
@@ -58,12 +59,24 @@ const ProfileVehicle = () => {
         body: formCover
       });
       if (coverfetch.ok) {
-        await fetchUser();
         setLoading(false);
+        navigate("/change");
       }
     }
     handleClose();
   };
+  const deleteCover = async nCover => {
+    const coverfetch = await fetch(`http://localhost:8080/vehicles/remove_img?urlImg=${nCover}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+    if (coverfetch.ok) {
+      navigate("/change");
+    }
+  };
+
   const fetchUser = async () => {
     const respSucces = await fetch("http://localhost:8080/users/me", {
       method: "GET",
@@ -84,24 +97,7 @@ const ProfileVehicle = () => {
     }
   };
 
-  const fetchDisponibilita = async () => {
-    const disponibilita = await fetch("http://localhost:8080/availability/my_availability", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-    if (disponibilita.ok) {
-      const obj = await disponibilita.json();
-      const key = Object.keys(obj);
-      const array = key.map(k => obj[k]);
-      setDate(array);
-    }
-  };
-
-  useEffect(() => {
-    fetchDisponibilita();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="ProfileVehicle">
@@ -205,6 +201,26 @@ const ProfileVehicle = () => {
                             borderRadius: "10px",
                             height: "50vh"
                           }}>
+                          <div
+                            className="d-flex align-items-start justify-content-center"
+                            style={{
+                              backgroundColor: "black",
+                              opacity: "0.3",
+                              borderRadius: "30px",
+                              height: "40px",
+                              width: "40px"
+                            }}>
+                            <HiOutlineTrash
+                              className="mt-2"
+                              onClick={() => deleteCover(vehicle.avatar[0])}
+                              style={{
+                                cursor: "pointer",
+                                opacity: "0.5",
+                                fontSize: "1.5em",
+                                color: "white"
+                              }}
+                            />
+                          </div>
                           <div
                             className="d-flex align-items-start justify-content-center"
                             style={{
