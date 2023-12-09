@@ -80,7 +80,19 @@ const App = () => {
             element={<VehicleArrangement />}
           />
           <Route
-            path="/results_page"
+            path="/results_page/:start_date/:end_date"
+            element={<ResultPage />}
+          />
+          <Route
+            path="/results_page/:start_date/:end_date/:beds"
+            element={<ResultPage />}
+          />
+          <Route
+            path="/results_page/:start_date/:end_date/:province"
+            element={<ResultPage />}
+          />
+          <Route
+            path="/results_page/:start_date/:end_date/:beds/:province"
             element={<ResultPage />}
           />
         </Routes>

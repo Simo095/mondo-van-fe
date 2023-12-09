@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Form, FormSelect } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -22,11 +21,7 @@ const FormHome = () => {
     e.preventDefault();
     const start = startDate.toLocaleDateString("fr-CA");
     const end = endDate.toLocaleDateString("fr-CA");
-    console.log(isValidBad);
-    console.log(isValid + " province");
-
     if (isValid && isValidBad) {
-      console.log(" selezione dei letti e della provincia");
       const pageble = await fetch(
         `http://localhost:8080/sign_in/date_prov_beds?start=${start}&end=${end}&beds=${beds}&province=${province}`,
         {
@@ -36,34 +31,31 @@ const FormHome = () => {
       if (pageble.ok) {
         const content = await pageble.json();
         dispatch(addResult(content.content));
-        navigate("/results_page");
+        navigate(`/results_page/${start}/${end}/${beds}/${province}`);
       }
     }
 
     if (!isValid && !isValidBad) {
-      console.log("nessuna selezione dei letti e della provincia");
       const pageble = await fetch(`http://localhost:8080/sign_in/date?start=${start}&end=${end}`, {
         method: "GET"
       });
       if (pageble.ok) {
         const content = await pageble.json();
         dispatch(addResult(content.content));
-        navigate("/results_page");
+        navigate(`/results_page/${start}/${end}`);
       }
     }
     if (!isValid && isValidBad) {
-      console.log("nessuna selezione della provincia");
       const pageble = await fetch(`http://localhost:8080/sign_in/date_beds?start=${start}&end=${end}&beds=${beds}`, {
         method: "GET"
       });
       if (pageble.ok) {
         const content = await pageble.json();
         dispatch(addResult(content.content));
-        navigate("/results_page");
+        navigate(`/results_page/${start}/${end}/${beds}`);
       }
     }
     if (isValid && !isValidBad) {
-      console.log("nessuna selezione e della dei letti");
       const pageble = await fetch(
         `http://localhost:8080/sign_in/date_province?start=${start}&end=${end}&province=${province}`,
         {
@@ -73,10 +65,9 @@ const FormHome = () => {
       if (pageble.ok) {
         const content = await pageble.json();
         dispatch(addResult(content.content));
-        navigate("/results_page");
+        navigate(`/results_page/${start}/${end}/${province}`);
       }
     }
-    console.log(beds);
   };
   //CLICK PROVINCE
   const handleProvinceClick = async e => {
@@ -86,7 +77,6 @@ const FormHome = () => {
     });
     if (risposta.ok) {
       const data = await risposta.json();
-      console.log(data.content);
       setProvinces(data.content);
     }
   };
@@ -155,7 +145,6 @@ const FormHome = () => {
           startDate={startDate}
           endDate={endDate}
           dateFormat={"dd-MM-yyyy"}
-          //excludeDates={[addDays(new Date(), 1), addDays(new Date(), 5)]}
           selectsRange
           selectsDisabledDaysInRange
           placeholderText="Quando vuoi partire?"

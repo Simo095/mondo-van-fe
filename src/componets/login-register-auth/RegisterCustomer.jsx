@@ -166,7 +166,7 @@ const RegisterCustomer = () => {
             sm={7}
             style={{
               overflow: "unset",
-              backgroundImage: `url(${sfondoTre})`,
+              //backgroundImage: `url(${sfondoTre})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "470px",
               backgroundPositionY: "66%",

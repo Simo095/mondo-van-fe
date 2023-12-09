@@ -61,7 +61,8 @@ const RegisterVehicle = () => {
         name: firstForm.name,
         model: firstForm.model,
         brand: firstForm.brand,
-        plate: firstForm.plate,
+        sits: firstForm.sits,
+        pricePerDay: firstForm.pricePerDay,
         supply: form.get("supply"),
         firstEnrollment: firstForm.firstEnrollment,
         license: firstForm.license,
@@ -93,7 +94,8 @@ const RegisterVehicle = () => {
       name: form.get("name"),
       model: form.get("model"),
       brand: form.get("brand"),
-      plate: form.get("plate"),
+      sits: form.get("sits"),
+      pricePerDay: form.get("pricePerDay"),
       kilometers: form.get("kilometers"),
       license: form.get("license"),
       firstEnrollment: form.get("firstEnrollment")
@@ -221,22 +223,22 @@ const RegisterVehicle = () => {
                       <Col className="d-flex justify-content-center gap-5">
                         <Form.Group className="mb-3">
                           <Form.Control
+                            name="kilometers"
+                            id="kilometers"
                             type="text"
-                            name="plate"
-                            id="plate"
                             required
-                            placeholder="Targa..."
+                            placeholder="KM..."
                           />
                         </Form.Group>
                       </Col>
                       <Col className="d-flex justify-content-center gap-5">
                         <Form.Group className="mb-3">
                           <Form.Control
-                            name="kilometers"
-                            id="kilometers"
+                            name="pricePerDay"
+                            id="pricePerDay"
                             type="text"
                             required
-                            placeholder="KM..."
+                            placeholder="€/Giorno"
                           />
                         </Form.Group>
                       </Col>
@@ -252,10 +254,27 @@ const RegisterVehicle = () => {
                           />
                         </Form.Group>
                       </Col>
+                      <Col className="d-flex justify-content-center gap-5">
+                        <Form.Group className="mb-3">
+                          <Form.Select
+                            style={{ width: "205px" }}
+                            name="sits"
+                            id="sits"
+                            required>
+                            <option>Posti in cabina</option>
+                            <option value="2">2 posti a sedere</option>
+                            <option value="3">3 posti a sedere</option>
+                            <option value="4">4 posti a sedere</option>
+                            <option value="5">5 posti a sedere</option>
+                            <option value="6">6 posti a sedere</option>
+                          </Form.Select>
+                        </Form.Group>
+                      </Col>
 
                       <Col className="d-flex justify-content-center gap-5">
                         <Form.Group className="mb-3">
                           <Form.Select
+                            style={{ width: "205px" }}
                             id="license"
                             name="license"
                             required>

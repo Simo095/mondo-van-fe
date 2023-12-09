@@ -22,8 +22,6 @@ const Login = () => {
     const data = new FormData(event.currentTarget);
     data.get("password");
     data.get("email");
-    console.log(data.get("password"));
-
     const request = await fetch("http://localhost:8080/sign_in/login", {
       method: "POST",
       headers: {

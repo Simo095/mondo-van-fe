@@ -122,7 +122,9 @@ body {
 /* ---------------------------- */
 
 /* ----------CALENDAR REACT------------------ */
-
+.react-datepicker__input-container {
+  width: 244px !important;
+}
 .react-calendar {
   width: inherit !important;
   max-width: inherit !important;
