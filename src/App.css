@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;700&display=swap");
 body {
 }
 .oV::-webkit-scrollbar {
@@ -20,6 +21,7 @@ body {
   font-family: "Rowdies", sans-serif;
   color: white;
 }
+
 .btn-radius-start-0 {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
@@ -38,7 +40,7 @@ body {
 
 .logo {
   font-family: "Rowdies", sans-serif;
-  color: white;
+  color: #ffffff;
 }
 
 .nav-toggler {
@@ -72,8 +74,8 @@ body {
 }
 
 .shadow-p {
-  box-shadow: inset 0px 0px 100px -1px #00000000;
-  border-radius: 2px;
+  box-shadow: inset 0px 0px 100px -1px #0000007b;
+  border-radius: 5px;
 }
 
 .color-link-nav {
@@ -96,6 +98,11 @@ body {
   flex: 1;
   max-width: 500px;
 }
+
+.ResultPage {
+  font-family: "Rethink Sans", sans-serif;
+}
+
 /* MEDIA SCREEN---------------------------- */
 @media (min-width: 990px) {
   .btn-nav-none {
@@ -111,6 +118,23 @@ body {
   .container {
     flex-direction: column;
   }
+  .FormHome {
+    display: block !important;
+  }
+  .btn-Form {
+    width: 100%;
+  }
+  .btn-radius-start-0 {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  .btn-radius-end-0 {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .shadow-p {
+    display: none;
+  }
 
   .calendar-container,
   .event-container {
@@ -119,6 +143,12 @@ body {
     margin-bottom: 2rem;
   }
 }
+@media (max-width: 575px) {
+  .Register {
+    height: 155vh !important;
+  }
+}
+
 /* ---------------------------- */
 
 /* ----------CALENDAR REACT------------------ */

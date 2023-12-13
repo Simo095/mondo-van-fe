@@ -11,7 +11,9 @@ import image3 from "../../assets/VW-Adventure.jpg";
 import image4 from "../../assets/VW-Stars-Blue.jpg";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToken } from "../../redux/actions";
+import { addToken, logged } from "../../redux/actions";
+import "../../assets/style/card-login.css";
+import { Card, FormGroup } from "react-bootstrap";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -36,6 +38,7 @@ const Login = () => {
     if (request.ok) {
       const objResp = await request.json();
       dispatch(addToken(objResp.token));
+      dispatch(logged(true));
       navigate("/auth");
     }
   };
@@ -48,9 +51,63 @@ const Login = () => {
 
   return (
     <div className="Login">
+      <Container
+        style={{ height: "100vh" }}
+        className="containerLogin d-flex align-items-center justify-content-center">
+        <Container className="CardContainer">
+          <div className="circle1"></div>
+          <div className="circle2"></div>
+          <Container className="Container">
+            <Row className="log-card">
+              <Col className="d-flex flex-column align-items-center justify-content-center">
+                <VscSignIn fontSize={80} />
+                <p>Sign in</p>
+              </Col>
+              <Form
+                id="formSmall"
+                onSubmit={hadlerForm}>
+                <FormGroup className="InputCardLogin-group">
+                  <Form.Control
+                    type="text"
+                    placeholder="Email"
+                    name="email"
+                    className="InputCardLogin"
+                  />
+
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    className="InputCardLogin"
+                  />
+                </FormGroup>
+              </Form>
+              <Button
+                form="formSmall"
+                type="submit"
+                variant="success"
+                className="btn-login">
+                Entra
+              </Button>
+              <Link
+                style={{
+                  color: "black",
+                  textDecoration: "none",
+                  fontSize: "1em",
+                  letterSpacing: "1px"
+                }}
+                to="/register">
+                Don't have any accounts?
+              </Link>
+            </Row>
+          </Container>
+        </Container>
+      </Container>
+
       <Container fluid>
-        <Row>
+        <Row className="LoginRow">
           <Col
+            className="LoginImg"
             style={{
               backgroundImage: `url(${image})`,
               backgroundRepeat: "no-repeat",
@@ -111,7 +168,7 @@ const Login = () => {
                       fontSize: "1em",
                       letterSpacing: "1px"
                     }}
-                    to="/">
+                    to="/register">
                     Don't have any accounts?
                   </Link>
                   <Link

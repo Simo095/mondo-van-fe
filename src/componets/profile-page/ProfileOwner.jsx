@@ -1,31 +1,16 @@
-import {
-  Button,
-  Card,
-  Carousel,
-  Col,
-  Container,
-  Form,
-  Image,
-  Modal,
-  Nav,
-  NavItem,
-  Row,
-  Spinner
-} from "react-bootstrap";
-import NavBar from "../NavBar";
-import { FaPlus, FaRegPenToSquare } from "react-icons/fa6";
+import { Button, Card, CardHeader, CardTitle, Col, Container, Form, Modal, Nav, Row, Spinner } from "react-bootstrap";
+import { FaRegPenToSquare } from "react-icons/fa6";
 import CardPrenotazioni from "./CardPrenotazioni";
 import cover from "../../assets/user_placeholder.png";
 import SideBar from "../SideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { addUser, addVehicle } from "../../redux/actions";
 import Calendario from "../Calendario";
-import Calendar from "react-calendar";
 import Dropzone from "react-dropzone";
 import { useNavigate } from "react-router";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import Notifiche from "./Notifiche";
+import { fetchUser, fetchVehicle } from "../../redux/actions/fetchActions";
 
 const ProfileOwner = () => {
   const user = useSelector(state => state.login.user);
@@ -38,9 +23,13 @@ const ProfileOwner = () => {
   const [loading, setLoading] = useState(false);
   const [calendario, setCalendario] = useState(true);
   const [altro, setAltro] = useState(false);
+  const [notifiche, setNotifiche] = useState([]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleClose = () => setShow(false);
+  const modifyCover = () => setShow(true);
 
   const handlerSubmitCover = async e => {
     e.preventDefault();
@@ -56,7 +45,7 @@ const ProfileOwner = () => {
         body: formCover
       });
       if (coverfetch.ok) {
-        await fetchUser();
+        await dispatch(fetchUser(token));
         setLoading(false);
       }
     }
@@ -79,48 +68,23 @@ const ProfileOwner = () => {
     }
   };
 
-  const vehicleFetch = async () => {
-    const objVehicle = await fetch("http://localhost:8080/vehicles/my_vehicle", {
+  const fetchNotifiche = async () => {
+    const risp = await fetch("http://localhost:8080/notifications", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token
       }
     });
-    if (objVehicle.ok) {
-      const vehicle = await objVehicle.json();
-
-      dispatch(addVehicle(vehicle));
-
-      console.log(vehicle);
+    if (risp.ok) {
+      const notifiche = await risp.json();
+      setNotifiche(notifiche);
     }
   };
-
-  const fetchUser = async () => {
-    const respSucces = await fetch("http://localhost:8080/users/me", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-    if (respSucces.ok) {
-      const user = await respSucces.json();
-      console.log(user);
-      dispatch(addUser(user));
-      if (user.role === "CUSTOMER") {
-        navigate("/profile_customer");
-      }
-      if (user.role === "OWNER") {
-        navigate("/profile_owner");
-      }
-    }
-  };
-
-  const handleClose = () => setShow(false);
-  const modifyCover = () => setShow(true);
 
   useEffect(() => {
-    vehicleFetch();
+    dispatch(fetchVehicle(token));
     fetchDisponibilita();
+    fetchNotifiche();
   }, []);
   return (
     <div className="ProfileOwner">
@@ -141,32 +105,30 @@ const ProfileOwner = () => {
                   setCover(acceptedFiles);
                 }}>
                 {({ getRootProps, getInputProps, acceptedFiles }) => (
-                  <>
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <div
-                        style={{
-                          border: "3px",
-                          borderStyle: "dashed",
-                          borderRadius: "30px",
-                          borderColor: "ActiveBorder"
-                        }}
-                        className="text-center">
-                        {acceptedFiles[0]
-                          ? acceptedFiles[0].path
-                          : "Tracina l'immagine che desideri come cover \noppure clicca sul qui per aprire explore e selezionarla"}
-                      </div>
-                      {loading ? (
-                        <Spinner
-                          animation="border"
-                          className="mt-5"
-                          variant="success"
-                        />
-                      ) : (
-                        <></>
-                      )}
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <div
+                      style={{
+                        border: "3px",
+                        borderStyle: "dashed",
+                        borderRadius: "30px",
+                        borderColor: "ActiveBorder"
+                      }}
+                      className="text-center">
+                      {acceptedFiles[0]
+                        ? acceptedFiles[0].path
+                        : "Tracina l'immagine che desideri come cover \noppure clicca sul qui per aprire explore e selezionarla"}
                     </div>
-                  </>
+                    {loading ? (
+                      <Spinner
+                        animation="border"
+                        className="mt-5"
+                        variant="success"
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 )}
               </Dropzone>
             </Form>
@@ -265,7 +227,7 @@ const ProfileOwner = () => {
                   <Nav
                     variant="tabs"
                     defaultActiveKey="#first"
-                    className="d-flex justify-content-center gap-5">
+                    className="d-flex  border-0">
                     <Nav.Item className="navCalendar">
                       <Nav.Link
                         onClick={() => {
@@ -277,12 +239,11 @@ const ProfileOwner = () => {
                     </Nav.Item>
                     <Nav.Item className="navCalendar">
                       <Nav.Link
-                        disabled
                         onClick={() => {
                           setCalendario(false);
                           setAltro(true);
                         }}>
-                        Altro
+                        Notifiche
                       </Nav.Link>
                     </Nav.Item>
                   </Nav>
@@ -303,12 +264,24 @@ const ProfileOwner = () => {
                           </>
                         )}
                     {altro ? (
-                      <Card style={{ width: "18rem" }}>
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>Notifiche</CardTitle>
+                        </CardHeader>
                         <Card.Body>
-                          <Card.Title>Notifiche</Card.Title>
-                          <Card.Title>Notifiche</Card.Title>
-                          <Card.Title>Notifiche</Card.Title>
-                          <Card.Title>Notifiche</Card.Title>
+                          <Row
+                            className="d-flex row-cols-1 oV overflow-y-scroll"
+                            style={{ height: "30vh" }}>
+                            {notifiche &&
+                              notifiche.map((elem, i) => (
+                                <Notifiche
+                                  notifica={elem}
+                                  key={i}
+                                  i={i}
+                                  setNotifiche={setNotifiche}
+                                />
+                              ))}
+                          </Row>
                         </Card.Body>
                       </Card>
                     ) : (

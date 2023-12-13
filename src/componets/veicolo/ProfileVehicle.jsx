@@ -3,30 +3,38 @@ import {
   Card,
   CardBody,
   CardFooter,
+  CardTitle,
   Carousel,
   Col,
   Container,
   Form,
   Image,
-  ListGroup,
   Modal,
   Nav,
   Row,
   Spinner
 } from "react-bootstrap";
-import NavBar from "../NavBar";
 import SideBar from "../SideBar";
+import Dropzone from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import cover from "../../assets/user_placeholder.png";
-
-import Calendario from "../Calendario";
 import { useNavigate } from "react-router";
+import { addUser } from "../../redux/actions";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
 import { HiOutlineTrash } from "react-icons/hi2";
-import Dropzone from "react-dropzone";
-import { addUser } from "../../redux/actions";
+import { PiEngineBold } from "react-icons/pi";
+import { SlSpeedometer } from "react-icons/sl";
+import { RxWidth } from "react-icons/rx";
+import { MdHeight } from "react-icons/md";
+import { BsFillFuelPumpFill } from "react-icons/bs";
+import { CiCalendar } from "react-icons/ci";
+import cover from "../../assets/user_placeholder.png";
+import cambio from "../../assets/Cambio.png";
+import patente from "../../assets/Patente.png";
+import cintura from "../../assets/cinturaSicurezza.png";
+import CaruselVehicle from "./CaruselVehicle";
+import CardInterni from "./CardInterni";
 
 const ProfileVehicle = () => {
   const token = useSelector(state => state.login.token);
@@ -43,8 +51,8 @@ const ProfileVehicle = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const modifyCover = () => setShow(true);
   const handleClose = () => setShow(false);
+
   const handlerSubmitCover = async e => {
     e.preventDefault();
     const formCover = new FormData();
@@ -64,37 +72,6 @@ const ProfileVehicle = () => {
       }
     }
     handleClose();
-  };
-  const deleteCover = async nCover => {
-    const coverfetch = await fetch(`http://localhost:8080/vehicles/remove_img?urlImg=${nCover}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-    if (coverfetch.ok) {
-      navigate("/change");
-    }
-  };
-
-  const fetchUser = async () => {
-    const respSucces = await fetch("http://localhost:8080/users/me", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-    if (respSucces.ok) {
-      const user = await respSucces.json();
-      console.log(user);
-      dispatch(addUser(user));
-      if (user.role === "CUSTOMER") {
-        navigate("/profile_customer");
-      }
-      if (user.role === "OWNER") {
-        navigate("/profile_owner");
-      }
-    }
   };
 
   useEffect(() => {}, []);
@@ -163,7 +140,7 @@ const ProfileVehicle = () => {
           <Col sm={2}>
             <SideBar />
           </Col>
-          <Col sm={5}>
+          <Col sm={8}>
             <Row
               style={{ height: "100vh" }}
               className="d-flex oV overflow-y-scroll">
@@ -187,135 +164,15 @@ const ProfileVehicle = () => {
                     {vehicle.shortDescriptions ? vehicle.shortDescriptions : ""}
                   </h4>
                   <Col className="mb-3">
-                    <Carousel
-                      interval={null}
-                      indicators={false}>
-                      <Carousel.Item>
-                        <div
-                          className="d-flex justify-content-end"
-                          style={{
-                            backgroundImage: `url(${vehicle.avatar[0] ? vehicle.avatar[0] : cover})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            borderRadius: "10px",
-                            height: "50vh"
-                          }}>
-                          <div
-                            className="d-flex align-items-start justify-content-center"
-                            style={{
-                              backgroundColor: "black",
-                              opacity: "0.3",
-                              borderRadius: "30px",
-                              height: "40px",
-                              width: "40px"
-                            }}>
-                            <HiOutlineTrash
-                              className="mt-2"
-                              onClick={() => deleteCover(vehicle.avatar[0])}
-                              style={{
-                                cursor: "pointer",
-                                opacity: "0.5",
-                                fontSize: "1.5em",
-                                color: "white"
-                              }}
-                            />
-                          </div>
-                          <div
-                            className="d-flex align-items-start justify-content-center"
-                            style={{
-                              backgroundColor: "black",
-                              opacity: "0.3",
-                              borderRadius: "30px",
-                              height: "40px",
-                              width: "40px"
-                            }}>
-                            <FaRegPenToSquare
-                              className="mt-2"
-                              onClick={modifyCover}
-                              style={{
-                                cursor: "pointer",
-                                opacity: "0.5",
-                                fontSize: "1.5em",
-                                color: "white"
-                              }}
-                            />
-                          </div>
-                        </div>
-                        <Carousel.Caption></Carousel.Caption>
-                      </Carousel.Item>
-                      <Carousel.Item>
-                        <div
-                          className="d-flex justify-content-end"
-                          style={{
-                            backgroundImage: `url(${vehicle.avatar[1] ? vehicle.avatar[1] : cover})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            borderRadius: "10px",
-                            height: "50vh"
-                          }}>
-                          <div
-                            className="d-flex align-items-start justify-content-center"
-                            style={{
-                              backgroundColor: "black",
-                              opacity: "0.3",
-                              borderRadius: "30px",
-                              height: "40px",
-                              width: "40px"
-                            }}>
-                            <FaRegPenToSquare
-                              className="mt-2"
-                              onClick={modifyCover}
-                              style={{
-                                cursor: "pointer",
-                                opacity: "0.5",
-                                fontSize: "1.5em",
-                                color: "white"
-                              }}
-                            />
-                          </div>
-                        </div>
-                        <Carousel.Caption></Carousel.Caption>
-                      </Carousel.Item>
-                      <Carousel.Item>
-                        <div
-                          className="d-flex justify-content-end"
-                          style={{
-                            backgroundImage: `url(${vehicle.avatar[2] ? vehicle.avatar[2] : cover})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            borderRadius: "10px",
-                            height: "50vh"
-                          }}>
-                          <div
-                            className="d-flex align-items-start justify-content-center"
-                            style={{
-                              backgroundColor: "black",
-                              opacity: "0.3",
-                              borderRadius: "30px",
-                              height: "40px",
-                              width: "40px"
-                            }}>
-                            <FaRegPenToSquare
-                              className="mt-2"
-                              onClick={modifyCover}
-                              style={{
-                                cursor: "pointer",
-                                opacity: "0.5",
-                                fontSize: "1.5em",
-                                color: "white"
-                              }}
-                            />
-                          </div>
-                        </div>
-                        <Carousel.Caption></Carousel.Caption>
-                      </Carousel.Item>
-                    </Carousel>
+                    <CaruselVehicle
+                      vehicle={vehicle}
+                      cover={cover}
+                      token={token}
+                      height={500}
+                    />
                   </Col>
 
-                  <Col sm={8}>
+                  <Col>
                     {vehicle && (
                       <>
                         <Card>
@@ -361,38 +218,100 @@ const ProfileVehicle = () => {
                           {motorizzazione && vehicle && (
                             <>
                               <Card.Body className="">
-                                <Row className="row-cols-2 gap-2 mt-3">
-                                  <Col
-                                    sm={3}
-                                    className="d-flex gap-5">
-                                    <Card>
-                                      <Card.Text>{vehicle.brand}</Card.Text>
-                                      <Card.Text>{vehicle.model}</Card.Text>
-                                      <Card.Text>Username: {vehicle.name}</Card.Text>
-                                    </Card>
+                                <Row className="row-cols-1">
+                                  <Col className="d-flex mb-4">
+                                    <Card.Title>
+                                      {vehicle.brand} - {vehicle.model} - Username: {vehicle.name}
+                                    </Card.Title>
                                   </Col>
-                                  <Col className="d-flex gap-5">
-                                    <Card>
-                                      <Card.Text>Cilindrata: {vehicle.displacement}</Card.Text>
-                                      <Card.Text>Kilometri: {vehicle.kilometers}</Card.Text>
-                                      <Card.Text>Patente: {vehicle.license}</Card.Text>
-                                      <Card.Text>
-                                        Cambio:{" "}
-                                        {vehicle.transmission === "MANUAL"
-                                          ? "MANUALE"
-                                          : vehicle.transmission === "AUTO"
-                                          ? "AUTOMATICO"
-                                          : vehicle.transmission === "SEMI_AUTO"
-                                          ? "SEMI AUTOMATICO"
-                                          : ""}
-                                      </Card.Text>
-                                    </Card>
-                                  </Col>
-                                  <h5>Dimensioni</h5>
-                                  <Col className="d-flex gap-5">
-                                    <Card.Text>Altezza: {vehicle.height}m</Card.Text>
-                                    <Card.Text>Larghezza: {vehicle.width}m</Card.Text>
-                                    <Card.Text>Lunghezza: {vehicle.length}m</Card.Text>
+                                  <Col>
+                                    <Row>
+                                      <Col className="d-flex flex-column">
+                                        <Row className="mb-3">
+                                          <Col
+                                            sm={3}
+                                            className="d-flex flex-column gap-1 align-items-center justify-content-centet">
+                                            <SlSpeedometer fontSize={40} />
+                                            <Card.Text>{vehicle.kilometers} KM</Card.Text>
+                                          </Col>
+
+                                          <Col
+                                            sm={3}
+                                            className="d-flex flex-column gap-1 align-items-center justify-content-centet">
+                                            <CiCalendar fontSize={40} />
+                                            <Card.Text>{vehicle.firstEnrollment.substring(0, 4)}</Card.Text>
+                                          </Col>
+
+                                          <Col
+                                            sm={3}
+                                            className="d-flex mt-1 flex-column gap-2 align-items-center justify-content-centet">
+                                            <Image
+                                              style={{ width: "45px" }}
+                                              src={patente}
+                                            />
+                                            <Card.Text>{vehicle.license}</Card.Text>
+                                          </Col>
+                                          <Col
+                                            sm={3}
+                                            className="d-flex flex-column gap-1 align-items-center justify-content-centet">
+                                            <Image
+                                              style={{ width: "38px" }}
+                                              src={cintura}
+                                            />
+                                            <Card.Text>{vehicle.sits}</Card.Text>
+                                          </Col>
+                                        </Row>
+                                        <Row>
+                                          <Col
+                                            sm={3}
+                                            className="d-flex flex-column gap-1 align-items-center justify-content-centet">
+                                            <PiEngineBold fontSize={40} />
+                                            <Card.Text>
+                                              {vehicle.displacement} cm<sup>3</sup>
+                                            </Card.Text>
+                                          </Col>
+                                          <Col
+                                            sm={3}
+                                            className="d-flex flex-column gap-2 align-items-center justify-content-centet">
+                                            <BsFillFuelPumpFill fontSize={37} />
+                                            <Card.Text>{vehicle.supply}</Card.Text>
+                                          </Col>
+                                          <Col
+                                            sm={3}
+                                            className="d-flex flex-column gap-1 align-items-center justify-content-centet">
+                                            <Image
+                                              style={{ width: "35px" }}
+                                              src={cambio}
+                                            />
+                                            <Card.Text>
+                                              {vehicle.transmission === "MANUAL"
+                                                ? "MANUALE"
+                                                : vehicle.transmission === "AUTO"
+                                                ? "AUTOMATICO"
+                                                : vehicle.transmission === "SEMI_AUTO"
+                                                ? "SEMI AUTOMATICO"
+                                                : ""}
+                                            </Card.Text>
+                                          </Col>
+                                        </Row>
+                                        <Row>
+                                          <CardTitle>Sagoma veicolo</CardTitle>
+                                          <Col
+                                            sm={3}
+                                            className="d-flex flex-column gap-1 align-items-center justify-content-centet">
+                                            <MdHeight fontSize={40} />
+                                            <Card.Text>{vehicle.height}m</Card.Text>
+                                          </Col>
+
+                                          <Col
+                                            sm={3}
+                                            className="d-flex flex-column gap-1 align-items-center justify-content-centet">
+                                            <RxWidth fontSize={40} />
+                                            <Card.Text>{vehicle.length}m</Card.Text>
+                                          </Col>
+                                        </Row>
+                                      </Col>
+                                    </Row>
                                   </Col>
                                 </Row>
                               </Card.Body>
@@ -403,24 +322,7 @@ const ProfileVehicle = () => {
                             vehicle.vehiclesArrangement ? (
                               <>
                                 <Card.Body>
-                                  <Card.Title>{vehicle.vehiclesArrangement.accessoriesDescription}</Card.Title>
-                                  <Card.Text>
-                                    Allestito da me:{" "}
-                                    {vehicle.vehiclesArrangement.doItMySelf
-                                      ? "Si, con tanto amore"
-                                      : "No, comprato e tutto omologato"}
-                                  </Card.Text>
-                                  <Card.Title>Sistemazione letti</Card.Title>
-                                  <Card.Text>Numero di letti: {vehicle.vehiclesArrangement.bads}</Card.Text>
-                                  <Card.Text>{vehicle.vehiclesArrangement.descriptionBeds}</Card.Text>
-                                  <Card.Title>Cucina</Card.Title>
-                                  <Card.Text>
-                                    {vehicle.vehiclesArrangement.doItMySelf
-                                      ? "Si, con tanto amore"
-                                      : "No, comprato e tutto omologato"}
-                                  </Card.Text>
-                                  <Card.Text></Card.Text>
-                                  <Button variant="primary">Go somewhere</Button>
+                                  <CardInterni vehicle={vehicle}></CardInterni>
                                 </Card.Body>
                               </>
                             ) : (

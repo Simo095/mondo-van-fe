@@ -16,6 +16,8 @@ import VehicleArrangement from "./componets/veicolo/VehicleArrangement";
 import ChangeCalendar from "./componets/profile-page/ChangeCalendar";
 import ResultPage from "./componets/results-page/ResultPage";
 import ChangeImg from "./componets/veicolo/ChangeImg";
+import Result from "./componets/results-page/Result";
+import Register from "./componets/login-register-auth/Register";
 
 const App = () => {
   return (
@@ -94,6 +96,14 @@ const App = () => {
           <Route
             path="/results_page/:start_date/:end_date/:beds/:province"
             element={<ResultPage />}
+          />
+          <Route
+            path="/result/:id"
+            element={<Result />}
+          />
+          <Route
+            path="/register"
+            element={<Register />}
           />
         </Routes>
       </BrowserRouter>

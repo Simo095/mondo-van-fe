@@ -1,15 +1,31 @@
-import { Button, Card, Col, Container, Form, Modal, Nav, Row, Spinner } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardText,
+  CardTitle,
+  Col,
+  Collapse,
+  Container,
+  Form,
+  Modal,
+  Nav,
+  Row,
+  Spinner
+} from "react-bootstrap";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import NavBar from "../NavBar";
+
 import CardPrenotazioni from "./CardPrenotazioni";
 import cover from "../../assets/user_placeholder.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { addUser } from "../../redux/actions";
 import Dropzone from "react-dropzone";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
 import SideBar from "../SideBar";
+import Notifiche from "./Notifiche";
+import { fetchNotifiche, fetchUser } from "../../redux/actions/fetchActions";
 
 const ProfileCustomer = () => {
   const user = useSelector(state => state.login.user);
@@ -17,6 +33,9 @@ const ProfileCustomer = () => {
   const [show, setShow] = useState(false);
   const [coverImg, setCover] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [altro, setAltro] = useState(true);
+  const [notifiche, setNotifiche] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,32 +57,29 @@ const ProfileCustomer = () => {
         body: formCover
       });
       if (coverfetch.ok) {
-        await fetchUser();
+        await dispatch(fetchUser(token));
         setLoading(false);
       }
     }
     handleClose();
   };
 
-  const fetchUser = async () => {
-    const respSucces = await fetch("http://localhost:8080/users/me", {
+  const fetchNotifiche = async () => {
+    const risp = await fetch("http://localhost:8080/notifications", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token
       }
     });
-    if (respSucces.ok) {
-      const user = await respSucces.json();
-      console.log(user);
-      dispatch(addUser(user));
-      if (user.role === "CUSTOMER") {
-        navigate("/profile_customer");
-      }
-      if (user.role === "OWNER") {
-        navigate("/profile_owner");
-      }
+    if (risp.ok) {
+      const notifiche = await risp.json();
+      setNotifiche(notifiche);
     }
   };
+
+  useEffect(() => {
+    fetchNotifiche();
+  }, []);
 
   return (
     <div className="ProfileCustomer">
@@ -205,14 +221,18 @@ const ProfileCustomer = () => {
                 </Row>
               </Col>
               <Col sm={3}>
-                {/* MENU LATERALE */}
                 <Row className="d-flex flex-column">
                   <Nav
                     variant="tabs"
                     defaultActiveKey="#first"
                     className="d-flex justify-content-center gap-5">
                     <Nav.Item className="navCalendar">
-                      <Nav.Link onClick={() => {}}>Primo</Nav.Link>
+                      <Nav.Link
+                        onClick={() => {
+                          setAltro(true);
+                        }}>
+                        Notifiche
+                      </Nav.Link>
                     </Nav.Item>
                     <Nav.Item className="navCalendar">
                       <Nav.Link
@@ -222,7 +242,30 @@ const ProfileCustomer = () => {
                       </Nav.Link>
                     </Nav.Item>
                   </Nav>
-                  <Col>{/* Qui condizioni permostarre tab */}</Col>
+                  <Col>
+                    {altro ? (
+                      <Card style={{ width: "18rem" }}>
+                        <CardHeader>
+                          <CardTitle>Notifiche</CardTitle>
+                        </CardHeader>
+                        <Card.Body>
+                          <Row>
+                            {notifiche &&
+                              notifiche.map((elem, i) => (
+                                <Notifiche
+                                  notifica={elem}
+                                  key={i}
+                                  i={i}
+                                  setNotifiche={setNotifiche}
+                                />
+                              ))}
+                          </Row>
+                        </Card.Body>
+                      </Card>
+                    ) : (
+                      <></>
+                    )}
+                  </Col>
                 </Row>
               </Col>
             </Row>

@@ -44,6 +44,9 @@ const SideBar = () => {
               }}>
               <Col className="border">
                 <Row className="mt-3 d-flex flex-column g-4">
+                  <Col>
+                    <Link to="/">Home</Link>
+                  </Col>
                   {vehicle ? (
                     <Col>
                       <Link to="/profile_vehicle">il tuo veicolo</Link>

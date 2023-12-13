@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Form, FormSelect } from "react-bootstrap";
+import { Alert, Button, Form, FormSelect } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
@@ -13,10 +13,10 @@ const FormHome = () => {
   const [beds, setBeds] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [isValidBad, setIsValidBed] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //FORM
   const handlerSubmit = async e => {
     e.preventDefault();
     const start = startDate.toLocaleDateString("fr-CA");
@@ -32,6 +32,8 @@ const FormHome = () => {
         const content = await pageble.json();
         dispatch(addResult(content.content));
         navigate(`/results_page/${start}/${end}/${beds}/${province}`);
+      } else {
+        setError(true);
       }
     }
 
@@ -43,6 +45,8 @@ const FormHome = () => {
         const content = await pageble.json();
         dispatch(addResult(content.content));
         navigate(`/results_page/${start}/${end}`);
+      } else {
+        setError(true);
       }
     }
     if (!isValid && isValidBad) {
@@ -53,6 +57,8 @@ const FormHome = () => {
         const content = await pageble.json();
         dispatch(addResult(content.content));
         navigate(`/results_page/${start}/${end}/${beds}`);
+      } else {
+        setError(true);
       }
     }
     if (isValid && !isValidBad) {
@@ -66,12 +72,13 @@ const FormHome = () => {
         const content = await pageble.json();
         dispatch(addResult(content.content));
         navigate(`/results_page/${start}/${end}/${province}`);
+      } else {
+        setError(true);
       }
     }
   };
-  //CLICK PROVINCE
+
   const handleProvinceClick = async e => {
-    //e.preventDefault();
     const risposta = await fetch("http://localhost:8080/sign_in/prov", {
       method: "GET"
     });
@@ -80,7 +87,7 @@ const FormHome = () => {
       setProvinces(data.content);
     }
   };
-  //CHANGE PROV
+
   const handleProvinceChange = async event => {
     event.preventDefault();
     setProvince(event.target.value);
@@ -91,6 +98,7 @@ const FormHome = () => {
   };
 
   const onChange = dates => {
+    setError(false);
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
@@ -107,72 +115,79 @@ const FormHome = () => {
       setIsValidBed(false);
     }
   }, [province, beds]);
+
   return (
-    <Form
-      id="formPrimo"
-      onSubmit={handlerSubmit}
-      className="d-flex gap-1 mt-5">
-      <Form.Group>
-        <FormSelect
-          className="btn-radius-end-0"
-          name="province"
-          value={province}
-          required
-          onChange={handleProvinceChange}>
-          <option value={"Tutte le province"}>Tutte le province</option>
-          {provinces ? (
-            provinces.map((province, index) => (
-              <option
-                key={index}
-                value={province.abbreviation}>
-                {province.name}
-              </option>
-            ))
-          ) : (
-            <></>
-          )}
-        </FormSelect>
-      </Form.Group>
-      <Form.Group>
-        <ReactDatePicker
-          selected={startDate}
-          id="giorni"
-          name="giorni"
-          autoComplete="off"
-          required
-          className="form-control btn-radius-start-0 btn-radius-end-0"
-          onChange={onChange}
-          startDate={startDate}
-          endDate={endDate}
-          dateFormat={"dd-MM-yyyy"}
-          selectsRange
-          selectsDisabledDaysInRange
-          placeholderText="Quando vuoi partire?"
-        />
-      </Form.Group>
-      <Form.Group>
-        <FormSelect
-          value={beds}
-          onChange={handlerBeds}
-          name="letto"
-          required
-          className="btn-radius-start-0 btn-radius-end-0">
-          <option value="Qualsiasi posto letto">Qualsiasi posto letto</option>
-          <option value={1}>1 posto letto</option>
-          <option value={2}>2 posti letto</option>
-          <option value={3}>3 posti letto</option>
-          <option value={4}>4 posti letto</option>
-          <option value={5}>5 posti letto</option>
-          <option value={6}>6 posti letto</option>
-        </FormSelect>
-      </Form.Group>
-      <Button
-        form="formPrimo"
-        type="submit"
-        variant="success btn-radius-start-0">
-        Parti!
-      </Button>
-    </Form>
+    <>
+      <Form
+        id="formPrimo"
+        onSubmit={handlerSubmit}
+        className="d-flex FormHome gap-1 mt-5">
+        <Form.Group>
+          <FormSelect
+            className="btn-radius-end-0"
+            name="province"
+            value={province}
+            required
+            onClick={() => setError(false)}
+            onChange={handleProvinceChange}>
+            <option value={"Tutte le province"}>Tutte le province</option>
+            {provinces ? (
+              provinces.map((province, index) => (
+                <option
+                  key={index}
+                  value={province.abbreviation}>
+                  {province.name}
+                </option>
+              ))
+            ) : (
+              <></>
+            )}
+          </FormSelect>
+        </Form.Group>
+        <Form.Group>
+          <ReactDatePicker
+            selected={startDate}
+            id="giorni"
+            name="giorni"
+            autoComplete="off"
+            required
+            className="form-control btn-radius-start-0 btn-radius-end-0"
+            onChange={onChange}
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat={"dd-MM-yyyy"}
+            selectsRange
+            selectsDisabledDaysInRange
+            placeholderText="Quando vuoi partire?"
+          />
+        </Form.Group>
+        <Form.Group>
+          <FormSelect
+            value={beds}
+            onChange={handlerBeds}
+            name="letto"
+            required
+            onClick={() => setError(false)}
+            className="btn-radius-start-0 btn-radius-end-0">
+            <option value="Qualsiasi posto letto">Qualsiasi posto letto</option>
+            <option value={1}>1 posto letto</option>
+            <option value={2}>2 posti letto</option>
+            <option value={3}>3 posti letto</option>
+            <option value={4}>4 posti letto</option>
+            <option value={5}>5 posti letto</option>
+            <option value={6}>6 posti letto</option>
+          </FormSelect>
+        </Form.Group>
+        <Button
+          form="formPrimo"
+          type="submit"
+          className="btn-radius-start-0 btn-Form"
+          variant="success ">
+          Parti!
+        </Button>
+      </Form>
+      {error ? <Alert variant="danger">Non ci sono disponibilita</Alert> : <></>}
+    </>
   );
 };
 export default FormHome;

@@ -15,9 +15,8 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import ReactCardFlip from "react-card-flip";
 import { Link } from "react-router-dom";
-import sfondo from "../../assets/SfondoRegiste.png";
-import sfondoTre from "../../assets/sfondoTre.png";
-import sfondodue from "../../assets/Untitled-26 02 Artboard 2.png";
+import "../../assets/style/loader.css";
+
 const RegisterCustomer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,9 +29,11 @@ const RegisterCustomer = () => {
   const [firstForm, setFirstForm] = useState(null);
   const [errorFirstForm, setErrorFirstForm] = useState(false);
   const [rispOk, setRispOk] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handlerSubmit = async e => {
     e.preventDefault();
+    setLoading(true);
     const data = new FormData(e.currentTarget);
     const risposta = await fetch("http://localhost:8080/sign_in/customer_register", {
       method: "POST",
@@ -54,6 +55,7 @@ const RegisterCustomer = () => {
     if (risposta.ok) {
       const o = await risposta.json();
       setRispOk(true);
+      setLoading(false);
     } else {
     }
   };
@@ -93,14 +95,12 @@ const RegisterCustomer = () => {
     });
     if (risposta.ok) {
       const data = await risposta.json();
-      console.log(data.content);
       setTowns(data.content);
     }
   };
   const handleTownsChange = e => {
     e.preventDefault();
     setTown(e.target.value);
-    console.log(town);
   };
   const handleStreetChange = e => {
     e.preventDefault();
@@ -166,13 +166,22 @@ const RegisterCustomer = () => {
             sm={7}
             style={{
               overflow: "unset",
-              //backgroundImage: `url(${sfondoTre})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "470px",
               backgroundPositionY: "66%",
               backgroundPositionX: "83%",
               height: "90vh"
             }}>
+            {loading ? (
+              <div className="d-flex flex-column">
+                <p> Registrazione in corso...</p>
+                <Alert
+                  variant="warning"
+                  className="loader"></Alert>
+              </div>
+            ) : (
+              <></>
+            )}
             <ReactCardFlip
               isFlipped={flip}
               containerClassName="d-flex "

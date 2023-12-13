@@ -16,7 +16,7 @@ import Jeep from "../../assets/Jeep.png";
 import Rooftop from "../../assets/Rooftop.png";
 import Van from "../../assets/Van.png";
 import Altro from "../../assets/Altro.png";
-import NavBar from "../NavBar";
+
 import FlipCard from "../FlipCard";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

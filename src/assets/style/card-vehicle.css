@@ -1,9 +1,19 @@
-.cardSpecial .bottom-section {
+.bottom-section {
   margin-top: 15px;
   padding: 10px 5px;
+  position: relative;
+}
+.cardSpecial {
+  height: 430px;
+  width: 270px;
+  min-width: 270px;
+}
+.titlo {
+  font-size: 1em;
+  color: rgb(0, 0, 0);
 }
 
-.cardSpecial .bottom-section .title {
+.bottom-section .title {
   display: block;
   font-size: 17px;
   font-weight: bolder;
@@ -12,29 +22,32 @@
   letter-spacing: 2px;
 }
 
-.cardSpecial .bottom-section .row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.cardSpecial .bottom-section .row .item {
-  flex: 30%;
+.bottom-section .row .item {
   text-align: center;
   padding: 5px;
   color: rgba(0, 0, 0, 0.721);
 }
 
-.cardSpecial .bottom-section .row .item .big-text {
+.bottom-section .row .item .big-text {
   font-size: 12px;
   display: block;
 }
 
-.cardSpecial .bottom-section .row .item .regular-text {
-  font-size: 9px;
+.bottom-section .row .item .regular-text {
+  font-size: 12px;
 }
 
 .cardSpecial .bottom-section .row .item:nth-child(2) {
   border-left: 1px solid rgba(255, 255, 255, 0.126);
   border-right: 1px solid rgba(255, 255, 255, 0.126);
+}
+@media (max-width: 1200px) {
+  .titlo {
+    font-size: small;
+  }
+}
+@media (max-width: 1050px) {
+  .FiltriSideBar {
+    display: none;
+  }
 }

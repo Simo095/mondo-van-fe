@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, Row } from "react-bootstrap";
-import DatePicker from "react-date-picker";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -43,58 +42,62 @@ const FiltriSideBar = ({ start, end, beds, prov }) => {
               height: "100vh"
             }}>
             <Col>
-              <FormLabel>Cambia date</FormLabel>
-              <FormGroup>
-                <ReactDatePicker
-                  selected={startDate}
-                  id="giorni"
-                  name="giorni"
-                  autoComplete="off"
-                  className="form-control btn-radius-start-0 btn-radius-end-0"
-                  onChange={onChange}
-                  startDate={startDate}
-                  endDate={endDate}
-                  dateFormat={"dd-MM-yyyy"}
-                  selectsRange
-                  selectsDisabledDaysInRange></ReactDatePicker>
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormLabel>Cambia luogo</FormLabel>
-              <Form.Group>
-                <FormSelect
-                  className="btn-radius-end-0"
-                  name="province"
-                  value={province}
-                  required
-                  onChange={handleProvinceChange}>
-                  <option value={"Tutte le province"}>Tutte le province</option>
-                  {provinces ? (
-                    provinces.map((province, index) => (
-                      <option
-                        key={index}
-                        value={province.abbreviation}>
-                        {province.name}
-                      </option>
-                    ))
-                  ) : (
-                    <></>
-                  )}
-                </FormSelect>
-              </Form.Group>
-            </Col>
-            <Col>
-              <FormLabel>Cambia posti letto</FormLabel>
-              <FormGroup>
-                <FormSelect value={beds}>
-                  <option>cambia i posti letto</option>
-                  <option value={2}>2 letti</option>
-                  <option value={3}>3 letti</option>
-                  <option value={4}>4 letti</option>
-                  <option value={5}>5 letti</option>
-                  <option value={6}>6 letti</option>
-                </FormSelect>
-              </FormGroup>
+              <Row className="row-cols-1 d-flex gap-5">
+                <Col className="d-flex flex-column">
+                  <FormLabel>Cambia date</FormLabel>
+                  <FormGroup>
+                    <ReactDatePicker
+                      selected={startDate}
+                      id="giorni"
+                      name="giorni"
+                      autoComplete="off"
+                      className="form-control btn-radius-start-0 btn-radius-end-0"
+                      onChange={onChange}
+                      startDate={startDate}
+                      endDate={endDate}
+                      dateFormat={"dd-MM-yyyy"}
+                      selectsRange
+                      selectsDisabledDaysInRange></ReactDatePicker>
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormLabel>Cambia luogo</FormLabel>
+                  <Form.Group>
+                    <FormSelect
+                      className="btn-radius-end-0"
+                      name="province"
+                      value={province}
+                      required
+                      onChange={handleProvinceChange}>
+                      <option value={"Tutte le province"}>Tutte le province</option>
+                      {provinces ? (
+                        provinces.map((province, index) => (
+                          <option
+                            key={index}
+                            value={province.abbreviation}>
+                            {province.name}
+                          </option>
+                        ))
+                      ) : (
+                        <></>
+                      )}
+                    </FormSelect>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <FormLabel>Cambia posti letto</FormLabel>
+                  <FormGroup>
+                    <FormSelect value={beds}>
+                      <option>cambia i posti letto</option>
+                      <option value={2}>2 letti</option>
+                      <option value={3}>3 letti</option>
+                      <option value={4}>4 letti</option>
+                      <option value={5}>5 letti</option>
+                      <option value={6}>6 letti</option>
+                    </FormSelect>
+                  </FormGroup>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Form>

@@ -1,0 +1,43 @@
+.cardInterni {
+  height: 300px;
+  border-radius: 4px;
+  display: flex;
+  gap: 5px;
+  padding: 0.4em;
+}
+
+.cardInterni div {
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardInterni div:hover {
+  flex: 4;
+}
+.cardInterni div:hover div {
+  display: block;
+}
+.cardInterni div div {
+  display: none;
+}
+
+.cardInterni div span {
+  min-width: 14em;
+  padding: 0.5em;
+  text-align: center;
+  /* transform: rotate(-90deg); */
+  transition: all 0.5s;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.cardInterni div:hover span {
+  transform: rotate(0);
+}

@@ -5,7 +5,6 @@ import { IoArrowBackCircleOutline, IoArrowRedo } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import sfondoTre from "../../assets/sfondoTre.png";
 import {
   Alert,
   Button,
@@ -21,6 +20,7 @@ import {
   Row
 } from "react-bootstrap";
 import ReactCardFlip from "react-card-flip";
+import "../../assets/style/loader.css";
 
 const RegisterOwner = () => {
   const dispatch = useDispatch();
@@ -34,9 +34,11 @@ const RegisterOwner = () => {
   const [firstForm, setFirstForm] = useState(null);
   const [errorFirstForm, setErrorFirstForm] = useState(false);
   const [rispOk, setRispOk] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handlerSubmit = async e => {
     e.preventDefault();
+    setLoading(true);
     const data = new FormData(e.currentTarget);
     const risposta = await fetch("http://localhost:8080/sign_in/owner_register", {
       method: "POST",
@@ -55,10 +57,10 @@ const RegisterOwner = () => {
         password: firstForm.password
       })
     });
-
     if (risposta.ok) {
       const o = await risposta.json();
       setRispOk(true);
+      setLoading(false);
     } else {
       //ERRORI
     }
@@ -172,13 +174,22 @@ const RegisterOwner = () => {
             sm={7}
             style={{
               overflow: "unset",
-              // backgroundImage: `url(${sfondoTre})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "470px",
               backgroundPositionY: "66%",
               backgroundPositionX: "83%",
               height: "90vh"
             }}>
+            {loading ? (
+              <div className="d-flex flex-column">
+                <p> Registrazione in corso...</p>
+                <Alert
+                  variant="warning"
+                  className="loader"></Alert>
+              </div>
+            ) : (
+              <></>
+            )}
             <ReactCardFlip
               isFlipped={flip}
               containerClassName="d-flex "

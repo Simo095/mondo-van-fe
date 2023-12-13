@@ -16,25 +16,24 @@ const Auth = () => {
     });
     if (respSucces.ok) {
       const user = await respSucces.json();
-      console.log(user);
       dispatch(addUser(user));
-      const objVehicle = await fetch("http://localhost:8080/vehicles/my_vehicle", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      });
-      if (objVehicle.ok) {
-        const vehicle = await objVehicle.json();
-        if (vehicle != null) {
-          dispatch(addVehicle(vehicle));
-        }
-        console.log(vehicle);
-      }
+
       if (user.role === "CUSTOMER") {
         navigate("/profile_customer");
       }
       if (user.role === "OWNER") {
+        const objVehicle = await fetch("http://localhost:8080/vehicles/my_vehicle", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        });
+        if (objVehicle.ok) {
+          const vehicle = await objVehicle.json();
+          if (vehicle != null) {
+            dispatch(addVehicle(vehicle));
+          }
+        }
         navigate("/profile_owner");
       }
     } else {
