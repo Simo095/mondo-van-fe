@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, addVehicle } from "../../redux/actions";
+import { addUser, addVehicle, fetchPost } from "../../redux/actions";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 
@@ -41,6 +41,7 @@ const Auth = () => {
 
   useEffect(() => {
     fetchAuth();
+    dispatch(fetchPost(token));
   }, []);
 
   return <></>;

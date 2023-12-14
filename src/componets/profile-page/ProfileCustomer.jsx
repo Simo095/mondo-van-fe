@@ -1,4 +1,18 @@
-import { Button, Card, CardHeader, CardTitle, Col, Container, Form, Modal, Nav, Row, Spinner } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardTitle,
+  Col,
+  Container,
+  Form,
+  Image,
+  Modal,
+  Nav,
+  Pagination,
+  Row,
+  Spinner
+} from "react-bootstrap";
 import { FaRegPenToSquare } from "react-icons/fa6";
 
 import cover from "../../assets/user_placeholder.png";
@@ -11,16 +25,29 @@ import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
 import SideBar from "../../componets/stucture/SideBar";
 import Notifiche from "./Notifiche";
 import { fetchUser } from "../../redux/actions/fetchActions";
+import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
+import SinglePost from "./SinglePost";
+import { fetchPost } from "../../redux/actions";
 
 const ProfileCustomer = () => {
   const user = useSelector(state => state.login.user);
   const token = useSelector(state => state.login.token);
+  const posts = useSelector(state => state.post.data);
   const [show, setShow] = useState(false);
   const [coverImg, setCover] = useState(null);
   const [loading, setLoading] = useState(false);
   const [altro, setAltro] = useState(true);
   const [notifiche, setNotifiche] = useState([]);
   const [open, setOpen] = useState(false);
+  const [prenotazioni, setPrenotazioni] = useState(null);
+  const [loadingPre, setLoadingPre] = useState(false);
+  const [postText, setPostText] = useState();
+  const [modifica, setModifica] = useState(false);
+  const [idPost, setIdPost] = useState("");
+  const [page, setPage] = useState();
+  const [showPost, setShowPost] = useState(false);
+  const handleClosePost = () => setShow(false);
+  const handleShowPost = () => setShow(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,9 +88,44 @@ const ProfileCustomer = () => {
       setNotifiche(notifiche);
     }
   };
+  const fetchPrenotazioni = async () => {
+    setLoadingPre(true);
+    const risp = await fetch("http://localhost:8080/reservations/my_reservations", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+    if (risp.ok) {
+      const pre = await risp.json();
+      setPrenotazioni(pre.content);
+      if (pre) {
+        setLoadingPre(false);
+      }
+    }
+  };
+  const delPost = async postId => {
+    try {
+      console.log("cancella");
+
+      const resp = await fetch(``, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (resp.ok) {
+      }
+    } catch (error) {
+      console.log("si e' verificato un errore", error.message);
+    }
+  };
 
   useEffect(() => {
     fetchNotifiche();
+    fetchPrenotazioni();
+    dispatch(fetchPost(token));
+    setPage(1);
   }, []);
 
   return (
@@ -132,13 +194,65 @@ const ProfileCustomer = () => {
         {user ? (
           <>
             <Row className="d-flex flex-nowrap mt-5">
-              <Col sm={2}>
+              <Col
+                className="sidebarCircle"
+                style={{ width: "338px" }}
+                sm={3}>
                 <SideBar />
+                <Row className="d-flex flex-column mt-3">
+                  <Nav
+                    variant="tabs"
+                    defaultActiveKey="#first"
+                    className="d-flex ms-3  border-0">
+                    <Nav.Item className="navCalendar">
+                      <Nav.Link
+                        onClick={() => {
+                          setAltro(false);
+                        }}>
+                        Altro
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className="navCalendar">
+                      <Nav.Link
+                        onClick={() => {
+                          setAltro(true);
+                        }}>
+                        Notifiche
+                      </Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                  <Col>
+                    {altro ? (
+                      <Card className="">
+                        <CardHeader>
+                          <CardTitle>Notifiche</CardTitle>
+                        </CardHeader>
+                        <Card.Body>
+                          <Row
+                            className="d-flex row-cols-1 oV overflow-y-scroll"
+                            style={{ height: "30vh" }}>
+                            {notifiche &&
+                              notifiche.map((elem, i) => (
+                                <Notifiche
+                                  notifica={elem}
+                                  key={i}
+                                  i={i}
+                                  setNotifiche={setNotifiche}
+                                />
+                              ))}
+                          </Row>
+                        </Card.Body>
+                      </Card>
+                    ) : (
+                      <></>
+                    )}
+                  </Col>
+                </Row>
               </Col>
               <Col
                 style={{ height: "100vh" }}
                 className="d-flex oV overflow-y-scroll">
-                <Row className="d-flex">
+                <Row className="d-flex ms-2 mt-5 flex-grow-1">
                   <Col
                     className="d-flex justify-content-end"
                     style={{
@@ -172,81 +286,122 @@ const ProfileCustomer = () => {
                     </div>
                   </Col>
                   <Row className="mt-5 d-flex justify-content-center no-wrap gap-3 row-cols-1 ">
-                    <Col
-                      className="d-flex justify-content-center"
-                      style={{ height: "60vh" }}>
-                      <Card>
-                        <Card.Header>Le tue prenotazioni attive</Card.Header>
+                    <Col className="d-flex justify-content-center">
+                      <Card className="d-flex flex-grow-1">
+                        <Card.Header>Prenotazioni</Card.Header>
                         <Row className="d-flex flex-grow-1">
-                          <Col
-                            sm={4}
-                            className="d-flex"></Col>
+                          <Card.Body className="d-flex">
+                            {loadingPre ? (
+                              <Spinner variant="danger" />
+                            ) : (
+                              prenotazioni &&
+                              prenotazioni.map(pre => {
+                                console.log(pre);
+                                return (
+                                  <Col
+                                    sm={3}
+                                    key={pre.id}
+                                    className="d-flex">
+                                    <Card>
+                                      <Card.Img
+                                        variant="top"
+                                        src={pre.vehicle.avatar[0]}
+                                      />
+                                      <Card.Body className="d-flex flex-column justify-content-end">
+                                        <Card.Title>
+                                          Dal {pre.startDate.substring(5, 11).split("-").reverse().join("-")} al{" "}
+                                          {pre.endDate.substring(5, 11).split("-").reverse().join("-")}
+                                        </Card.Title>
+                                        <Card.Text>Van: {pre.vehicle.name}</Card.Text>
+                                        <Card.Text>
+                                          Stato:{" "}
+                                          {pre.state === "TAKING_CHARGE"
+                                            ? "IN ATTESA DI CONFERMA DAL PROPRIETARIO"
+                                            : pre.state === "PENDING_PAYMENT"
+                                            ? "IN ATTESA DEL PAGAMENTO"
+                                            : pre.state === "CONFIRMED"
+                                            ? "CONFERMATA"
+                                            : pre.state === "NOT_CONFIRMED"
+                                            ? "NON CONFERMATA"
+                                            : ""}
+                                        </Card.Text>
+                                      </Card.Body>
+                                    </Card>
+                                  </Col>
+                                );
+                              })
+                            )}
+                          </Card.Body>
                         </Row>
-                        <Card.Footer className="text-muted"></Card.Footer>
                       </Card>
                     </Col>
-                    <Col
-                      className="d-flex justify-content-center"
-                      style={{ height: "60vh" }}>
-                      <Card>
-                        <Card.Header>Le tue prenotazioni attive</Card.Header>
-                        <Row className="d-flex flex-grow-1">
-                          <Col
-                            sm={4}
-                            className="d-flex"></Col>
-                        </Row>
-                        <Card.Footer className="text-muted"></Card.Footer>
-                      </Card>
-                    </Col>
-                  </Row>
-                </Row>
-              </Col>
-              <Col sm={3}>
-                <Row className="d-flex flex-column">
-                  <Nav
-                    variant="tabs"
-                    defaultActiveKey="#first"
-                    className="d-flex justify-content-center gap-5">
-                    <Nav.Item className="navCalendar">
-                      <Nav.Link
-                        onClick={() => {
-                          setAltro(true);
-                        }}>
-                        Notifiche
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item className="navCalendar">
-                      <Nav.Link
-                        disabled
-                        onClick={() => {}}>
-                        Secondo
-                      </Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-                  <Col>
-                    {altro ? (
-                      <Card style={{ width: "18rem" }}>
-                        <CardHeader>
-                          <CardTitle>Notifiche</CardTitle>
-                        </CardHeader>
-                        <Card.Body>
-                          <Row>
-                            {notifiche &&
-                              notifiche.map((elem, i) => (
-                                <Notifiche
-                                  notifica={elem}
-                                  key={i}
-                                  i={i}
-                                  setNotifiche={setNotifiche}
+                    <Col className="d-flex flex-column overflow-y-scroll justify-content-center">
+                      <Container>
+                        {posts ? (
+                          <>
+                            {posts
+                              .filter(elem => elem.author.id === user.id)
+                              .toReversed()
+                              .map((elem, i) => (
+                                <SinglePost
+                                  elem={elem}
+                                  key={`post${i}`}
+                                  cancella={delPost}
+                                  profile={user}
+                                  handleClose={handleClosePost}
+                                  handleShow={handleShowPost}
+                                  show={showPost}
+                                  setPostText={setPostText}
+                                  setModifica={setModifica}
+                                  setIdPost={setIdPost}
                                 />
                               ))}
-                          </Row>
-                        </Card.Body>
-                      </Card>
-                    ) : (
-                      <></>
-                    )}
-                  </Col>
+                            <hr />
+                            {/* {posts.toReversed().map(
+                              (elem, i) =>
+                                i >= page * 5 - 5 &&
+                                i < page * 5 && (
+                                  <SinglePost
+                                    elem={elem}
+                                    key={`post${i}`}
+                                    cancella={delPost}
+                                    profile={user}
+                                    handleClose={handleClosePost}
+                                    handleShow={handleShowPost}
+                                    show={showPost}
+                                    setPostText={setPostText}
+                                    setModifica={setModifica}
+                                    setIdPost={setIdPost}
+                                  />
+                                )
+                            )} */}
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </Container>
+                    </Col>
+                    <div className="d-flex justify-content-center">
+                      <Pagination className="d-flex justify-content-center">
+                        <Pagination.Item
+                          onClick={() => {
+                            page > 1 && setPage(page - 1);
+                          }}>
+                          <BsCaretLeft />
+                        </Pagination.Item>
+                        <Pagination.Item disabled>{page - 1 === 0 ? "..." : page - 1}</Pagination.Item>
+                        <Pagination.Item active={true}>{page}</Pagination.Item>
+                        <Pagination.Item disabled>{page === posts.length / 5 ? "..." : page + 1}</Pagination.Item>
+                        <Pagination.Item
+                          onClick={() => {
+                            console.log(posts.length);
+                            page < posts.length / 5 && setPage(page + 1);
+                          }}>
+                          <BsCaretRight />
+                        </Pagination.Item>
+                      </Pagination>
+                    </div>
+                  </Row>
                 </Row>
               </Col>
             </Row>

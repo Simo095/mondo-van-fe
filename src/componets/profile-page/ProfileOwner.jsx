@@ -1,4 +1,18 @@
-import { Button, Card, CardHeader, CardTitle, Col, Container, Form, Modal, Nav, Row, Spinner } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  Col,
+  Container,
+  Form,
+  Modal,
+  Nav,
+  Pagination,
+  Row,
+  Spinner
+} from "react-bootstrap";
 import { FaRegPenToSquare } from "react-icons/fa6";
 
 import cover from "../../assets/user_placeholder.png";
@@ -11,11 +25,15 @@ import { useNavigate } from "react-router";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
 import Notifiche from "./Notifiche";
 import { fetchUser, fetchVehicle } from "../../redux/actions/fetchActions";
+import SinglePost from "./SinglePost";
+import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
+import { fetchPost } from "../../redux/actions";
 
 const ProfileOwner = () => {
   const user = useSelector(state => state.login.user);
   const token = useSelector(state => state.login.token);
   const vehicle = useSelector(state => state.vehicles.vehicle);
+  const posts = useSelector(state => state.post.data);
   const [date, setDate] = useState(null);
   const [idDispo, setIdDispo] = useState(null);
   const [show, setShow] = useState(false);
@@ -27,6 +45,13 @@ const ProfileOwner = () => {
   const [notifiche, setNotifiche] = useState([]);
   const [prenotazioni, setPrenotazioni] = useState(null);
 
+  const [postText, setPostText] = useState();
+  const [modifica, setModifica] = useState(false);
+  const [idPost, setIdPost] = useState("");
+  const [page, setPage] = useState();
+  const [showPost, setShowPost] = useState(false);
+  const handleClosePost = () => setShow(false);
+  const handleShowPost = () => setShow(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -93,10 +118,28 @@ const ProfileOwner = () => {
     });
     if (risp.ok) {
       const pre = await risp.json();
+      console.log(pre.content);
+      console.log("ciao");
       setPrenotazioni(pre.content);
       if (pre) {
         setLoadingPre(false);
       }
+    }
+  };
+  const delPost = async postId => {
+    try {
+      console.log("cancella");
+
+      const resp = await fetch(``, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (resp.ok) {
+      }
+    } catch (error) {
+      console.log("si e' verificato un errore", error.message);
     }
   };
 
@@ -105,6 +148,8 @@ const ProfileOwner = () => {
     fetchDisponibilita();
     fetchNotifiche();
     fetchPrenotazioni();
+    dispatch(fetchPost(token));
+    setPage(1);
   }, []);
   return (
     <div className="ProfileOwner">
@@ -304,6 +349,7 @@ const ProfileOwner = () => {
                             prenotazioni &&
                             prenotazioni.map(pre => {
                               console.log(pre);
+                              console.group("ciao");
                               return (
                                 <Col
                                   key={pre.id}
@@ -353,20 +399,72 @@ const ProfileOwner = () => {
                         </Row>
                       </Card>
                     </Col>
-
-                    <Col
-                      className="d-flex justify-content-center"
-                      style={{ height: "60vh" }}>
-                      <Card className="d-flex flex-grow-1">
-                        <Card.Header>BLOG POOST</Card.Header>
-                        <Row className="d-flex flex-grow-1">
-                          <Col
-                            sm={4}
-                            className="d-flex"></Col>
-                        </Row>
-                        <Card.Footer className="text-muted"></Card.Footer>
-                      </Card>
+                    <Col className="d-flex flex-column overflow-y-scroll justify-content-center">
+                      <Container>
+                        {posts ? (
+                          <>
+                            {posts
+                              .filter(elem => elem.author.id === user.id)
+                              .toReversed()
+                              .map((elem, i) => (
+                                <SinglePost
+                                  elem={elem}
+                                  key={`post${i}`}
+                                  cancella={delPost}
+                                  profile={user}
+                                  handleClose={handleClosePost}
+                                  handleShow={handleShowPost}
+                                  show={showPost}
+                                  setPostText={setPostText}
+                                  setModifica={setModifica}
+                                  setIdPost={setIdPost}
+                                />
+                              ))}
+                            <hr />
+                            {/* {posts.toReversed().map(
+                              (elem, i) =>
+                                i >= page * 5 - 5 &&
+                                i < page * 5 && (
+                                  <SinglePost
+                                    elem={elem}
+                                    key={`post${i}`}
+                                    cancella={delPost}
+                                    profile={user}
+                                    handleClose={handleClosePost}
+                                    handleShow={handleShowPost}
+                                    show={showPost}
+                                    setPostText={setPostText}
+                                    setModifica={setModifica}
+                                    setIdPost={setIdPost}
+                                  />
+                                )
+                            )} */}
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </Container>
                     </Col>
+                    <div className="d-flex justify-content-center">
+                      <Pagination className="d-flex justify-content-center">
+                        <Pagination.Item
+                          onClick={() => {
+                            page > 1 && setPage(page - 1);
+                          }}>
+                          <BsCaretLeft />
+                        </Pagination.Item>
+                        <Pagination.Item disabled>{page - 1 === 0 ? "..." : page - 1}</Pagination.Item>
+                        <Pagination.Item active={true}>{page}</Pagination.Item>
+                        <Pagination.Item disabled>{page === posts.length / 5 ? "..." : page + 1}</Pagination.Item>
+                        <Pagination.Item
+                          onClick={() => {
+                            console.log(posts.length);
+                            page < posts.length / 5 && setPage(page + 1);
+                          }}>
+                          <BsCaretRight />
+                        </Pagination.Item>
+                      </Pagination>
+                    </div>
                   </Row>
                 </Row>
               </Col>

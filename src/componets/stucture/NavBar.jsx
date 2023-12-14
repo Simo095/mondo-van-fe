@@ -61,7 +61,7 @@ const NavBar = () => {
 
             <Nav>
               {user ? (
-                role === "CUSTOMER" ? (
+                user.role === "CUSTOMER" ? (
                   <>
                     <Image
                       src={user.avatar}

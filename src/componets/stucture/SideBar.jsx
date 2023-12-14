@@ -11,6 +11,7 @@ import { fetchUser } from "../../redux/actions/fetchActions";
 
 import vanSide from "../../assets/icone/van-side.png";
 import lente from "../../assets/icone/lente.png";
+import blog from "../../assets/icone/Blog.png";
 
 import "../../assets/style/sidebar-button.css";
 const SideBar = () => {
@@ -103,29 +104,64 @@ const SideBar = () => {
           </Modal.Footer>
         </Modal>
         {user.role === "CUSTOMER" ? (
-          <Container>
-            <Row
-              className="d-flex flex-row"
-              style={{
-                height: "100vh"
-              }}>
-              <Col className="border">
-                <Row className="mt-3 d-flex flex-column g-4">
-                  <Col>
-                    <Link to="/register_vehicle">Prenota un van</Link>
-                  </Col>
-                  <Col>
-                    <Link to="/profile_vehicle">Le tue prenotazioni</Link>
-                  </Col>
-                  <Col>
-                    <Link to="/profile_customer">Profile</Link>
-                  </Col>
-                  <Col>
-                    <Link to="/log_out">Logout</Link>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
+          <Container className="main mt-5 ms-5">
+            <h2>VAN WORLD</h2>
+            <div className="up">
+              <Button
+                href="/"
+                style={{
+                  backgroundImage: `url(${lente})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  backgroundSize: "contain",
+                  backgroundPositionY: "9px"
+                }}
+                className="card1"></Button>
+              <Button
+                href="#"
+                style={{
+                  backgroundImage: `url(${blog})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  backgroundSize: "contain"
+                }}
+                className="card2"></Button>
+            </div>
+            <div className="down">
+              <Button
+                href="/profile_customer"
+                style={{
+                  position: "relative",
+                  backgroundImage: `url(${user.avatar})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  backgroundSize: "cover"
+                }}
+                className="card3 d-flex align-items-start justify-content-end">
+                <FaRegPenToSquare
+                  className="m-0"
+                  onClick={e => {
+                    e.preventDefault();
+                    setShow(true);
+                  }}
+                  style={{
+                    cursor: "pointer",
+                    position: "absolute",
+                    fontSize: "1em",
+                    color: "white"
+                  }}
+                />
+              </Button>
+              <Button
+                href="/log_out"
+                className="card4 text-black">
+                <FiLogOut
+                  color="black"
+                  fontSize={40}
+                />
+                Logout
+              </Button>
+            </div>
           </Container>
         ) : user.role === "OWNER" ? (
           <Container className="main mt-5 ms-5">
