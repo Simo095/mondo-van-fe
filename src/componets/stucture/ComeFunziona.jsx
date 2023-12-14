@@ -1,71 +1,74 @@
-import { Col, Container, Row } from "react-bootstrap";
-import { Route } from "react-router";
+import { Col, Container, Image, Row } from "react-bootstrap";
+
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 
-const Idea = () => {
+import logo from "../../assets/LogoVanWorld.png";
+import comunity from "../../assets/Comunity.avif";
+
+const ComeFunziona = () => {
   return (
-    <>
+    <div className="ComeFunziona">
       <NavBar />
       <Container style={{ height: "90vh" }}>
-        <Row>
+        <Row className="d-flex align-items-center">
           <Col sm={4}>
-            <p>IMMAGINE</p>
+            <Image
+              width={400}
+              src={logo}
+            />
           </Col>
           <Col sm={6}>
+            <h3>Noleggiare un furgone con Van World è semplice e veloce. Basta Registrarsi.</h3>
             <p>
-              Il progetto van è un'iniziativa che mira a creare una comunità di persone che condividono la passione per
-              i van. L'obiettivo del progetto è fornire una piattaforma per le persone che desiderano imparare di più
-              sui van, trovare altri appassionati di van e condividere le loro esperienze.
+              Cerca il furgone che fa per te.<br></br> Una volta registrato, puoi iniziare a cercare il furgone che fa
+              per te e ricorda che non è un parco auto e a non abbiamo qualsiasi tipo di mezzo, solo quelli che gli
+              utenti hanno intenzione di condividere. Il progetto van è un'iniziativa che mira a creare una comunità di
+              persone che condividono la passione per i van. L'obiettivo del progetto è fornire una piattaforma per le
+              persone che desiderano imparare di più sui van, trovare altri appassionati di van e condividere le loro
+              esperienze.
             </p>
           </Col>
         </Row>
         <Row>
-          <Col sm={4}>
-            <p>IMMAGINE</p>
-          </Col>
           <Col sm={6}>
             <p>
-              Il progetto van offre una varietà di risorse per la comunità. Queste risorse includono: Un forum online
-              dove le persone possono discutere di van, condividere storie e chiedere consigli. Un blog che offre
+              Il progetto VanWorld offre una varietà di risorse per la comunità. Queste risorse includono: Un forum
+              online dove le persone possono discutere di van, condividere storie e chiedere consigli. Un blog che offre
               notizie, recensioni e informazioni sui van. Un calendario di eventi che include raduni, fiere e altri
-              eventi per appassionati di van.
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={4}>
-            <p>IMMAGINE</p>
-          </Col>
-          <Col sm={6}>
-            <p>
-              Il progetto van è basato sulla convinzione che i van siano più di semplici veicoli. Sono un modo di
+              eventi per appassionati di van. <br></br>
+              <br></br>
+              Il progetto VanWorld è basato sulla convinzione che i van siano più di semplici veicoli. Sono un modo di
               vivere, un modo di viaggiare e un modo di vedere il mondo. Il progetto van mira a celebrare questa
               passione e a creare una comunità di persone che condividono questo amore. La comunità del progetto van è
               composta da persone di tutte le età, background e interessi. Sono persone che amano i van, che vogliono
               imparare di più sui van e che vogliono condividere la loro passione con gli altri.
+              <br></br>
+              <br></br>
+              Il progetto VanWorld è un'iniziativa entusiasmante che sta rapidamente crescendo. Se sei un appassionato
+              di van, ti invitiamo a partecipare alla comunità e a aiutarci a costruire una comunità forte e vibrante
+              per gli appassionati di van.
             </p>
           </Col>
-        </Row>
-        <Row>
-          <Col sm={4}>IMMAGINE</Col>
-          <Col sm={6}>
-            Il progetto van è un'iniziativa entusiasmante che sta rapidamente crescendo. Se sei un appassionato di van,
-            ti invitiamo a partecipare alla comunità e a aiutarci a costruire una comunità forte e vibrante per gli
-            appassionati di van.
+          <Col>
+            <Image
+              thumbnail
+              width={400}
+              src={comunity}
+            />
           </Col>
         </Row>
       </Container>
       <Footer />
-    </>
+    </div>
   );
 };
-export default Idea;
+export default ComeFunziona;
 
 // Noleggiare un furgone con Van World è semplice e veloce. Basta Registrarsi.
 
 // Cerca il furgone che fa per te
-// Una volta registrato, puoi iniziare a cercare il furgone che fa per te. Puoi filtrare i risultati per marca, modello, prezzo, posizione e altri criteri, ricorda che non è un parco auto e anon abbiamo qualsiasi tipo di mezzo, solo quelli che gli utenti hanno intenzione di condividere.
+// Una volta registrato, puoi iniziare a cercare il furgone che fa per te. Ricorda che non è un parco auto e a non abbiamo qualsiasi tipo di mezzo, solo quelli che gli utenti hanno intenzione di condividere.
 
 // Prenota il furgone
 // Quando hai trovato il furgone che vuoi noleggiare, puoi procedere con la prenotazione. Dovrai indicare le date di ritiro e riconsegna, il numero di passeggeri.

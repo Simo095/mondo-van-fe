@@ -46,8 +46,7 @@ const NavBar = () => {
                   <NavItem className="flex-grow-1">
                     <Nav.Link
                       className="color-link-nav"
-                      href="/rules"
-                      disabled>
+                      href="/rules">
                       COME FUNZIONA?
                     </Nav.Link>
                   </NavItem>

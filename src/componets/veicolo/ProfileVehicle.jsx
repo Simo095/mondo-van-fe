@@ -29,9 +29,9 @@ import { MdHeight } from "react-icons/md";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { CiCalendar } from "react-icons/ci";
 import cover from "../../assets/user_placeholder.png";
-import cambio from "../../assets/Cambio.png";
-import patente from "../../assets/Patente.png";
-import cintura from "../../assets/cinturaSicurezza.png";
+import cambio from "../../assets/icone/Cambio.png";
+import patente from "../../assets/icone/Patente.png";
+import cintura from "../../assets/icone/cinturaSicurezza.png";
 import CaruselVehicle from "./CaruselVehicle";
 import CardInterni from "./CardInterni";
 

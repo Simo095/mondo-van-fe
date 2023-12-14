@@ -11,9 +11,9 @@ import { useNavigate, useParams } from "react-router";
 import CardInterni from "../veicolo/CardInterni";
 import CaruselVehicle from "../veicolo/CaruselVehicle";
 import cover from "../../assets/user_placeholder.png";
-import cambio from "../../assets/Cambio.png";
-import patente from "../../assets/Patente.png";
-import cintura from "../../assets/cinturaSicurezza.png";
+import cambio from "../../assets/icone/Cambio.png";
+import patente from "../../assets/icone/Patente.png";
+import cintura from "../../assets/icone/cinturaSicurezza.png";
 
 const Result = () => {
   const token = useSelector(state => state.login.token);

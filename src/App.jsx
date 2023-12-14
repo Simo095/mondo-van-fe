@@ -18,6 +18,7 @@ import ResultPage from "./componets/results-page/ResultPage";
 import ChangeImg from "./componets/veicolo/ChangeImg";
 import Result from "./componets/results-page/Result";
 import Register from "./componets/login-register-auth/Register";
+import ComeFunziona from "./componets/stucture/ComeFunziona";
 
 const App = () => {
   return (
@@ -104,6 +105,10 @@ const App = () => {
           <Route
             path="/register"
             element={<Register />}
+          />
+          <Route
+            path="/rules"
+            element={<ComeFunziona />}
           />
         </Routes>
       </BrowserRouter>

@@ -47,7 +47,7 @@ const Register = () => {
               backgroundPositionX: "83%",
               height: "90vh"
             }}>
-            <h3>Registrati per vedere i van disponibili al noleggio</h3>
+            <h3>Noleggiare un furgone con Van World è semplice e veloce. Basta Registrarsi.</h3>
             <Button
               href="/register_owner"
               className="my-5"

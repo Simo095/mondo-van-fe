@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;700&display=swap");
 body {
-  background-color: #e2b61890;
 }
 .oV::-webkit-scrollbar {
   color: #00000000;
@@ -69,6 +68,10 @@ body {
 
 .ProfileOwner {
   font-family: "Rowdies", sans-serif;
+}
+.ComeFunziona {
+  font-family: "Rowdies", sans-serif;
+  background-color: #e2b61890;
 }
 .Footer {
   color: #000000;

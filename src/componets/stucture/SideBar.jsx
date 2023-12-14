@@ -9,8 +9,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { fetchUser } from "../../redux/actions/fetchActions";
 
-import vanSide from "../../assets/van-side.png";
-import lente from "../../assets/lente.png";
+import vanSide from "../../assets/icone/van-side.png";
+import lente from "../../assets/icone/lente.png";
 
 import "../../assets/style/sidebar-button.css";
 const SideBar = () => {

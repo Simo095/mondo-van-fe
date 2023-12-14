@@ -1,9 +1,9 @@
 import { Alert, Button, Card, Col, Container, Form, FormLabel, Modal, ModalHeader, Row } from "react-bootstrap";
-import Camper from "../../assets/Camper.png";
-import Jeep from "../../assets/Jeep.png";
-import Rooftop from "../../assets/Rooftop.png";
-import Van from "../../assets/Van.png";
-import Altro from "../../assets/Altro.png";
+import Camper from "../../assets/icone/Camper.png";
+import Jeep from "../../assets/icone/Jeep.png";
+import Rooftop from "../../assets/icone/Rooftop.png";
+import Van from "../../assets/icone/Van.png";
+import Altro from "../../assets/icone/Altro.png";
 
 import FlipCard from "../../componets/stucture/FlipCard";
 import { useState } from "react";

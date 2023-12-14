@@ -8,7 +8,7 @@ import "../../assets/style/card-vehicle.css";
 import "../../assets/style/button.css";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { FaArrowRight, FaEuroSign } from "react-icons/fa";
-import cintura from "../../assets/cinturaSicurezza.png";
+import cintura from "../../assets/icone/cinturaSicurezza.png";
 
 import cover from "../../assets/user_placeholder.png";
 import CaruselVehicle from "../veicolo/CaruselVehicle";
