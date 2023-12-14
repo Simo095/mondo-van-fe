@@ -1,31 +1,16 @@
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardText,
-  CardTitle,
-  Col,
-  Collapse,
-  Container,
-  Form,
-  Modal,
-  Nav,
-  Row,
-  Spinner
-} from "react-bootstrap";
+import { Button, Card, CardHeader, CardTitle, Col, Container, Form, Modal, Nav, Row, Spinner } from "react-bootstrap";
 import { FaRegPenToSquare } from "react-icons/fa6";
 
-import CardPrenotazioni from "./CardPrenotazioni";
 import cover from "../../assets/user_placeholder.png";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { addUser } from "../../redux/actions";
+
 import Dropzone from "react-dropzone";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
-import SideBar from "../SideBar";
+import SideBar from "../../componets/stucture/SideBar";
 import Notifiche from "./Notifiche";
-import { fetchNotifiche, fetchUser } from "../../redux/actions/fetchActions";
+import { fetchUser } from "../../redux/actions/fetchActions";
 
 const ProfileCustomer = () => {
   const user = useSelector(state => state.login.user);
@@ -195,9 +180,7 @@ const ProfileCustomer = () => {
                         <Row className="d-flex flex-grow-1">
                           <Col
                             sm={4}
-                            className="d-flex">
-                            <CardPrenotazioni></CardPrenotazioni>
-                          </Col>
+                            className="d-flex"></Col>
                         </Row>
                         <Card.Footer className="text-muted"></Card.Footer>
                       </Card>
@@ -210,9 +193,7 @@ const ProfileCustomer = () => {
                         <Row className="d-flex flex-grow-1">
                           <Col
                             sm={4}
-                            className="d-flex">
-                            <CardPrenotazioni></CardPrenotazioni>
-                          </Col>
+                            className="d-flex"></Col>
                         </Row>
                         <Card.Footer className="text-muted"></Card.Footer>
                       </Card>

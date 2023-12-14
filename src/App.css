@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;700&display=swap");
 body {
+  background-color: #e2b61890;
 }
 .oV::-webkit-scrollbar {
   color: #00000000;
@@ -148,12 +149,31 @@ body {
     height: 155vh !important;
   }
 }
+@media (max-width: 1240px) {
+  .FiltriSideBar {
+    display: none;
+  }
+  .sidebarCircle {
+    display: none;
+  }
+  .ColSidebarFiltri {
+    display: none;
+  }
+}
+@media (min-width: 1240px) {
+  .mediaQueryCalendario {
+    display: none;
+  }
+}
 
 /* ---------------------------- */
 
 /* ----------CALENDAR REACT------------------ */
 .react-datepicker__input-container {
-  width: 244px !important;
+  width: 100%;
+}
+.react-datepicker-wrapper {
+  width: 100%;
 }
 .react-calendar {
   width: inherit !important;

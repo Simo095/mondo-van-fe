@@ -3,22 +3,30 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { VscSignIn } from "react-icons/vsc";
-import { Link, useNavigate } from "react-router-dom";
 import image1 from "../../assets/VW-Stars.jpg";
 import image2 from "../../assets/VW-Bianco.jpg";
 import image3 from "../../assets/VW-Adventure.jpg";
 import image4 from "../../assets/VW-Stars-Blue.jpg";
+import image5 from "../../assets/VW-RedPlant.avif";
+import image6 from "../../assets/VW-WhiteOpen.avif";
+import image7 from "../../assets/JungleRoad.avif";
+import image8 from "../../assets/InfiniteRoad.avif";
+import image9 from "../../assets/InfiniteRoad2.avif";
+import image10 from "../../assets/InfiniteRoad3.avif";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { addToken, logged } from "../../redux/actions";
+import { FormGroup } from "react-bootstrap";
+import { VscSignIn } from "react-icons/vsc";
 import "../../assets/style/card-login.css";
-import { Card, FormGroup } from "react-bootstrap";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [image, setImage] = useState("");
+
   const hadlerForm = async event => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -44,7 +52,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    const images = [image1, image2, image3, image4];
+    const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10];
     const randomImage = images[Math.floor(Math.random() * images.length)];
     setImage(randomImage);
   }, []);
@@ -73,7 +81,6 @@ const Login = () => {
                     name="email"
                     className="InputCardLogin"
                   />
-
                   <Form.Control
                     type="password"
                     placeholder="Password"
@@ -172,6 +179,7 @@ const Login = () => {
                     Don't have any accounts?
                   </Link>
                   <Link
+                    className="disabled-link"
                     style={{
                       color: "black",
                       textDecoration: "none",

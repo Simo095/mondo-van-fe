@@ -13,7 +13,7 @@ import {
   ModalHeader,
   Row
 } from "react-bootstrap";
-import FlipCard from "../FlipCard";
+import FlipCard from "../../componets/stucture/FlipCard";
 import ReactCardFlip from "react-card-flip";
 import { GrFormNextLink } from "react-icons/gr";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";

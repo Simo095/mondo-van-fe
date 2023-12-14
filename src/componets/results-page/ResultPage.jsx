@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Button, Card, CardBody, CardFooter, CardTitle, Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import FiltriSideBar from "../FiltriSideBar";
+import FiltriSideBar from "../../componets/stucture/FiltriSideBar";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/style/card-vehicle.css";
 import "../../assets/style/button.css";
@@ -48,26 +48,32 @@ const ResultPage = () => {
         <Row>
           <Col>
             <Row>
-              <Col sm={2}>
+              <Col
+                sm={3}
+                className="ColSidebarFiltri"
+                style={{ maxWidth: "300px" }}>
                 <FiltriSideBar
-                  start={params.start_date}
-                  end={params.end_date}
+                  startProps={params.start_date}
+                  endProps={params.end_date}
                   beds={params.beds}
                   prov={params.province}
                 />
               </Col>
-              <Col sm={8}>
-                <Row
-                  className="row-cols-3 overflow-y-scroll oV"
+              <Col
+                className="flex-grow-1"
+                sm={8}>
+                <Container
+                  fluid
+                  className="d-flex flex-wrap overflow-y-scroll oV"
                   style={{
-                    height: "100vh"
+                    height: "100vh",
+                    maxWidth: "1465px"
                   }}>
                   {results &&
                     results.map((elem, i) => {
                       return (
-                        <Col
-                          sm={3}
-                          className="d-flex my-3"
+                        <div
+                          className="m-2"
                           key={i}>
                           <Card className="cardSpecial">
                             <CaruselVehicle
@@ -94,28 +100,31 @@ const ResultPage = () => {
                             </CardBody>
                             <CardFooter className="bottom-section">
                               <Row className="row row1">
-                                <Col className="item d-flex flex-column align-items-center gap-2">
+                                <Col className="item d-flex flex-column align-items-center">
                                   <Image
                                     src={cintura}
                                     style={{ width: "20px" }}
                                   />
                                   <span className="regular-text">{elem.sits}</span>
                                 </Col>
-                                <Col className="item d-flex flex-column align-items-center gap-2">
-                                  <FaEuroSign className="mb-1 big-text" />
-                                  <span className="regular-text">{elem.pricePerDay} €/giorno</span>
+                                <Col className="item d-flex flex-column align-items-center">
+                                  <FaEuroSign
+                                    fontSize={15}
+                                    className="mb-1"
+                                  />
+                                  <span className="regular-text m-0">{elem.pricePerDay} €/giorno</span>
                                 </Col>
-                                <Col className="item d-flex flex-column align-items-center pe-3 gap-2">
-                                  <span className="big-text mb-1">{elem.brand}</span>
-                                  <span className="regular-text">{elem.model}</span>
+                                <Col className="item d-flex flex-column align-items-center pe-3">
+                                  <span className="big-text m-0">{elem.brand}</span>
+                                  <span className="regular-text m-0">{elem.model}</span>
                                 </Col>
                               </Row>
                             </CardFooter>
                           </Card>
-                        </Col>
+                        </div>
                       );
                     })}
-                </Row>
+                </Container>
               </Col>
             </Row>
           </Col>

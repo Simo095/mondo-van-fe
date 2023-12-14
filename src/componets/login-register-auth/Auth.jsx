@@ -7,6 +7,7 @@ const Auth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector(state => state.login.token);
+
   const fetchAuth = async () => {
     const respSucces = await fetch("http://localhost:8080/users/me", {
       method: "GET",
@@ -17,7 +18,6 @@ const Auth = () => {
     if (respSucces.ok) {
       const user = await respSucces.json();
       dispatch(addUser(user));
-
       if (user.role === "CUSTOMER") {
         navigate("/profile_customer");
       }
@@ -36,10 +36,9 @@ const Auth = () => {
         }
         navigate("/profile_owner");
       }
-    } else {
-      //componente per errori
     }
   };
+
   useEffect(() => {
     fetchAuth();
   }, []);

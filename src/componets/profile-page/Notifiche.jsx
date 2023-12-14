@@ -1,25 +1,18 @@
 import { useState } from "react";
-import { Badge, Button, Card, CardText, Col, Collapse, Container, Form, Modal, Row } from "react-bootstrap";
+import { Button, CardText, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 
 const Notifiche = ({ notifica, i, setNotifiche }) => {
-  const [open, setOpen] = useState(false);
+  const token = useSelector(state => state.login.token);
+
   const [show, setShow] = useState(false);
   const [showDue, setShowDue] = useState(false);
 
-  const navigate = useNavigate();
-  const token = useSelector(state => state.login.token);
   const handleClose = () => setShow(false);
   const handleCloseDue = () => setShowDue(false);
-
-  const handleShow = () => {
-    setShow(true);
-  };
-  const handleShowDue = () => {
-    setShowDue(true);
-  };
+  const handleShow = () => setShow(true);
+  const handleShowDue = () => setShowDue(true);
 
   const cancellaNotifica = async id => {
     const cancella = await fetch(`http://localhost:8080/notifications/${notifica.id}`, {
@@ -42,6 +35,7 @@ const Notifiche = ({ notifica, i, setNotifiche }) => {
       }
     }
   };
+
   const handleRead = async () => {
     handleClose();
     const modifica = await fetch(`http://localhost:8080/notifications/${notifica.id}`, {
@@ -63,6 +57,7 @@ const Notifiche = ({ notifica, i, setNotifiche }) => {
       }
     }
   };
+
   const handlerRisposta = async e => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);

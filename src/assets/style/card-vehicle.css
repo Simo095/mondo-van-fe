@@ -1,5 +1,4 @@
 .bottom-section {
-  margin-top: 15px;
   padding: 10px 5px;
   position: relative;
 }
@@ -9,6 +8,7 @@
   min-width: 270px;
 }
 .titlo {
+  height: 45px;
   font-size: 1em;
   color: rgb(0, 0, 0);
 }
@@ -29,7 +29,7 @@
 }
 
 .bottom-section .row .item .big-text {
-  font-size: 12px;
+  font-size: 13px;
   display: block;
 }
 
@@ -44,10 +44,5 @@
 @media (max-width: 1200px) {
   .titlo {
     font-size: small;
-  }
-}
-@media (max-width: 1050px) {
-  .FiltriSideBar {
-    display: none;
   }
 }

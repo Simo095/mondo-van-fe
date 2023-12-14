@@ -1,19 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardText,
-  CardTitle,
-  Col,
-  Container,
-  Form,
-  FormGroup,
-  Image,
-  Nav,
-  Row
-} from "react-bootstrap";
+import { Button, Card, CardBody, CardText, CardTitle, Col, Container, Form, Image, Nav, Row } from "react-bootstrap";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { CiCalendar } from "react-icons/ci";
 import { MdHeight } from "react-icons/md";
@@ -44,8 +30,8 @@ const Result = () => {
   const [diff, setDiff] = useState();
 
   const navigate = useNavigate();
+
   const vehicleFetchDetail = async () => {
-    console.log(params.id);
     if (logged) {
       const vehicle = await fetch(`http://localhost:8080/vehicles/result/${params.id}`, {
         method: "GET",
@@ -55,13 +41,13 @@ const Result = () => {
       });
       if (vehicle.ok) {
         const vehicleData = await vehicle.json();
-        console.log(vehicleData);
         setVehicle(vehicleData);
       }
     } else {
       navigate("/register");
     }
   };
+
   const calcolaGiorni = () => {
     if (startDate && endDate) {
       const d1 = new Date(startDate);
@@ -70,6 +56,7 @@ const Result = () => {
       setDiff(diff);
     }
   };
+
   const handlerSubmit = async e => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -110,12 +97,14 @@ const Result = () => {
       }
     }
   };
+
   useEffect(() => {
     vehicleFetchDetail();
     if (startDate && endDate) {
       calcolaGiorni();
     }
   }, []);
+
   return (
     <>
       {vehicle ? (
@@ -147,7 +136,7 @@ const Result = () => {
                     vehicle={vehicle}
                     cover={cover}
                     token={token}
-                    height={50}
+                    height={600}
                   />
                 </Col>
 

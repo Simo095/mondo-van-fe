@@ -1,11 +1,11 @@
 import { Button, Card, CardHeader, CardTitle, Col, Container, Form, Modal, Nav, Row, Spinner } from "react-bootstrap";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import CardPrenotazioni from "./CardPrenotazioni";
+
 import cover from "../../assets/user_placeholder.png";
-import SideBar from "../SideBar";
+import SideBar from "../../componets/stucture/SideBar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import Calendario from "../Calendario";
+import Calendario from "../../componets/stucture/Calendario";
 import Dropzone from "react-dropzone";
 import { useNavigate } from "react-router";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
@@ -21,9 +21,11 @@ const ProfileOwner = () => {
   const [show, setShow] = useState(false);
   const [coverImg, setCover] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadingPre, setLoadingPre] = useState(false);
   const [calendario, setCalendario] = useState(true);
   const [altro, setAltro] = useState(false);
   const [notifiche, setNotifiche] = useState([]);
+  const [prenotazioni, setPrenotazioni] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -81,10 +83,28 @@ const ProfileOwner = () => {
     }
   };
 
+  const fetchPrenotazioni = async () => {
+    setLoadingPre(true);
+    const risp = await fetch("http://localhost:8080/reservations", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+    if (risp.ok) {
+      const pre = await risp.json();
+      setPrenotazioni(pre.content);
+      if (pre) {
+        setLoadingPre(false);
+      }
+    }
+  };
+
   useEffect(() => {
-    dispatch(fetchVehicle(token));
+    dispatch(fetchVehicle(token, navigate));
     fetchDisponibilita();
     fetchNotifiche();
+    fetchPrenotazioni();
   }, []);
   return (
     <div className="ProfileOwner">
@@ -148,14 +168,84 @@ const ProfileOwner = () => {
         </Modal>
         {user ? (
           <>
-            <Row className="d-flex flex-nowrap mt-5">
-              <Col sm={2}>
+            <Row className="d-flex justify-content-center">
+              <Col
+                className="sidebarCircle"
+                style={{ width: "338px" }}
+                sm={3}>
                 <SideBar />
+
+                <Row className="d-flex flex-column mt-3">
+                  <Nav
+                    variant="tabs"
+                    defaultActiveKey="#first"
+                    className="d-flex ms-3  border-0">
+                    <Nav.Item className="navCalendar">
+                      <Nav.Link
+                        onClick={() => {
+                          setCalendario(true);
+                          setAltro(false);
+                        }}>
+                        Calendario
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className="navCalendar">
+                      <Nav.Link
+                        onClick={() => {
+                          setCalendario(false);
+                          setAltro(true);
+                        }}>
+                        Notifiche
+                      </Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                  <Col>
+                    {date
+                      ? calendario && (
+                          <>
+                            <h2>Le disponibilita per gli utenti</h2>
+                            <Calendario
+                              array={date}
+                              idDispo={idDispo}
+                            />
+                          </>
+                        )
+                      : calendario && (
+                          <>
+                            <h4>Registra un mezzo per utilizzare questa funzionalità </h4>
+                          </>
+                        )}
+                    {altro ? (
+                      <Card className="">
+                        <CardHeader>
+                          <CardTitle>Notifiche</CardTitle>
+                        </CardHeader>
+                        <Card.Body>
+                          <Row
+                            className="d-flex row-cols-1 oV overflow-y-scroll"
+                            style={{ height: "30vh" }}>
+                            {notifiche &&
+                              notifiche.map((elem, i) => (
+                                <Notifiche
+                                  notifica={elem}
+                                  key={i}
+                                  i={i}
+                                  setNotifiche={setNotifiche}
+                                />
+                              ))}
+                          </Row>
+                        </Card.Body>
+                      </Card>
+                    ) : (
+                      <></>
+                    )}
+                  </Col>
+                </Row>
               </Col>
               <Col
                 style={{ height: "100vh" }}
                 className="d-flex oV overflow-y-scroll">
-                <Row className="d-flex">
+                <Row className="d-flex ms-2 mt-5 flex-grow-1">
                   <Col
                     className="d-flex justify-content-end"
                     style={{
@@ -188,33 +278,91 @@ const ProfileOwner = () => {
                     </div>
                   </Col>
 
-                  <Row className="mt-5 d-flex justify-content-center no-wrap gap-3 row-cols-1 ">
-                    <Col
-                      className="d-flex justify-content-center"
-                      style={{ height: "60vh" }}>
-                      <Card>
-                        <Card.Header>Le prenotazioni attive dei van travelers</Card.Header>
+                  <Row className="mt-5 d-flex flex-grow-1 justify-content-center no-wrap gap-3 row-cols-1 ">
+                    <Col>
+                      {date && calendario ? (
+                        <div className="mediaQueryCalendario mx-5">
+                          <h2>Le disponibilita per gli utenti</h2>
+                          <Calendario
+                            array={date}
+                            idDispo={idDispo}
+                          />
+                        </div>
+                      ) : (
+                        <div className="mediaQueryCalendario">
+                          <h4>Registra un mezzo per utilizzare questa funzionalità </h4>
+                        </div>
+                      )}
+                    </Col>
+                    <Col className="d-flex justify-content-center">
+                      <Card className="d-flex flex-grow-1">
+                        <Card.Header>Prenotazioni</Card.Header>
                         <Row className="d-flex flex-grow-1">
-                          <Col
-                            sm={4}
-                            className="d-flex">
-                            <CardPrenotazioni></CardPrenotazioni>
-                          </Col>
+                          {loadingPre ? (
+                            <Spinner variant="danger" />
+                          ) : (
+                            prenotazioni &&
+                            prenotazioni.map(pre => {
+                              console.log(pre);
+                              return (
+                                <Col
+                                  key={pre.id}
+                                  className="d-flex">
+                                  <Card.Body className="d-flex flex-grow-1">
+                                    <Card>
+                                      <Card.Img
+                                        variant="top"
+                                        src={pre.user.avatar}
+                                      />
+                                      <Card.Body className="d-flex flex-column justify-content-end">
+                                        <Card.Title>
+                                          Dal {pre.startDate.substring(5, 11).split("-").reverse().join("-")} al{" "}
+                                          {pre.endDate.substring(5, 11).split("-").reverse().join("-")}
+                                        </Card.Title>
+                                        <Card.Text>Da: {pre.user.name}</Card.Text>
+                                        <Card.Text>
+                                          Stato:{" "}
+                                          {pre.state === "TAKING_CHARGE"
+                                            ? "DA CONFERMARE"
+                                            : pre.state === "PENDING_PAYMENT"
+                                            ? "IN ATTESA DEL PAGAMENTO"
+                                            : pre.state === "CONFIRMED"
+                                            ? "CONFERMATA"
+                                            : pre.state === "NOT_CONFIRMED"
+                                            ? "NON CONFERMATA"
+                                            : ""}
+                                        </Card.Text>
+                                        <Button variant="primary">
+                                          {pre.state === "TAKING_CHARGE"
+                                            ? "CONFERMA"
+                                            : pre.state === "PENDING_PAYMENT"
+                                            ? "IN ATTESA DEL PAGAMENTO"
+                                            : pre.state === "CONFIRMED"
+                                            ? "CONFERMATA"
+                                            : pre.state === "NOT_CONFIRMED"
+                                            ? "NON CONFERMATA"
+                                            : ""}
+                                        </Button>
+                                      </Card.Body>
+                                    </Card>
+                                  </Card.Body>
+                                </Col>
+                              );
+                            })
+                          )}
                         </Row>
-                        <Card.Footer className="text-muted"></Card.Footer>
                       </Card>
                     </Col>
+
                     <Col
                       className="d-flex justify-content-center"
                       style={{ height: "60vh" }}>
-                      <Card>
+                      <Card className="d-flex flex-grow-1">
                         <Card.Header>BLOG POOST</Card.Header>
                         <Row className="d-flex flex-grow-1">
                           <Col
                             sm={4}
-                            className="d-flex">
-                            <CardPrenotazioni></CardPrenotazioni>
-                          </Col>
+                            className="d-flex"></Col>
                         </Row>
                         <Card.Footer className="text-muted"></Card.Footer>
                       </Card>
@@ -222,12 +370,14 @@ const ProfileOwner = () => {
                   </Row>
                 </Row>
               </Col>
-              <Col sm={3}>
+              {/* <Col
+                className="sidebarCircle"
+                sm={3}>
                 <Row className="d-flex flex-column">
                   <Nav
                     variant="tabs"
                     defaultActiveKey="#first"
-                    className="d-flex  border-0">
+                    className="d-flex ms-3  border-0">
                     <Nav.Item className="navCalendar">
                       <Nav.Link
                         onClick={() => {
@@ -289,7 +439,7 @@ const ProfileOwner = () => {
                     )}
                   </Col>
                 </Row>
-              </Col>
+              </Col> */}
             </Row>
           </>
         ) : (

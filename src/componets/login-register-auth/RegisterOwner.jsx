@@ -1,5 +1,4 @@
 import { RiArrowGoBackLine } from "react-icons/ri";
-import { RiSendPlaneFill } from "react-icons/ri";
 import { GrFormNextLink } from "react-icons/gr";
 import { IoArrowBackCircleOutline, IoArrowRedo } from "react-icons/io5";
 import { useDispatch } from "react-redux";
@@ -29,7 +28,6 @@ const RegisterOwner = () => {
   const [province, setProvince] = useState("");
   const [towns, setTowns] = useState();
   const [town, setTown] = useState();
-  const [via, setVia] = useState("");
   const [flip, setFlip] = useState(false);
   const [firstForm, setFirstForm] = useState(null);
   const [errorFirstForm, setErrorFirstForm] = useState(false);
@@ -111,10 +109,7 @@ const RegisterOwner = () => {
     setTown(e.target.value);
     console.log(town);
   };
-  const handleStreetChange = e => {
-    e.preventDefault();
-    setVia(e.target.value);
-  };
+
   const handlerFlip = e => {
     setFlip(!flip);
   };

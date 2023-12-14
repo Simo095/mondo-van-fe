@@ -8,7 +8,7 @@ import { TbCamper } from "react-icons/tb";
 import { FaRegSquare } from "react-icons/fa";
 import { FaRegCheckSquare } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { checkedCard1 } from "../redux/actions";
+import { checkedCard1 } from "../../redux/actions";
 
 const FlipCard = ({ type, image, i, checked, setChecked, serverEnum, setForm }) => {
   const dispatch = useDispatch();

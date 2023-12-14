@@ -23,11 +23,8 @@ const NavBar = () => {
             aria-controls="basic-navbar-nav"
             className="nav-toggler"
           />
-
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav
-              //variant="tabs"
-              className="d-flex  flex-grow-1">
+            <Nav className="d-flex  flex-grow-1">
               {user ? (
                 <></>
               ) : (
@@ -85,15 +82,14 @@ const NavBar = () => {
                   <>
                     <Image
                       src={user.avatar}
-                      alt="image profile"
+                      alt="immagine profilo"
                       roundedCircle
-                      style={{ width: "60px", height: "60px", marginInline: "1rem" }}
+                      style={{ width: "80px", height: "80px", marginInline: "1rem", objectFit: "cover" }}
                     />
                     <NavDropdown
                       id="basic-nav-dropdown"
                       align="end">
                       <NavDropdown.Item href="/profile_owner">Profilo</NavDropdown.Item>
-
                       <NavDropdown.Item href="/profile_vehicle">Veicolo</NavDropdown.Item>
                       <NavDropdown.Divider />
                       <NavDropdown.Item href="/log_out">Logout</NavDropdown.Item>

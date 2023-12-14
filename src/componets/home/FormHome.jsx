@@ -43,6 +43,7 @@ const FormHome = () => {
       });
       if (pageble.ok) {
         const content = await pageble.json();
+        console.log(content);
         dispatch(addResult(content.content));
         navigate(`/results_page/${start}/${end}`);
       } else {

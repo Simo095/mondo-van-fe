@@ -1,30 +1,24 @@
 import { Alert, Button, Card, Col, Container, FormLabel, FormSelect, Image, Modal, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../redux/actions";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { RiArrowGoBackLine } from "react-icons/ri";
-import { RiSendPlaneFill } from "react-icons/ri";
-import { CiSaveUp2 } from "react-icons/ci";
 import { IoArrowRedo } from "react-icons/io5";
-
-import { BsFillTriangleFill } from "react-icons/bs";
 import { GrFormNextLink } from "react-icons/gr";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import ReactCardFlip from "react-card-flip";
-import { Link } from "react-router-dom";
 import "../../assets/style/loader.css";
 
 const RegisterCustomer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [provinces, setProvinces] = useState();
   const [province, setProvince] = useState("");
   const [towns, setTowns] = useState();
   const [town, setTown] = useState();
-  const [via, setVia] = useState("");
   const [flip, setFlip] = useState(false);
   const [firstForm, setFirstForm] = useState(null);
   const [errorFirstForm, setErrorFirstForm] = useState(false);
@@ -83,10 +77,9 @@ const RegisterCustomer = () => {
     if (risposta.ok) {
       const data = await risposta.json();
       setProvinces(data.content);
-    } else {
-      //QUI PER GESTIRE ERRORI
     }
   };
+
   const handleProvinceChange = async event => {
     event.preventDefault();
     setProvince(event.target.value);
@@ -102,10 +95,7 @@ const RegisterCustomer = () => {
     e.preventDefault();
     setTown(e.target.value);
   };
-  const handleStreetChange = e => {
-    e.preventDefault();
-    setVia(e.target.value);
-  };
+
   const handlerFlip = e => {
     setFlip(!flip);
   };

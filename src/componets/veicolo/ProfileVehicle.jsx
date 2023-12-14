@@ -8,21 +8,20 @@ import {
   Col,
   Container,
   Form,
+  FormControl,
+  FormGroup,
   Image,
   Modal,
   Nav,
   Row,
   Spinner
 } from "react-bootstrap";
-import SideBar from "../SideBar";
-import Dropzone from "react-dropzone";
+import SideBar from "../../componets/stucture/SideBar";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { addUser } from "../../redux/actions";
-import { FaRegPenToSquare } from "react-icons/fa6";
-import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
-import { HiOutlineTrash } from "react-icons/hi2";
+import { addVehicle } from "../../redux/actions";
 import { PiEngineBold } from "react-icons/pi";
 import { SlSpeedometer } from "react-icons/sl";
 import { RxWidth } from "react-icons/rx";
@@ -40,38 +39,28 @@ const ProfileVehicle = () => {
   const token = useSelector(state => state.login.token);
   const vehicle = useSelector(state => state.vehicles.vehicle);
 
-  const [date, setDate] = useState(null);
   const [interni, setInterni] = useState(false);
   const [motorizzazione, setMotorizzazione] = useState(false);
   const [creaAnnuncio, setCreaAnnuncio] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
-  const [coverImg, setCover] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleClose = () => setShow(false);
-
-  const handlerSubmitCover = async e => {
+  const handlerForm = async e => {
     e.preventDefault();
-    const formCover = new FormData();
-    formCover.append("img", coverImg[0]);
-    setLoading(true);
-    if (cover) {
-      const coverfetch = await fetch("http://localhost:8080/vehicles/upload_img", {
-        method: "PATCH",
-        headers: {
-          Authorization: "Bearer " + token
-        },
-        body: formCover
-      });
-      if (coverfetch.ok) {
-        setLoading(false);
-        navigate("/change");
-      }
+    const form = new FormData(e.currentTarget);
+    const request = await fetch("http://localhost:8080/vehicles/announcement", {
+      method: "PATCH",
+      headers: {
+        Authorization: "Bearer " + token,
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({ announcement: form.get("annuncio") })
+    });
+    if (request.ok) {
+      const vehicle = await request.json();
+      dispatch(addVehicle(vehicle));
     }
-    handleClose();
   };
 
   useEffect(() => {}, []);
@@ -79,63 +68,6 @@ const ProfileVehicle = () => {
   return (
     <div className="ProfileVehicle">
       <Container fluid>
-        <Modal show={show}>
-          <Modal.Header>
-            <Modal.Title>Immagine di copertina</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form
-              id="drop"
-              className="d-flex justify-content-center "
-              onSubmit={handlerSubmitCover}>
-              <Dropzone
-                onDrop={acceptedFiles => {
-                  setCover(acceptedFiles);
-                }}>
-                {({ getRootProps, getInputProps, acceptedFiles }) => (
-                  <>
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <div
-                        style={{
-                          border: "3px",
-                          borderStyle: "dashed",
-                          borderRadius: "30px",
-                          borderColor: "ActiveBorder"
-                        }}
-                        className="text-center">
-                        {acceptedFiles[0]
-                          ? acceptedFiles[0].path
-                          : "Tracina l'immagine che desideri come cover \noppure clicca sul qui per aprire explore e selezionarla"}
-                      </div>
-                      {loading ? (
-                        <Spinner
-                          animation="border"
-                          className="mt-5"
-                          variant="success"
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  </>
-                )}
-              </Dropzone>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-between">
-            <RiArrowGoBackLine
-              onClick={handleClose}
-              style={{ cursor: "pointer" }}
-            />
-            <Button
-              style={{ background: "white", border: "white" }}
-              type="submit"
-              form="drop">
-              <RiSendPlaneFill style={{ cursor: "pointer", color: "blue" }} />
-            </Button>
-          </Modal.Footer>
-        </Modal>
         <Row>
           <Col sm={2}>
             <SideBar />
@@ -183,41 +115,88 @@ const ProfileVehicle = () => {
                               <Nav.Item
                                 className="navItemsVehicle"
                                 onClick={() => {
+                                  window.scrollTo(0, document.body.scrollHeight);
                                   setCreaAnnuncio(true);
                                   setMotorizzazione(false);
                                   setInterni(false);
                                 }}>
-                                <Nav.Link>Crea l'annuncio</Nav.Link>
+                                <Nav.Link href="#annuncio">Annuncio</Nav.Link>
                               </Nav.Item>
                               <Nav.Item
                                 className="navItemsVehicle"
                                 onClick={() => {
+                                  window.scrollTo(0, document.body.scrollHeight);
                                   setMotorizzazione(true);
                                   setCreaAnnuncio(false);
                                   setInterni(false);
                                 }}>
-                                <Nav.Link>Motorizzazione</Nav.Link>
+                                <Nav.Link href="#motorizzazione">Motorizzazione</Nav.Link>
                               </Nav.Item>
                               <Nav.Item
                                 className="navItemsVehicle"
                                 onClick={() => {
+                                  window.scrollTo(0, document.body.scrollHeight);
                                   setMotorizzazione(false);
                                   setCreaAnnuncio(false);
                                   setInterni(true);
                                 }}>
-                                <Nav.Link>Interni</Nav.Link>
+                                <Nav.Link href="#interni">Interni</Nav.Link>
                               </Nav.Item>
                             </Nav>
                           </Card.Header>
-                          {creaAnnuncio && creaAnnuncio && (
-                            <CardBody>
-                              <Card.Title>Annuncio</Card.Title>
-                              <Card.Text>In arrivo</Card.Text>
-                            </CardBody>
+                          {creaAnnuncio ? (
+                            vehicle.announcement ? (
+                              <>
+                                <CardBody id="annuncio">
+                                  <Card.Title>Annuncio</Card.Title>
+                                  <Row>
+                                    <Col>
+                                      <p>{vehicle.announcement}</p>
+                                    </Col>
+                                  </Row>
+                                </CardBody>
+                                <CardFooter style={{ height: "100px" }}>Modifica</CardFooter>
+                              </>
+                            ) : (
+                              <>
+                                <CardBody>
+                                  <Card.Title>Annuncio</Card.Title>
+                                  <Row>
+                                    <Col>
+                                      <Form
+                                        id="formAnnuncio"
+                                        onSubmit={handlerForm}>
+                                        <FormGroup>
+                                          <Form.Control
+                                            name="annuncio"
+                                            id="annuncio"
+                                            as="textarea"
+                                            style={{ backgroundColor: "#00000000" }}
+                                            rows={6}
+                                            placeholder="Scrivi l'annuncio che visualizzeranno i van travelers"
+                                            required
+                                          />
+                                        </FormGroup>
+                                        <Button
+                                          type="submit"
+                                          form="formAnnuncio">
+                                          Crea
+                                        </Button>
+                                      </Form>
+                                    </Col>
+                                  </Row>
+                                </CardBody>
+                              </>
+                            )
+                          ) : (
+                            <></>
                           )}
+
                           {motorizzazione && vehicle && (
                             <>
-                              <Card.Body className="">
+                              <Card.Body
+                                id="motorizzazione"
+                                className="">
                                 <Row className="row-cols-1">
                                   <Col className="d-flex mb-4">
                                     <Card.Title>
@@ -315,15 +294,17 @@ const ProfileVehicle = () => {
                                   </Col>
                                 </Row>
                               </Card.Body>
+                              <CardFooter style={{ height: "100px" }}>Modifica</CardFooter>
                             </>
                           )}
 
                           {interni ? (
                             vehicle.vehiclesArrangement ? (
                               <>
-                                <Card.Body>
+                                <Card.Body id="interni">
                                   <CardInterni vehicle={vehicle}></CardInterni>
                                 </Card.Body>
+                                <CardFooter style={{ height: "100px" }}>Modifica</CardFooter>
                               </>
                             ) : (
                               <>

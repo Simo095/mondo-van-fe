@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router";
 import { addUser, addVehicle } from ".";
 
-export const fetchUser = token => {
+export const fetchUser = (token, navigate) => {
   return async dispatch => {
-    const navigate = useNavigate();
     try {
       const respSucces = await fetch("http://localhost:8080/users/me", {
         method: "GET",

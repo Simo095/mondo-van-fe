@@ -50,7 +50,7 @@ const Register = () => {
             <h3>Registrati per vedere i van disponibili al noleggio</h3>
             <Button
               href="/register_owner"
-              className="mb-5"
+              className="my-5"
               style={{ background: "transparent", border: "none", color: "black" }}>
               Registrati come proprietario
             </Button>

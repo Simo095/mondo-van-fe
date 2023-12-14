@@ -1,28 +1,16 @@
-import {
-  Alert,
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  FormLabel,
-  FormSelect,
-  Modal,
-  ModalHeader,
-  Row
-} from "react-bootstrap";
+import { Alert, Button, Card, Col, Container, Form, FormLabel, Modal, ModalHeader, Row } from "react-bootstrap";
 import Camper from "../../assets/Camper.png";
 import Jeep from "../../assets/Jeep.png";
 import Rooftop from "../../assets/Rooftop.png";
 import Van from "../../assets/Van.png";
 import Altro from "../../assets/Altro.png";
 
-import FlipCard from "../FlipCard";
+import FlipCard from "../../componets/stucture/FlipCard";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, addVehicle } from "../../redux/actions";
+import { addVehicle } from "../../redux/actions";
 import { useNavigate } from "react-router";
-import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
+import { RiArrowGoBackLine } from "react-icons/ri";
 import { IoArrowBackCircleOutline, IoArrowRedo } from "react-icons/io5";
 import ReactCardFlip from "react-card-flip";
 import { GrFormNextLink } from "react-icons/gr";

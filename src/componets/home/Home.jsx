@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import sfondoHome from "../../assets/VW-Giallo.jpg";
 import NavBar from "../../componets/stucture/NavBar";
-import Footer from "../Footer";
+import Footer from "../../componets/stucture/Footer";
 import FormHome from "./FormHome";
 
 const Home = () => {
