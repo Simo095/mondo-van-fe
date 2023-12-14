@@ -20,6 +20,7 @@ const Result = () => {
   const logged = useSelector(state => state.result.logged);
   const startDate = useSelector(state => state.result.startDate);
   const endDate = useSelector(state => state.result.endDate);
+  const r = useSelector(state => state.result.vehicles);
   const params = useParams();
 
   const [interni, setInterni] = useState(false);
@@ -107,7 +108,7 @@ const Result = () => {
 
   return (
     <>
-      {vehicle ? (
+      {r.length !== 0 && vehicle ? (
         <Container sm={8}>
           <Row
             style={{ height: "100vh" }}
@@ -302,7 +303,9 @@ const Result = () => {
                         {annuncio && <CardBody>Annuncio</CardBody>}
                         {prenotazione && (
                           <CardBody>
-                            <CardTitle>Prenota</CardTitle>
+                            <CardTitle>
+                              Prenota {vehicle.name} in provincia di {r[vehicle.id - 1].province}
+                            </CardTitle>
                             <CardText>
                               dal {startDate.substring(5, 11).split("-").reverse().join("-")} al{" "}
                               {endDate.substring(5, 11).split("-").reverse().join("-")} al prezzo di{" "}

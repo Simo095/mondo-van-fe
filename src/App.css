@@ -60,7 +60,7 @@ body {
 
 .Register {
   font-family: "Rowdies", sans-serif;
-  background-color: #e2b61890;
+  /* background-color: #e2b61890; */
 }
 .Login {
   font-family: "Rowdies", sans-serif;
@@ -150,6 +150,27 @@ body {
 @media (max-width: 575px) {
   .Register {
     height: 155vh !important;
+    font-size: 0.8em;
+  }
+  .Register .form-control {
+    width: 300px !important;
+  }
+  .p-stile {
+    position: unset !important;
+    top: unset !important;
+  }
+  .col-stile {
+    background-image: unset !important;
+  }
+}
+@media (max-width: 800px) {
+  .Register {
+    font-size: 0.9em;
+  }
+}
+@media (max-width: 1000px) {
+  .Register .form-control {
+    height: 100px !important;
   }
 }
 @media (max-width: 1240px) {
@@ -166,6 +187,16 @@ body {
 @media (min-width: 1240px) {
   .mediaQueryCalendario {
     display: none;
+  }
+}
+@media (min-width: 700px) {
+  .ColArrangement {
+    display: flex;
+    flex-direction: column;
+  }
+  .FormArrangement {
+    display: flex;
+    max-height: 45vh;
   }
 }
 

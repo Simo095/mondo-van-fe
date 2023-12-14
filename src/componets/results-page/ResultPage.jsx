@@ -9,7 +9,7 @@ import "../../assets/style/button.css";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { FaArrowRight, FaEuroSign } from "react-icons/fa";
 import cintura from "../../assets/icone/cinturaSicurezza.png";
-
+import { GiPositionMarker } from "react-icons/gi";
 import cover from "../../assets/user_placeholder.png";
 import CaruselVehicle from "../veicolo/CaruselVehicle";
 import { endDate, startDate } from "../../redux/actions";
@@ -115,8 +115,9 @@ const ResultPage = () => {
                                   <span className="regular-text m-0">{elem.pricePerDay} €/giorno</span>
                                 </Col>
                                 <Col className="item d-flex flex-column align-items-center pe-3">
-                                  <span className="big-text m-0">{elem.brand}</span>
-                                  <span className="regular-text m-0">{elem.model}</span>
+                                  <GiPositionMarker fontSize={18} />
+
+                                  <span className="regular-text m-0">{elem.province}</span>
                                 </Col>
                               </Row>
                             </CardFooter>

@@ -68,8 +68,11 @@ const ProfileVehicle = () => {
   return (
     <div className="ProfileVehicle">
       <Container fluid>
-        <Row>
-          <Col sm={2}>
+        <Row className="">
+          <Col
+            className="sidebarCircle"
+            style={{ width: "290px" }}
+            sm={2}>
             <SideBar />
           </Col>
           <Col sm={8}>
