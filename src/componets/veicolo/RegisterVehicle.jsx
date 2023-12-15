@@ -38,36 +38,39 @@ const RegisterVehicle = () => {
 
   const handlerForm = async e => {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const richiesta = await fetch("http://localhost:8080/vehicles/register_vehicle", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        name: firstForm.name,
-        model: firstForm.model,
-        brand: firstForm.brand,
-        sits: firstForm.sits,
-        pricePerDay: firstForm.pricePerDay,
-        supply: form.get("supply"),
-        firstEnrollment: firstForm.firstEnrollment,
-        license: firstForm.license,
-        type: typeServer,
-        transmission: form.get("transmission"),
-        displacement: form.get("displacement"),
-        kilometers: firstForm.kilometers,
-        height: form.get("height"),
-        width: form.get("width"),
-        length: form.get("length"),
-        shortDescriptions: form.get("shortDesc")
-      })
-    });
-    if (richiesta.ok) {
-      const vehicle = await richiesta.json();
-      dispatch(addVehicle(vehicle));
-      navigate(`/profile_owner`);
+    if (errorFirstForm) {
+    } else {
+      const form = new FormData(e.currentTarget);
+      const richiesta = await fetch("http://localhost:8080/vehicles/register_vehicle", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          name: firstForm.name,
+          model: firstForm.model,
+          brand: firstForm.brand,
+          sits: firstForm.sits,
+          pricePerDay: firstForm.pricePerDay,
+          supply: form.get("supply"),
+          firstEnrollment: firstForm.firstEnrollment,
+          license: firstForm.license,
+          type: typeServer,
+          transmission: form.get("transmission"),
+          displacement: form.get("displacement"),
+          kilometers: firstForm.kilometers,
+          height: form.get("height"),
+          width: form.get("width"),
+          length: form.get("length"),
+          shortDescriptions: form.get("shortDesc")
+        })
+      });
+      if (richiesta.ok) {
+        const vehicle = await richiesta.json();
+        dispatch(addVehicle(vehicle));
+        navigate(`/profile_owner`);
+      }
     }
   };
 
@@ -94,7 +97,7 @@ const RegisterVehicle = () => {
 
   return (
     <div
-      className="Register gradient-background"
+      className="Register"
       style={{ height: "100vh" }}>
       <div className="d-flex justify-content-between">
         <h1>Registrazione Van...</h1>
@@ -130,6 +133,13 @@ const RegisterVehicle = () => {
             </Modal>
           )}
           <Col sm={5}>
+            {errorFirstForm ? (
+              <>
+                <Alert variant="danger">Seleziona un tipo...</Alert>
+              </>
+            ) : (
+              <></>
+            )}
             {errorTypeServer ? (
               <>
                 <Alert variant="danger">Seleziona un tipo...</Alert>
@@ -207,7 +217,6 @@ const RegisterVehicle = () => {
                           />
                         </Form.Group>
                       </Col>
-
                       <Col className="d-flex justify-content-center gap-5">
                         <Form.Group className="mb-3">
                           <Form.Control
@@ -258,7 +267,6 @@ const RegisterVehicle = () => {
                           </Form.Select>
                         </Form.Group>
                       </Col>
-
                       <Col className="d-flex justify-content-center gap-5">
                         <Form.Group className="mb-3">
                           <Form.Select

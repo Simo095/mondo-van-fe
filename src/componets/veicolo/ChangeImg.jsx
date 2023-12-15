@@ -5,7 +5,6 @@ import { addVehicle } from "../../redux/actions";
 
 const ChangeImg = () => {
   const token = useSelector(state => state.login.token);
-  const vehicle = useSelector(state => state.vehicles.vehicle);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const vehicleFetch = async () => {
@@ -17,7 +16,6 @@ const ChangeImg = () => {
     });
     if (objVehicle.ok) {
       const vehicle = await objVehicle.json();
-
       dispatch(addVehicle(vehicle));
       navigate("/profile_vehicle");
     }

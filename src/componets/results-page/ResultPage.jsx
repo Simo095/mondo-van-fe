@@ -15,7 +15,6 @@ import CaruselVehicle from "../veicolo/CaruselVehicle";
 import { endDate, startDate } from "../../redux/actions";
 
 const ResultPage = () => {
-  const user = useSelector(state => state.login.user);
   const token = useSelector(state => state.login.token);
   const results = useSelector(state => state.result.vehicles);
   const params = useParams();
@@ -23,7 +22,7 @@ const ResultPage = () => {
   const dispatch = useDispatch();
 
   const handlerResults = () => {
-    console.log(results);
+    // console.log(results);
   };
 
   useEffect(() => {

@@ -6,7 +6,6 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useSelector } from "react-redux";
 const NavBar = () => {
   const user = useSelector(state => state.login.user);
-  const role = useSelector(state => state.login.role);
   return (
     <div className="NavBar">
       <Navbar

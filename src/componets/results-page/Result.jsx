@@ -105,6 +105,7 @@ const Result = () => {
     if (startDate && endDate) {
       calcolaGiorni();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

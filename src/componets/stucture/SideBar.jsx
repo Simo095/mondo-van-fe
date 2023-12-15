@@ -1,19 +1,17 @@
-import { Button, Col, Container, Form, Modal, Row, Spinner } from "react-bootstrap";
+import { Button, Container, Form, Modal, Spinner } from "react-bootstrap";
 import Dropzone from "react-dropzone";
 import { FiLogOut } from "react-icons/fi";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
-
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { fetchUser } from "../../redux/actions/fetchActions";
-
 import vanSide from "../../assets/icone/van-side.png";
 import lente from "../../assets/icone/lente.png";
 import blog from "../../assets/icone/Blog.png";
-
 import "../../assets/style/sidebar-button.css";
+
 const SideBar = () => {
   const user = useSelector(state => state.login.user);
   const vehicle = useSelector(state => state.vehicles.vehicle);
@@ -24,6 +22,7 @@ const SideBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClose = () => setShow(false);
+
   const handlerSubmitAvatar = async e => {
     e.preventDefault();
     const formCover = new FormData();
@@ -41,7 +40,6 @@ const SideBar = () => {
       await dispatch(fetchUser(token, navigate));
       setLoading(false);
     }
-
     handleClose();
   };
 
@@ -178,7 +176,7 @@ const SideBar = () => {
                 }}
                 className="card1"></Button>
               <Button
-                href="/profile_vehicle"
+                href={vehicle ? "/profile_vehicle" : "/register_vehicle"}
                 style={{
                   backgroundImage: `url(${vanSide})`,
                   backgroundRepeat: "no-repeat",

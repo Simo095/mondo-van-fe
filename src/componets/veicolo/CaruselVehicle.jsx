@@ -4,7 +4,6 @@ import Dropzone from "react-dropzone";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 const CaruselVehicle = ({ vehicle, cover, token, height }) => {

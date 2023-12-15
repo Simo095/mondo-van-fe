@@ -1,50 +1,27 @@
-import { Col, Container, Pagination, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import sfondoHome from "../../assets/VW-Giallo.jpg";
 import NavBar from "../../componets/stucture/NavBar";
 import Footer from "../../componets/stucture/Footer";
 import FormHome from "./FormHome";
 import { useDispatch, useSelector } from "react-redux";
-import SinglePost from "../profile-page/SinglePost";
+
 import { useEffect, useState } from "react";
 import { fetchPostHome, fetchPostHomeEmiliaRomagna } from "../../redux/actions";
-import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
 import SinglePostHome from "./SinglePostHome";
 import SinglePostEm from "./SinglePostEm";
 
 const Home = () => {
   const posts = useSelector(state => state.post.home);
   const postsEm = useSelector(state => state.post.em);
-  const user = useSelector(state => state.login.user);
+
   const dispatch = useDispatch();
   const [page, setPage] = useState();
-  const [showPost, setShowPost] = useState(false);
-  const [postText, setPostText] = useState();
-  const [modifica, setModifica] = useState(false);
-  const [idPost, setIdPost] = useState("");
-  const handleClosePost = () => setShowPost(false);
-  const handleShowPost = () => setShowPost(true);
-
-  const delPost = async postId => {
-    try {
-      console.log("cancella");
-
-      const resp = await fetch(``, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " // + token
-        }
-      });
-      if (resp.ok) {
-      }
-    } catch (error) {
-      console.log("si e' verificato un errore", error.message);
-    }
-  };
 
   useEffect(() => {
     dispatch(fetchPostHome());
     dispatch(fetchPostHomeEmiliaRomagna());
     setPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

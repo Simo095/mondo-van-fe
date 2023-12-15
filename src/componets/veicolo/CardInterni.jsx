@@ -1,6 +1,4 @@
-import { useState } from "react";
 import "../../assets/style/card-interni.css";
-import { Card } from "react-bootstrap";
 const CardInterni = ({ vehicle }) => {
   return (
     <>

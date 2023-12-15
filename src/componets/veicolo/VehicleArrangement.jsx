@@ -1,24 +1,6 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Form,
-  FormSelect,
-  Image,
-  Modal,
-  ModalHeader,
-  Row
-} from "react-bootstrap";
+import { Button, Col, Container, Form, FormSelect, Modal, ModalHeader, Row } from "react-bootstrap";
 
-import ReactCardFlip from "react-card-flip";
-
-import { RiSendPlaneFill } from "react-icons/ri";
-import { FaRegCircle } from "react-icons/fa";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { HiArrowUturnLeft } from "react-icons/hi2";
-import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,7 +20,6 @@ const VehicleArrangement = () => {
   const [wc, setWc] = useState(false);
 
   const token = useSelector(state => state.login.token);
-  const vehicle = useSelector(state => state.vehicles.vehicle);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

@@ -1,18 +1,13 @@
 import { useState } from "react";
-import { Button, Card, Col, FormGroup, Row, ToggleButton } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import ReactCardFlip from "react-card-flip";
-import { Form } from "react-router-dom";
 import { HiArrowPathRoundedSquare } from "react-icons/hi2";
-import ReactSwitch from "react-switch";
-import { TbCamper } from "react-icons/tb";
 import { FaRegSquare } from "react-icons/fa";
 import { FaRegCheckSquare } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { checkedCard1 } from "../../redux/actions";
 
 const FlipCard = ({ type, image, i, checked, setChecked, serverEnum, setForm }) => {
-  const dispatch = useDispatch();
   const [flip, setFlip] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [showCheckbox, setShowCheckbox] = useState(false);
   const handlerFlip = e => {
     setFlip(!flip);

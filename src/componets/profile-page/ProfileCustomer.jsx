@@ -6,7 +6,6 @@ import {
   Col,
   Container,
   Form,
-  Image,
   Modal,
   Nav,
   Pagination,
@@ -38,7 +37,7 @@ const ProfileCustomer = () => {
   const [loading, setLoading] = useState(false);
   const [altro, setAltro] = useState(true);
   const [notifiche, setNotifiche] = useState([]);
-  const [open, setOpen] = useState(false);
+
   const [prenotazioni, setPrenotazioni] = useState(null);
   const [loadingPre, setLoadingPre] = useState(false);
   const [postText, setPostText] = useState();
@@ -50,7 +49,6 @@ const ProfileCustomer = () => {
   const handleShowPost = () => setShowPost(true);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const modifyCover = () => setShow(true);

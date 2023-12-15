@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 const Register = () => {

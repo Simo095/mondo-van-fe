@@ -4,17 +4,13 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
-  Carousel,
   Col,
   Container,
   Form,
-  FormControl,
   FormGroup,
   Image,
-  Modal,
   Nav,
-  Row,
-  Spinner
+  Row
 } from "react-bootstrap";
 import SideBar from "../../componets/stucture/SideBar";
 
