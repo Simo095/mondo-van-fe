@@ -118,8 +118,6 @@ const ProfileOwner = () => {
     });
     if (risp.ok) {
       const pre = await risp.json();
-      console.log(pre.content);
-      console.log("ciao");
       setPrenotazioni(pre.content);
       if (pre) {
         setLoadingPre(false);
@@ -344,12 +342,11 @@ const ProfileOwner = () => {
                         <Card.Header>Prenotazioni</Card.Header>
                         <Row className="d-flex flex-grow-1">
                           {loadingPre ? (
-                            <Spinner variant="danger" />
-                          ) : (
-                            prenotazioni &&
+                            <Col className="d-flex justify-content-center">
+                              <Spinner variant="danger" />
+                            </Col>
+                          ) : prenotazioni && prenotazioni.length !== 0 ? (
                             prenotazioni.map(pre => {
-                              console.log(pre);
-                              console.group("ciao");
                               return (
                                 <Col
                                   key={pre.id}
@@ -395,13 +392,17 @@ const ProfileOwner = () => {
                                 </Col>
                               );
                             })
+                          ) : (
+                            <Col className="d-flex justify-content-center">
+                              <p>Nessuna prenotazione da parte dei Van Travelers</p>
+                            </Col>
                           )}
                         </Row>
                       </Card>
                     </Col>
                     <Col className="d-flex flex-column overflow-y-scroll justify-content-center">
                       <Container>
-                        {posts ? (
+                        {posts && posts.length !== 0 ? (
                           <>
                             {posts
                               .filter(elem => elem.author.id === user.id)
@@ -420,7 +421,7 @@ const ProfileOwner = () => {
                                   setIdPost={setIdPost}
                                 />
                               ))}
-                            <hr />
+
                             {/* {posts.toReversed().map(
                               (elem, i) =>
                                 i >= page * 5 - 5 &&
@@ -441,7 +442,11 @@ const ProfileOwner = () => {
                             )} */}
                           </>
                         ) : (
-                          <></>
+                          <Row>
+                            <Col className="d-flex justify-content-center">
+                              <p>Nessun post...</p>
+                            </Col>
+                          </Row>
                         )}
                       </Container>
                     </Col>

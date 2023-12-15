@@ -14,6 +14,7 @@ import cover from "../../assets/user_placeholder.png";
 import cambio from "../../assets/icone/Cambio.png";
 import patente from "../../assets/icone/Patente.png";
 import cintura from "../../assets/icone/cinturaSicurezza.png";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 const Result = () => {
   const token = useSelector(state => state.login.token);
@@ -112,26 +113,40 @@ const Result = () => {
         <Container sm={8}>
           <Row
             style={{ height: "100vh" }}
-            className="d-flex oV overflow-y-scroll">
-            <Col>
-              <Row className="d-flex flex-column align-items-center mt-5">
-                <h4>
-                  {vehicle.name}
-                  {" - "}
-                  {vehicle.type === "CAMPERIZED_JEEP"
-                    ? "JEEP ATTREZZATA"
-                    : vehicle.type === "ROOFTOOP_CAR"
-                    ? "MACCHINA ATTREZZATA"
-                    : vehicle.type === "VAN"
-                    ? "VAN"
-                    : vehicle.type === "CAMPER"
-                    ? "CAMPER"
-                    : vehicle.type === "OTHER"
-                    ? "ALTRO"
-                    : ""}
-                  {" - "}
-                  {vehicle.shortDescriptions ? vehicle.shortDescriptions : ""}
-                </h4>
+            className="d-flex oV  overflow-y-scroll">
+            <Col className="">
+              <Row className="d-flex Result flex-column align-items-center mt-5">
+                <div className="d-flex justify-content-between mb-5 position-relative">
+                  <h3>
+                    {vehicle.name}
+                    {" - "}
+                    {vehicle.type === "CAMPERIZED_JEEP"
+                      ? "JEEP ATTREZZATA"
+                      : vehicle.type === "ROOFTOOP_CAR"
+                      ? "MACCHINA ATTREZZATA"
+                      : vehicle.type === "VAN"
+                      ? "VAN"
+                      : vehicle.type === "CAMPER"
+                      ? "CAMPER"
+                      : vehicle.type === "OTHER"
+                      ? "ALTRO"
+                      : ""}
+                    {" - "}
+                    {vehicle.shortDescriptions ? vehicle.shortDescriptions : ""}
+                  </h3>
+
+                  <div className="d-flex align-items-center">
+                    <IoArrowBackCircleOutline
+                      onClick={() => {
+                        console.log(params);
+                        navigate(-1);
+                      }}
+                      className="fs-1"
+                      style={{ cursor: "pointer", zIndex: "1" }}
+                    />
+                  </div>
+                </div>
+
                 <Col className="mb-3">
                   <CaruselVehicle
                     vehicle={vehicle}
@@ -300,11 +315,16 @@ const Result = () => {
                             <CardInterni vehicle={vehicle}></CardInterni>
                           </Card.Body>
                         )}
-                        {annuncio && <CardBody>Annuncio</CardBody>}
+                        {annuncio && (
+                          <CardBody>{vehicle.announcement ? vehicle.announcement : "Nessun annuncio"}</CardBody>
+                        )}
                         {prenotazione && (
                           <CardBody>
                             <CardTitle>
-                              Prenota {vehicle.name} in provincia di {r[vehicle.id - 1].province}
+                              Prenota {vehicle.name} in provincia di{" "}
+                              {r.map((elem, i) => {
+                                return elem.name === vehicle.name ? r[i].province : "";
+                              })}
                             </CardTitle>
                             <CardText>
                               dal {startDate.substring(5, 11).split("-").reverse().join("-")} al{" "}

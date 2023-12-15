@@ -7,6 +7,8 @@ export const LOGGED = "LOGGED";
 export const ADD_STARTDATE = "ADD_STARTDATE";
 export const ADD_ENDDATE = "ADD_ENDDATE";
 export const ADD_POSTS = "ADD_POSTS";
+export const ADD_POSTS_HOME = "ADD_POSTS_HOME";
+export const ADD_POSTS_EM = "ADD_POSTS_EM";
 export const addToken = token => ({ type: ADD_TOKEN, payload: token });
 export const addRole = role => ({ type: ADD_ROLE, payload: role });
 export const addUser = user => ({ type: ADD_USER, payload: user });
@@ -16,6 +18,8 @@ export const logged = condition => ({ type: LOGGED, payload: condition });
 export const startDate = startDate => ({ type: ADD_STARTDATE, payload: startDate });
 export const endDate = endDate => ({ type: ADD_ENDDATE, payload: endDate });
 export const addPosts = data => ({ type: ADD_POSTS, payload: data });
+export const addPostsHome = data => ({ type: ADD_POSTS_HOME, payload: data });
+export const addPostsEmiliaRomagna = data => ({ type: ADD_POSTS_EM, payload: data });
 
 export const fetchPost = token => {
   return async dispatch => {
@@ -29,6 +33,39 @@ export const fetchPost = token => {
       if (risp.ok) {
         const data = await risp.json();
         dispatch(addPosts(data.content));
+      }
+    } catch (error) {
+      console.log("si e' verificato un errore", error.message);
+    }
+  };
+};
+export const fetchPostHome = () => {
+  return async dispatch => {
+    try {
+      const risp = await fetch("http://localhost:8080/sign_in/home", {
+        method: "GET"
+      });
+      if (risp.ok) {
+        const data = await risp.json();
+        console.log(data.content);
+        dispatch(addPostsHome(data.content));
+      }
+    } catch (error) {
+      console.log("si e' verificato un errore", error.message);
+    }
+  };
+};
+export const fetchPostHomeEmiliaRomagna = () => {
+  return async dispatch => {
+    try {
+      const risp = await fetch("https://emiliaromagnaturismo.it/opendata/v1/itineraries?limit=6&time=48'", {
+        method: "GET"
+      });
+      if (risp.ok) {
+        const data = await risp.json();
+        console.log("em");
+        console.log(data.data);
+        dispatch(addPostsEmiliaRomagna(data.data));
       }
     } catch (error) {
       console.log("si e' verificato un errore", error.message);

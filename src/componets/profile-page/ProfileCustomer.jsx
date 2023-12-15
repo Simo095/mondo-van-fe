@@ -46,8 +46,8 @@ const ProfileCustomer = () => {
   const [idPost, setIdPost] = useState("");
   const [page, setPage] = useState();
   const [showPost, setShowPost] = useState(false);
-  const handleClosePost = () => setShow(false);
-  const handleShowPost = () => setShow(true);
+  const handleClosePost = () => setShowPost(false);
+  const handleShowPost = () => setShowPost(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -292,9 +292,10 @@ const ProfileCustomer = () => {
                         <Row className="d-flex flex-grow-1">
                           <Card.Body className="d-flex">
                             {loadingPre ? (
-                              <Spinner variant="danger" />
-                            ) : (
-                              prenotazioni &&
+                              <Col className="d-flex justify-content-center">
+                                <Spinner variant="danger" />
+                              </Col>
+                            ) : prenotazioni && prenotazioni.length !== 0 ? (
                               prenotazioni.map(pre => {
                                 console.log(pre);
                                 return (
@@ -330,6 +331,10 @@ const ProfileCustomer = () => {
                                   </Col>
                                 );
                               })
+                            ) : (
+                              <Col className="d-flex justify-content-center">
+                                <p>Non effettuato delle prenotazioni</p>
+                              </Col>
                             )}
                           </Card.Body>
                         </Row>

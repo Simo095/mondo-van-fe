@@ -1,7 +1,9 @@
-import { ADD_POSTS } from "../actions";
+import { ADD_POSTS, ADD_POSTS_EM, ADD_POSTS_HOME } from "../actions";
 
 const initialState = {
-  data: []
+  data: [],
+  home: [],
+  em: []
 };
 
 const postReducers = (state = initialState, action) => {
@@ -10,6 +12,16 @@ const postReducers = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload
+      };
+    case ADD_POSTS_HOME:
+      return {
+        ...state,
+        home: action.payload
+      };
+    case ADD_POSTS_EM:
+      return {
+        ...state,
+        em: action.payload
       };
     default:
       return state;

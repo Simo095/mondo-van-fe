@@ -1,4 +1,6 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Image, Row } from "react-bootstrap";
+import logo from "../../assets/LogoVanWorld.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -12,31 +14,33 @@ const Footer = () => {
           <Col className="d-flex flex-grow-1">
             <Row className="flex-grow-1 d-flex">
               <Col sm={4}>
-                <Row className="d-flex flex-column">
-                  <Col>Elemento 1.1</Col>
-                  <Col>Elemento 1.1</Col>
-                  <Col>Elemento 1.1</Col>
+                <Row className="d-flex flex-column mt-5">
+                  <Col>Informazioni utili</Col>
+                  <Col>Contattaci</Col>
+                  <Col>Termini e condizioni</Col>
+                  <Col>
+                    Gli itinerari dell'Emilia Romagna sono presi dal sito{" "}
+                    <Link to="emiliaromagnaturimo.it">emiliaromagnaturismo.it</Link>
+                  </Col>
+                </Row>
+              </Col>
+              <Col>
+                <Row className="d-flex flex-column mt-5">
+                  <Col>Seguici sui social</Col>
+                  <Col>Linkedin</Col>
+                  <Col>Instagram</Col>
                 </Row>
               </Col>
               <Col>
                 <Row className="d-flex flex-column">
-                  <Col>Elemento 1.1</Col>
-                  <Col>Elemento 1.1</Col>
-                  <Col>Elemento 1.1</Col>
+                  <Image src={logo} />
                 </Row>
               </Col>
               <Col>
-                <Row className="d-flex flex-column">
-                  <Col>Elemento 1.1</Col>
-                  <Col>Elemento 1.1</Col>
-                  <Col>Elemento 1.1</Col>
-                </Row>
-              </Col>
-              <Col>
-                <Row className="d-flex flex-column">
-                  <Col>Elemento 1.1</Col>
-                  <Col>Elemento 1.1</Col>
-                  <Col>Elemento 1.1</Col>
+                <Row className="d-flex flex-column mt-5">
+                  <Col>Van World</Col>
+                  <Col>Il tuo portale per il viaggio in camper</Col>
+                  <Col>Copyright © 2023 Van World</Col>
                 </Row>
               </Col>
             </Row>

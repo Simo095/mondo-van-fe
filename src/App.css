@@ -60,6 +60,7 @@ body {
 
 .Register {
   font-family: "Rowdies", sans-serif;
+  background-color: #e2b61890;
   /* background-color: #e2b61890; */
 }
 .Login {
@@ -105,6 +106,7 @@ body {
 
 .ResultPage {
   font-family: "Rethink Sans", sans-serif;
+  background-color: #e2b61890;
 }
 
 /* MEDIA SCREEN---------------------------- */
@@ -189,6 +191,12 @@ body {
     display: none;
   }
 }
+/* @media (min-width: 1400px) {
+  .Result {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+} */
 @media (min-width: 700px) {
   .ColArrangement {
     display: flex;

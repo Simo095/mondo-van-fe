@@ -4,7 +4,7 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 
 import logo from "../../assets/LogoVanWorld.png";
-import comunity from "../../assets/Comunity.avif";
+import comunity from "../../assets/Comunity.jpeg";
 
 const ComeFunziona = () => {
   return (
@@ -53,7 +53,6 @@ const ComeFunziona = () => {
           <Col>
             <Image
               thumbnail
-              width={400}
               src={comunity}
             />
           </Col>

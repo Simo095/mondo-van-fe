@@ -90,7 +90,7 @@ const ResultPage = () => {
                               }}
                               className="animated-button">
                               <FaArrowRight className="arr-2" />
-                              <span className="text">Vai alla scheda</span>
+                              <span className="text mb-2">Vai alla scheda</span>
                               <span className="circle"></span>
                               <FaArrowRight className="arr-1" />
                             </Button>
