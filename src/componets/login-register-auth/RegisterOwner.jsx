@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import {
   Alert,
   Button,
-  Card,
   Col,
   Container,
   Form,
@@ -20,6 +19,7 @@ import {
 } from "react-bootstrap";
 import ReactCardFlip from "react-card-flip";
 import "../../assets/style/loader.css";
+import { fetchProvince, fetchTown } from "../../redux/actions/fetchProvince";
 
 const RegisterOwner = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,6 @@ const RegisterOwner = () => {
   const [town, setTown] = useState();
   const [flip, setFlip] = useState(false);
   const [firstForm, setFirstForm] = useState(null);
-  const [errorFirstForm, setErrorFirstForm] = useState(false);
   const [rispOk, setRispOk] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -78,49 +77,26 @@ const RegisterOwner = () => {
       };
       setFirstForm(obj);
     }
-    setErrorFirstForm(true);
   };
 
-  const fetchProvince = async e => {
-    const risposta = await fetch("http://localhost:8080/sign_in/prov", {
-      method: "GET"
-    });
-    if (risposta.ok) {
-      const data = await risposta.json();
-      setProvinces(data.content);
-    } else {
-      //QUI PER GESTIRE ERRORI
-    }
-  };
   const handleProvinceChange = async event => {
     event.preventDefault();
     setProvince(event.target.value);
-    const risposta = await fetch("http://localhost:8080/sign_in/towns/" + event.target.value, {
-      method: "GET"
-    });
-    if (risposta.ok) {
-      const data = await risposta.json();
-      console.log(data.content);
-      setTowns(data.content);
-    }
+    dispatch(fetchTown(event.target.value, setTowns));
   };
   const handleTownsChange = e => {
     e.preventDefault();
     setTown(e.target.value);
-    console.log(town);
   };
 
-  const handlerFlip = e => {
-    setFlip(!flip);
-  };
-
+  const handlerFlip = () => setFlip(!flip);
   useEffect(() => {
-    fetchProvince();
+    dispatch(fetchProvince(setProvinces));
   }, []);
 
   return (
     <div
-      className="Register gradient-background"
+      className="Register"
       style={{ height: "100vh" }}>
       <div className="d-flex justify-content-between">
         <h1>Registrati ed entra a far parte della comunity!</h1>
@@ -135,7 +111,7 @@ const RegisterOwner = () => {
         </div>
       </div>
       <Container>
-        <Row className="d-flex flex-grow-1 justify-content-center align-items-center">
+        <Row className="RegisterRow mt-5 d-flex flex-grow-1 justify-content-center align-items-center">
           {rispOk && (
             <Modal
               show={rispOk}
@@ -143,7 +119,7 @@ const RegisterOwner = () => {
               style={{ color: "#75B798" }}
               onHide={() => {
                 setRispOk(false);
-                navigate("/");
+                navigate("/profile_owner");
               }}>
               <ModalHeader
                 style={{ background: "#051C12", borderColor: "green" }}
@@ -165,223 +141,226 @@ const RegisterOwner = () => {
             />
           </Col>
           <Col
-            className="d-flex justify-content-center align-items-center"
-            sm={7}
-            style={{
-              overflow: "unset",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "470px",
-              backgroundPositionY: "66%",
-              backgroundPositionX: "83%",
-              height: "90vh"
-            }}>
+            className="ColRegisterForm d-flex justify-content-center align-items-center"
+            sm={7}>
             {loading ? (
               <div className="d-flex flex-column">
                 <p> Registrazione in corso...</p>
                 <Alert
-                  variant="warning"
+                  variant="light"
                   className="loader"></Alert>
               </div>
             ) : (
               <></>
             )}
-            <ReactCardFlip
-              isFlipped={flip}
-              containerClassName="d-flex "
-              containerStyle={{}}
-              cardStyles={{}}
-              flipDirection="horizontal">
-              <Card
-                className="d-flex align-items-center"
-                style={{
-                  background: "#00000000",
-                  border: "none"
-                }}>
-                <Card.Header className="w-75 text-center border-0">
-                  Inserisci i tuoi dati e dopo potrai inserire i dettagli del tuo mezzo
-                </Card.Header>
-                <Card.Body>
-                  <Row className="d-flex flex-column">
-                    <Form onSubmit={handlerFirstForm}>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            type="text"
-                            required
-                            name="name"
-                            id="name"
-                            placeholder="Nome..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            type="text"
-                            required
-                            name="surname"
-                            id="surname"
-                            placeholder="Cognome..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            style={{ width: "205px" }}
-                            type="date"
-                            name="date"
-                            required
-                            id="date"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            type="email"
-                            required
-                            name="email"
-                            id="email"
-                            placeholder="Inserisci un indirizzo email valido..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            name="password"
-                            required
-                            id="password"
-                            type="password"
-                            placeholder="Scegli una password..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            name="passwordConfirm"
-                            id="passwordConfirm"
-                            required
-                            type="password"
-                            placeholder="Conferma password"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Button
-                          style={{ background: "#00000000", border: "white" }}
-                          type="submit">
-                          <GrFormNextLink style={{ cursor: "pointer", color: "black", fontSize: "2em" }} />
-                        </Button>
-                      </Col>
-                    </Form>
-                  </Row>
-                </Card.Body>
-              </Card>
+            <Container className="CardContainerRegister">
+              <div className="circle1"></div>
+              <div className="circle2"></div>
+              <Container className="ContainerCard">
+                <Row className="log-cardRegister">
+                  <Col className="d-flex flex-column align-items-center justify-content-center">
+                    <p>Registrati e dopo potrai inserire i dettagli del tuo mezzo</p>
+                  </Col>
+                  <ReactCardFlip
+                    isFlipped={flip}
+                    containerClassName="d-flex "
+                    containerStyle={{}}
+                    cardStyles={{}}
+                    flipDirection="horizontal">
+                    <div
+                      className="d-flex align-items-center"
+                      style={{
+                        background: "#00000000",
+                        border: "none"
+                      }}>
+                      {/* <Card.Header className="w-75 text-center border-0">
+                        Inserisci i tuoi dati e dopo potrai inserire i dettagli del tuo mezzo
+                      </Card.Header> */}
+                      <div>
+                        <Row className="d-flex flex-column">
+                          <Form onSubmit={handlerFirstForm}>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  type="text"
+                                  required
+                                  name="name"
+                                  id="name"
+                                  placeholder="Nome..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  type="text"
+                                  required
+                                  name="surname"
+                                  id="surname"
+                                  placeholder="Cognome..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  style={{ width: "205px" }}
+                                  type="date"
+                                  name="date"
+                                  required
+                                  id="date"
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  type="email"
+                                  required
+                                  name="email"
+                                  id="email"
+                                  placeholder="Inserisci un indirizzo email valido..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  name="password"
+                                  required
+                                  id="password"
+                                  type="password"
+                                  placeholder="Scegli una password..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  name="passwordConfirm"
+                                  id="passwordConfirm"
+                                  required
+                                  type="password"
+                                  placeholder="Conferma password"
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Button
+                                style={{ background: "#00000000", border: "white" }}
+                                type="submit">
+                                <GrFormNextLink style={{ cursor: "pointer", color: "black", fontSize: "2em" }} />
+                              </Button>
+                            </Col>
+                          </Form>
+                        </Row>
+                      </div>
+                    </div>
 
-              <Card
-                className="d-flex"
-                style={{
-                  background: "#00000000",
-                  border: "none"
-                }}>
-                <Card.Header className="text-center border-0">Completa con la via di residenza</Card.Header>
-                <Card.Body>
-                  <Row className="d-flex flex-column">
-                    <Form onSubmit={handlerSubmit}>
-                      <Col className="d-flex gap-5 justify-content-center">
-                        <Form.Group className="mb-3">
-                          <FormSelect
-                            style={{ width: "250px" }}
-                            name="province"
-                            value={province}
-                            onChange={handleProvinceChange}>
-                            <option>seleziona una provincia</option>
-                            {provinces ? (
-                              provinces.map((province, index) => (
-                                <option
-                                  key={index}
-                                  value={province.abbreviation}>
-                                  {province.name}
-                                </option>
-                              ))
-                            ) : (
-                              <></>
-                            )}
-                          </FormSelect>
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex gap-5 justify-content-center">
-                        <Form.Group className="mb-3">
-                          <FormSelect
-                            style={{ width: "250px" }}
-                            name="town"
-                            value={town}
-                            onChange={handleTownsChange}>
-                            <option>prima seleziona una provincia</option>
-                            {towns ? (
-                              towns.map((town, index) => (
-                                <option
-                                  key={index}
-                                  value={town.id}>
-                                  {town.name}
-                                </option>
-                              ))
-                            ) : (
-                              <></>
-                            )}
-                          </FormSelect>
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex gap-5 justify-content-center">
-                        <Form.Group className="mb-3">
-                          <FormLabel>Inserisci la via</FormLabel>
-                          <Form.Control
-                            type="text"
-                            name="street"
-                            id="street"
-                            placeholder="via/piazza/vicolo..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex gap-5 justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            type="text"
-                            name="houseNumber"
-                            id="houseNumber"
-                            placeholder="Numero civico..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex gap-5 justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            type="text"
-                            name="zipCode"
-                            id="zipCode"
-                            placeholder="CAP.."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex gap-5 justify-content-center align-items-center">
-                        <RiArrowGoBackLine
-                          style={{ cursor: "pointer", fontSize: "2em" }}
-                          onClick={handlerFlip}
-                        />
-                        <Button
-                          style={{ background: "#00000000", border: "white" }}
-                          type="submit">
-                          <IoArrowRedo style={{ cursor: "pointer", color: "#000000", fontSize: "2em" }} />
-                        </Button>
-                      </Col>
-                    </Form>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </ReactCardFlip>
+                    <div
+                      className="d-flex"
+                      style={{
+                        background: "#00000000",
+                        border: "none"
+                      }}>
+                      {/* <Card.Header className="text-center border-0">Completa con la via di residenza</Card.Header> */}
+                      <div>
+                        <Row className="d-flex flex-column">
+                          <Form onSubmit={handlerSubmit}>
+                            <Col className="d-flex gap-5 justify-content-center">
+                              <Form.Group className="mb-3">
+                                <FormSelect
+                                  style={{ width: "250px" }}
+                                  name="province"
+                                  value={province}
+                                  onChange={handleProvinceChange}>
+                                  <option>seleziona una provincia</option>
+                                  {provinces ? (
+                                    provinces.map((province, index) => (
+                                      <option
+                                        key={index}
+                                        value={province.abbreviation}>
+                                        {province.name}
+                                      </option>
+                                    ))
+                                  ) : (
+                                    <></>
+                                  )}
+                                </FormSelect>
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex gap-5 justify-content-center">
+                              <Form.Group className="mb-3">
+                                <FormSelect
+                                  style={{ width: "250px" }}
+                                  name="town"
+                                  value={town}
+                                  onChange={handleTownsChange}>
+                                  <option>prima seleziona una provincia</option>
+                                  {towns ? (
+                                    towns.map((town, index) => (
+                                      <option
+                                        key={index}
+                                        value={town.id}>
+                                        {town.name}
+                                      </option>
+                                    ))
+                                  ) : (
+                                    <></>
+                                  )}
+                                </FormSelect>
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex gap-5 justify-content-center">
+                              <Form.Group className="mb-3">
+                                <FormLabel>Inserisci la via</FormLabel>
+                                <Form.Control
+                                  type="text"
+                                  name="street"
+                                  id="street"
+                                  placeholder="via/piazza/vicolo..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex gap-5 justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  type="text"
+                                  name="houseNumber"
+                                  id="houseNumber"
+                                  placeholder="Numero civico..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex gap-5 justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  type="text"
+                                  name="zipCode"
+                                  id="zipCode"
+                                  placeholder="CAP.."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex gap-5 justify-content-center align-items-center">
+                              <RiArrowGoBackLine
+                                style={{ cursor: "pointer", fontSize: "2em" }}
+                                onClick={handlerFlip}
+                              />
+                              <Button
+                                style={{ background: "#00000000", border: "white" }}
+                                type="submit">
+                                <IoArrowRedo style={{ cursor: "pointer", color: "#000000", fontSize: "2em" }} />
+                              </Button>
+                            </Col>
+                          </Form>
+                        </Row>
+                      </div>
+                    </div>
+                  </ReactCardFlip>
+                </Row>
+              </Container>
+            </Container>
           </Col>
         </Row>
       </Container>

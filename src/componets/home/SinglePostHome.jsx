@@ -3,7 +3,7 @@ import { Col, Image, Row } from "react-bootstrap";
 const SinglePostHome = ({ elem }) => {
   return (
     elem && (
-      <div className="border border-1 rounded-3 shadow my-3 p-3 bg-light">
+      <div className="SinglePost border border-1 rounded-3 shadow my-3 p-3 bg-light">
         <Row className="mb-2">
           <Col
             sm={2}
@@ -26,7 +26,13 @@ const SinglePostHome = ({ elem }) => {
             <div className="d-flex flex-column">
               <p
                 className="w-100 mb-0"
-                style={{ whiteSpace: "wrap", textOverflow: "ellipsis", overflow: "hidden", fontSize: "18px" }}>
+                style={{
+                  cursor: "pointer",
+                  whiteSpace: "wrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  fontSize: "15px"
+                }}>
                 {elem.title}
               </p>
             </div>

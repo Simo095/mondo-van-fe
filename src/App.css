@@ -1,13 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;700&display=swap");
-body {
-}
+
 .oV::-webkit-scrollbar {
   color: #00000000;
 }
 
 .carousel-control-next {
   top: 10%;
+}
+.carousel-control-prev {
+  top: 11%;
 }
 
 .cerchio {
@@ -35,8 +37,6 @@ body {
 }
 
 /* Navbar-- */
-.NavBar {
-}
 
 .logo {
   font-family: "Rowdies", sans-serif;
@@ -57,11 +57,12 @@ body {
   overflow: hidden;
 }
 /* Navbar-- */
+.NavBar {
+  font-family: "Rowdies", sans-serif;
+}
 
 .Register {
   font-family: "Rowdies", sans-serif;
-  background-color: #e2b61890;
-  /* background-color: #e2b61890; */
 }
 .Login {
   font-family: "Rowdies", sans-serif;
@@ -70,18 +71,28 @@ body {
 .ProfileOwner {
   font-family: "Rowdies", sans-serif;
 }
-.ComeFunziona {
+.SinglePost {
+  font-family: "Rethink Sans", sans-serif;
+}
+.SinglePostER {
+  text-decoration: none;
+  color: black;
+  font-family: "Rethink Sans", sans-serif;
+}
+.ComeFunziona p {
+  font-family: "Rethink Sans", sans-serif;
+}
+.ComeFunziona h3 {
   font-family: "Rowdies", sans-serif;
-  background-color: #e2b61890;
 }
 .Footer {
   color: #000000;
 }
 
-.shadow-p {
+/* .shadow-p {
   box-shadow: inset 0px 0px 100px -1px #0000007b;
   border-radius: 5px;
-}
+} */
 
 .color-link-nav {
   color: white;
@@ -94,10 +105,6 @@ body {
   background-color: rgb(10, 31, 56);
   scale: 1.005;
 }
-.bg_mui {
-  background: rgb(33, 28, 30);
-  background: radial-gradient(circle, rgba(33, 28, 30, 1) 0%, rgba(10, 31, 56, 1) 100%);
-}
 
 .event-container {
   flex: 1;
@@ -106,13 +113,21 @@ body {
 
 .ResultPage {
   font-family: "Rethink Sans", sans-serif;
-  background-color: #e2b61890;
 }
 
 /* MEDIA SCREEN---------------------------- */
 @media (min-width: 990px) {
   .btn-nav-none {
     display: none !important;
+  }
+}
+@media (max-width: 996px) {
+  .RegisterRow {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .ColRegisterForm {
+    margin-top: 2.5rem;
   }
 }
 @media (max-width: 990px) {
@@ -154,7 +169,7 @@ body {
     height: 155vh !important;
     font-size: 0.8em;
   }
-  .Register .form-control {
+  .Register textarea {
     width: 300px !important;
   }
   .p-stile {
@@ -171,7 +186,7 @@ body {
   }
 }
 @media (max-width: 1000px) {
-  .Register .form-control {
+  .Register textarea {
     height: 100px !important;
   }
 }
@@ -207,7 +222,18 @@ body {
     max-height: 45vh;
   }
 }
-
+.RegisterVan {
+  font-family: "Rethink Sans", sans-serif;
+  letter-spacing: 0.001px;
+}
+.RegisterVan h1,
+h4 {
+  font-family: "Rowdies", sans-serif;
+}
+textarea {
+  border: none !important;
+  background-color: #fff9ff !important;
+}
 /* ---------------------------- */
 
 /* ----------CALENDAR REACT------------------ */

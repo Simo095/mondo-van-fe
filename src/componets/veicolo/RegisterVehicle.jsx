@@ -1,10 +1,11 @@
-import { Alert, Button, Card, Col, Container, Form, FormLabel, Modal, ModalHeader, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, FormLabel, Modal, ModalHeader, Row } from "react-bootstrap";
 import Camper from "../../assets/icone/Camper.png";
 import Jeep from "../../assets/icone/Jeep.png";
 import Rooftop from "../../assets/icone/Rooftop.png";
 import Van from "../../assets/icone/Van.png";
 import Altro from "../../assets/icone/Altro.png";
 
+import ReactCardFlip from "react-card-flip";
 import FlipCard from "../../componets/stucture/FlipCard";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +13,6 @@ import { addVehicle } from "../../redux/actions";
 import { useNavigate } from "react-router";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { IoArrowBackCircleOutline, IoArrowRedo } from "react-icons/io5";
-import ReactCardFlip from "react-card-flip";
 import { GrFormNextLink } from "react-icons/gr";
 
 const RegisterVehicle = () => {
@@ -23,6 +23,7 @@ const RegisterVehicle = () => {
   const [typeServer, setTypeServer] = useState("");
   const [errorTypeServer, setErrorTypeServer] = useState(false);
   const [rispOk, setRispOk] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [flip, setFlip] = useState(false);
   const [firstForm, setFirstForm] = useState(null);
   const [errorFirstForm, setErrorFirstForm] = useState(false);
@@ -38,7 +39,10 @@ const RegisterVehicle = () => {
 
   const handlerForm = async e => {
     e.preventDefault();
+    setLoading(true);
     if (errorFirstForm) {
+      setErrorTypeServer(true);
+      handlerFlip();
     } else {
       const form = new FormData(e.currentTarget);
       const richiesta = await fetch("http://localhost:8080/vehicles/register_vehicle", {
@@ -69,7 +73,8 @@ const RegisterVehicle = () => {
       if (richiesta.ok) {
         const vehicle = await richiesta.json();
         dispatch(addVehicle(vehicle));
-        navigate(`/profile_owner`);
+        setRispOk(true);
+        setLoading(false);
       }
     }
   };
@@ -133,26 +138,21 @@ const RegisterVehicle = () => {
             </Modal>
           )}
           <Col sm={5}>
-            {errorFirstForm ? (
-              <>
-                <Alert variant="danger">Seleziona un tipo...</Alert>
-              </>
-            ) : (
-              <></>
-            )}
-            {errorTypeServer ? (
-              <>
-                <Alert variant="danger">Seleziona un tipo...</Alert>
-              </>
-            ) : (
-              <></>
-            )}
+            {errorTypeServer ? <Alert variant="danger">Seleziona una tipologia...</Alert> : <></>}
             <span>seleziona la tipologia del tuo van</span>
-            <Row className="d-flex justify-content-center mt-3">
+            <Row
+              sm={1}
+              md={2}
+              lg={3}
+              className="mt-3">
               {typeForm.map((x, i) => (
                 <Col
                   key={i}
-                  className="d-flex justify-content-center mt-2">
+                  className="mt-2"
+                  onClick={() => {
+                    setErrorFirstForm(false);
+                    setErrorTypeServer(false);
+                  }}>
                   <FlipCard
                     type={typeForm[i]}
                     setForm={setTypeServer}
@@ -167,246 +167,265 @@ const RegisterVehicle = () => {
             </Row>
           </Col>
           <Col
-            className="d-flex justify-content-center align-items-center"
+            className="d-flex mt-5 justify-content-center align-items-center"
             sm={7}>
-            <ReactCardFlip
-              isFlipped={flip}
-              containerClassName="d-flex "
-              containerStyle={{}}
-              cardStyles={{}}
-              flipDirection="horizontal">
-              <Card
-                className="d-flex "
-                style={{
-                  background: "#00000000",
-                  border: "none"
-                }}>
-                <Card.Header className="text-center border-0">Compila i campi</Card.Header>
-                <Card.Body>
-                  <Row className="d-flex flex-column">
-                    <Form onSubmit={handlerFirstForm}>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            name="name"
-                            id="name"
-                            type="text"
-                            placeholder="Nome..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            type="text"
-                            name="brand"
-                            id="brand"
-                            required
-                            placeholder="Marca..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            type="text"
-                            name="model"
-                            id="model"
-                            required
-                            placeholder="Modello..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            name="kilometers"
-                            id="kilometers"
-                            type="text"
-                            required
-                            placeholder="KM..."
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            name="pricePerDay"
-                            id="pricePerDay"
-                            type="text"
-                            required
-                            placeholder="€/Giorno"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <FormLabel>Anni del mezzo, inserisci data</FormLabel>
-                          <Form.Control
-                            style={{ width: "205px" }}
-                            type="date"
-                            required
-                            name="firstEnrollment"
-                            id="firstEnrollment"
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Select
-                            style={{ width: "205px" }}
-                            name="sits"
-                            id="sits"
-                            required>
-                            <option>Posti in cabina</option>
-                            <option value="2">2 posti a sedere</option>
-                            <option value="3">3 posti a sedere</option>
-                            <option value="4">4 posti a sedere</option>
-                            <option value="5">5 posti a sedere</option>
-                            <option value="6">6 posti a sedere</option>
-                          </Form.Select>
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Select
-                            style={{ width: "205px" }}
-                            id="license"
-                            name="license"
-                            required>
-                            <option>Seleziona una patente</option>
-                            <option value="B">B</option>
-                            <option value="B_96">B 96</option>
-                            <option value="C">C</option>
-                            <option value="CE">CE</option>
-                            <option value="CD">CD</option>
-                            <option value="CDE">CDE</option>
-                          </Form.Select>
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Button
-                          style={{ background: "#00000000", border: "white" }}
-                          type="submit">
-                          <GrFormNextLink style={{ cursor: "pointer", color: "black", fontSize: "2em" }} />
-                        </Button>
-                      </Col>
-                    </Form>
-                  </Row>
-                </Card.Body>
-              </Card>
+            {loading ? (
+              <div className="d-flex flex-column">
+                <p> Registrazione in corso...</p>
+                <Alert
+                  variant="light"
+                  className="loader"></Alert>
+              </div>
+            ) : (
+              <></>
+            )}
+            <Container className="CardContainerRegister mt-5 ">
+              <div className="circle1"></div>
+              <div className="circle2"></div>
+              <Container className="ContainerCard">
+                <Row className="log-cardRegister">
+                  <Col className="d-flex flex-column align-items-center justify-content-center">
+                    <p>Dettagli del tuo mezzo</p>
+                  </Col>
+                  <ReactCardFlip
+                    isFlipped={flip}
+                    containerClassName="d-flex "
+                    containerStyle={{}}
+                    cardStyles={{}}
+                    flipDirection="horizontal">
+                    <div
+                      className="d-flex "
+                      style={{
+                        background: "#00000000",
+                        border: "none"
+                      }}>
+                      <div>
+                        <Row className="d-flex flex-column">
+                          <Form onSubmit={handlerFirstForm}>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  name="name"
+                                  id="name"
+                                  type="text"
+                                  placeholder="Nome..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  type="text"
+                                  name="brand"
+                                  id="brand"
+                                  required
+                                  placeholder="Marca..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  type="text"
+                                  name="model"
+                                  id="model"
+                                  required
+                                  placeholder="Modello..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  name="kilometers"
+                                  id="kilometers"
+                                  type="text"
+                                  required
+                                  placeholder="KM..."
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  name="pricePerDay"
+                                  id="pricePerDay"
+                                  type="text"
+                                  required
+                                  placeholder="€/Giorno"
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <FormLabel>Anni del mezzo, inserisci data</FormLabel>
+                                <Form.Control
+                                  style={{ width: "205px" }}
+                                  type="date"
+                                  required
+                                  name="firstEnrollment"
+                                  id="firstEnrollment"
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Select
+                                  style={{ width: "205px" }}
+                                  name="sits"
+                                  id="sits"
+                                  required>
+                                  <option>Posti in cabina</option>
+                                  <option value="2">2 posti a sedere</option>
+                                  <option value="3">3 posti a sedere</option>
+                                  <option value="4">4 posti a sedere</option>
+                                  <option value="5">5 posti a sedere</option>
+                                  <option value="6">6 posti a sedere</option>
+                                </Form.Select>
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Select
+                                  style={{ width: "205px" }}
+                                  id="license"
+                                  name="license"
+                                  required>
+                                  <option>Seleziona una patente</option>
+                                  <option value="B">B</option>
+                                  <option value="B_96">B 96</option>
+                                  <option value="C">C</option>
+                                  <option value="CE">CE</option>
+                                  <option value="CD">CD</option>
+                                  <option value="CDE">CDE</option>
+                                </Form.Select>
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Button
+                                style={{ background: "#00000000", border: "white" }}
+                                type="submit">
+                                <GrFormNextLink style={{ cursor: "pointer", color: "black", fontSize: "2em" }} />
+                              </Button>
+                            </Col>
+                          </Form>
+                        </Row>
+                      </div>
+                    </div>
 
-              <Card
-                className="d-flex "
-                style={{
-                  background: "#00000000",
-                  border: "none"
-                }}>
-                <Card.Header className="text-center border-0">Qualche dettaglio tecnico</Card.Header>
-                <Card.Body>
-                  <Row className="d-flex flex-column">
-                    <Form onSubmit={handlerForm}>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Select
-                            id="displacement"
-                            name="displacement"
-                            required>
-                            <option>Seleziona una cilindrata</option>
-                            <option value="1600">1600</option>
-                            <option value="1800">1800</option>
-                            <option value="2000">2000</option>
-                            <option value="2200">2200</option>
-                            <option value="2500">2500</option>
-                          </Form.Select>
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Select
-                            id="transmission"
-                            name="transmission"
-                            required>
-                            <option>Seleziona un tipo di cambio</option>
-                            <option value="AUTO">Automatico</option>
-                            <option value="SEMI_AUTO">Semi automatico</option>
-                            <option value="MANUAL">Manuale</option>
-                          </Form.Select>
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center">
-                        <Form.Group className="mb-3">
-                          <Form.Select
-                            id="supply"
-                            name="supply"
-                            required>
-                            <option>Seleziona una alimentazione</option>
-                            <option value="GASOLINE">Benzina</option>
-                            <option value="DIESEL">Diesel</option>
-                            <option value="LPG_DIESEL">GPL e Diesel</option>
-                          </Form.Select>
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            name="length"
-                            id="length"
-                            type="text"
-                            placeholder="Lunghezza..."
-                            required
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            name="width"
-                            id="width"
-                            type="text"
-                            placeholder="Larghezza..."
-                            required
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            name="height"
-                            id="height"
-                            type="text"
-                            placeholder="Altezza Max..."
-                            required
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex justify-content-center gap-5">
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            name="shortDesc"
-                            id="shortDesc"
-                            type="text"
-                            placeholder="Breve descrizione...(mansardato, etc)"
-                            required
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col className="d-flex gap-5 justify-content-center align-items-center">
-                        <RiArrowGoBackLine
-                          style={{ cursor: "pointer", fontSize: "1.5em" }}
-                          onClick={handlerFlip}
-                        />
-                        <Button
-                          style={{ background: "#00000000", border: "white" }}
-                          type="submit">
-                          <IoArrowRedo style={{ cursor: "pointer", color: "#000000", fontSize: "1.5em" }} />
-                        </Button>
-                      </Col>
-                    </Form>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </ReactCardFlip>
+                    <div
+                      className="d-flex "
+                      style={{
+                        background: "#00000000",
+                        border: "none"
+                      }}>
+                      <div>
+                        <Row className="d-flex flex-column">
+                          <Form onSubmit={handlerForm}>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Select
+                                  id="displacement"
+                                  name="displacement"
+                                  required>
+                                  <option>Seleziona una cilindrata</option>
+                                  <option value="1600">1600</option>
+                                  <option value="1800">1800</option>
+                                  <option value="2000">2000</option>
+                                  <option value="2200">2200</option>
+                                  <option value="2500">2500</option>
+                                </Form.Select>
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Select
+                                  id="transmission"
+                                  name="transmission"
+                                  required>
+                                  <option>Seleziona un tipo di cambio</option>
+                                  <option value="AUTO">Automatico</option>
+                                  <option value="SEMI_AUTO">Semi automatico</option>
+                                  <option value="MANUAL">Manuale</option>
+                                </Form.Select>
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center">
+                              <Form.Group className="mb-3">
+                                <Form.Select
+                                  id="supply"
+                                  name="supply"
+                                  required>
+                                  <option>Seleziona una alimentazione</option>
+                                  <option value="GASOLINE">Benzina</option>
+                                  <option value="DIESEL">Diesel</option>
+                                  <option value="LPG_DIESEL">GPL e Diesel</option>
+                                </Form.Select>
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  name="length"
+                                  id="length"
+                                  type="text"
+                                  placeholder="Lunghezza..."
+                                  required
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  name="width"
+                                  id="width"
+                                  type="text"
+                                  placeholder="Larghezza..."
+                                  required
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  name="height"
+                                  id="height"
+                                  type="text"
+                                  placeholder="Altezza Max..."
+                                  required
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex justify-content-center gap-5">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  name="shortDesc"
+                                  id="shortDesc"
+                                  type="text"
+                                  placeholder="Breve descrizione...(mansardato, etc)"
+                                  required
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col className="d-flex gap-5 justify-content-center align-items-center">
+                              <RiArrowGoBackLine
+                                style={{ cursor: "pointer", fontSize: "1.5em" }}
+                                onClick={handlerFlip}
+                              />
+                              <Button
+                                style={{ background: "#00000000", border: "white" }}
+                                type="submit">
+                                <IoArrowRedo style={{ cursor: "pointer", color: "#000000", fontSize: "1.5em" }} />
+                              </Button>
+                            </Col>
+                          </Form>
+                        </Row>
+                      </div>
+                    </div>
+                  </ReactCardFlip>
+                </Row>
+              </Container>
+            </Container>
           </Col>
         </Row>
       </Container>

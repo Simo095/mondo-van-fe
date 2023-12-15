@@ -65,7 +65,7 @@ const Login = () => {
         <Container className="CardContainer">
           <div className="circle1"></div>
           <div className="circle2"></div>
-          <Container className="Container">
+          <Container className="ContainerCard">
             <Row className="log-card">
               <Col className="d-flex flex-column align-items-center justify-content-center">
                 <VscSignIn fontSize={80} />

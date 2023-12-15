@@ -1,7 +1,7 @@
 import {
   Button,
   Card,
-  CardBody,
+  CardFooter,
   CardHeader,
   CardTitle,
   Col,
@@ -24,17 +24,24 @@ import Dropzone from "react-dropzone";
 import { useNavigate } from "react-router";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
 import Notifiche from "./Notifiche";
-import { fetchUser, fetchVehicle } from "../../redux/actions/fetchActions";
+import {
+  fetchDisponibilita,
+  fetchNotifiche,
+  fetchPrenotazioni,
+  fetchUser,
+  fetchVehicle,
+  handlerSubmitCover
+} from "../../redux/actions/fetchActions";
 import SinglePost from "./SinglePost";
 import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
-import { fetchPost } from "../../redux/actions";
+import { fetchMyPost, fetchPost } from "../../redux/actions";
+import Prenotazione from "./Prenotazione";
 
 const ProfileOwner = () => {
   const user = useSelector(state => state.login.user);
   const token = useSelector(state => state.login.token);
-  const vehicle = useSelector(state => state.vehicles.vehicle);
   const posts = useSelector(state => state.post.data);
-  const [date, setDate] = useState(null);
+  const [disponibilita, setDisponibilita] = useState(null);
   const [idDispo, setIdDispo] = useState(null);
   const [show, setShow] = useState(false);
   const [coverImg, setCover] = useState(null);
@@ -44,6 +51,7 @@ const ProfileOwner = () => {
   const [altro, setAltro] = useState(false);
   const [notifiche, setNotifiche] = useState([]);
   const [prenotazioni, setPrenotazioni] = useState(null);
+  const [blog, setBlog] = useState(false);
 
   const [postText, setPostText] = useState();
   const [modifica, setModifica] = useState(false);
@@ -63,71 +71,23 @@ const ProfileOwner = () => {
     const formCover = new FormData();
     formCover.append("cover", coverImg[0]);
     setLoading(true);
-    if (cover) {
-      const coverfetch = await fetch("http://localhost:8080/users/upload_cover", {
-        method: "PATCH",
-        headers: {
-          Authorization: "Bearer " + token
-        },
-        body: formCover
-      });
-      if (coverfetch.ok) {
-        await dispatch(fetchUser(token));
-        setLoading(false);
-      }
+    const coverfetch = await fetch("http://localhost:8080/users/upload_cover", {
+      method: "PATCH",
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      body: formCover
+    });
+    if (coverfetch.ok) {
+      await dispatch(fetchUser(token));
+      setLoading(false);
     }
+
     handleClose();
   };
 
-  const fetchDisponibilita = async () => {
-    const disponibilita = await fetch("http://localhost:8080/availability/my_availability", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-    if (disponibilita.ok) {
-      const obj = await disponibilita.json();
-      const key = Object.keys(obj);
-      const array = key.map(k => obj[k]);
-      setDate(array);
-      setIdDispo(key);
-    }
-  };
-
-  const fetchNotifiche = async () => {
-    const risp = await fetch("http://localhost:8080/notifications", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-    if (risp.ok) {
-      const notifiche = await risp.json();
-      setNotifiche(notifiche);
-    }
-  };
-
-  const fetchPrenotazioni = async () => {
-    setLoadingPre(true);
-    const risp = await fetch("http://localhost:8080/reservations", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-    if (risp.ok) {
-      const pre = await risp.json();
-      setPrenotazioni(pre.content);
-      if (pre) {
-        setLoadingPre(false);
-      }
-    }
-  };
   const delPost = async postId => {
     try {
-      console.log("cancella");
-
       const resp = await fetch(``, {
         method: "DELETE",
         headers: {
@@ -143,10 +103,10 @@ const ProfileOwner = () => {
 
   useEffect(() => {
     dispatch(fetchVehicle(token, navigate));
-    fetchDisponibilita();
-    fetchNotifiche();
-    fetchPrenotazioni();
-    dispatch(fetchPost(token));
+    dispatch(fetchDisponibilita(token, setDisponibilita, setIdDispo));
+    dispatch(fetchNotifiche(token, setNotifiche));
+    dispatch(fetchPrenotazioni(token, setPrenotazioni, setLoadingPre));
+    dispatch(fetchMyPost(token));
     setPage(1);
   }, []);
   return (
@@ -183,11 +143,15 @@ const ProfileOwner = () => {
                         : "Tracina l'immagine che desideri come cover \noppure clicca sul qui per aprire explore e selezionarla"}
                     </div>
                     {loading ? (
-                      <Spinner
-                        animation="border"
-                        className="mt-5"
-                        variant="success"
-                      />
+                      <Row className="d-flex flex-grow-1 justify-content-center align-items-center">
+                        <Col className="d-flex justify-content-center align-items-center">
+                          <Spinner
+                            animation="border"
+                            className="mt-5"
+                            variant="success"
+                          />
+                        </Col>
+                      </Row>
                     ) : (
                       <></>
                     )}
@@ -217,7 +181,6 @@ const ProfileOwner = () => {
                 style={{ width: "338px" }}
                 sm={3}>
                 <SideBar />
-
                 <Row className="d-flex flex-column mt-3">
                   <Nav
                     variant="tabs"
@@ -228,6 +191,7 @@ const ProfileOwner = () => {
                         onClick={() => {
                           setCalendario(true);
                           setAltro(false);
+                          setBlog(false);
                         }}>
                         Calendario
                       </Nav.Link>
@@ -237,18 +201,29 @@ const ProfileOwner = () => {
                         onClick={() => {
                           setCalendario(false);
                           setAltro(true);
+                          setBlog(false);
                         }}>
                         Notifiche
                       </Nav.Link>
                     </Nav.Item>
+                    <Nav.Item className="navCalendar">
+                      <Nav.Link
+                        onClick={() => {
+                          setCalendario(false);
+                          setBlog(true);
+                          setAltro(false);
+                        }}>
+                        Post
+                      </Nav.Link>
+                    </Nav.Item>
                   </Nav>
                   <Col>
-                    {date
+                    {disponibilita
                       ? calendario && (
                           <>
                             <h2>Le disponibilita per gli utenti</h2>
                             <Calendario
-                              array={date}
+                              array={disponibilita}
                               idDispo={idDispo}
                             />
                           </>
@@ -282,13 +257,25 @@ const ProfileOwner = () => {
                     ) : (
                       <></>
                     )}
+                    {blog ? (
+                      <Card className="">
+                        <CardHeader>
+                          <CardTitle>Post</CardTitle>
+                        </CardHeader>
+                        <Card.Body>
+                          <Row
+                            className="d-flex row-cols-1 oV overflow-y-scroll"
+                            style={{ height: "30vh" }}></Row>
+                        </Card.Body>
+                      </Card>
+                    ) : (
+                      <></>
+                    )}
                   </Col>
                 </Row>
               </Col>
-              <Col
-                style={{ height: "100vh" }}
-                className="d-flex oV overflow-y-scroll">
-                <Row className="d-flex ms-2 mt-5 flex-grow-1">
+              <Col className="">
+                <Row className="d-flex gap-4 flex-column ms-2 mt-5">
                   <Col
                     className="d-flex justify-content-end"
                     style={{
@@ -297,7 +284,8 @@ const ProfileOwner = () => {
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       borderRadius: "30px",
-                      height: "50vh"
+                      minHeight: "40vh",
+                      maxWidth: "800px"
                     }}>
                     <div
                       className="d-flex align-items-start justify-content-center"
@@ -320,109 +308,44 @@ const ProfileOwner = () => {
                       />
                     </div>
                   </Col>
+                  <Col
+                    className="d-flex justify-content-center"
+                    style={{ maxWidth: "800px" }}>
+                    <Card className="d-flex flex-grow-1">
+                      <Card.Header>Prenotazioni</Card.Header>
+                      <Row className="d-flex flex-grow-1">
+                        {loadingPre ? (
+                          <Col className="d-flex justify-content-center">
+                            <Spinner variant="success" />
+                          </Col>
+                        ) : prenotazioni && prenotazioni.length !== 0 ? (
+                          prenotazioni.map(pre => {
+                            return (
+                              <Col
+                                key={pre.id}
+                                className="d-flex">
+                                <Prenotazione pre={pre} />
+                              </Col>
+                            );
+                          })
+                        ) : (
+                          <Col className="d-flex justify-content-center">
+                            <p>Nessuna prenotazione da parte dei Van Travelers</p>
+                          </Col>
+                        )}
+                      </Row>
+                    </Card>
+                  </Col>
 
-                  <Row className="mt-5 d-flex flex-grow-1 justify-content-center no-wrap gap-3 row-cols-1 ">
-                    <Col>
-                      {date && calendario ? (
-                        <div className="mediaQueryCalendario mx-5">
-                          <h2>Le disponibilita per gli utenti</h2>
-                          <Calendario
-                            array={date}
-                            idDispo={idDispo}
-                          />
-                        </div>
-                      ) : (
-                        <div className="mediaQueryCalendario">
-                          <h4>Registra un mezzo per utilizzare questa funzionalità </h4>
-                        </div>
-                      )}
-                    </Col>
-                    <Col className="d-flex justify-content-center">
-                      <Card className="d-flex flex-grow-1">
-                        <Card.Header>Prenotazioni</Card.Header>
-                        <Row className="d-flex flex-grow-1">
-                          {loadingPre ? (
-                            <Col className="d-flex justify-content-center">
-                              <Spinner variant="danger" />
-                            </Col>
-                          ) : prenotazioni && prenotazioni.length !== 0 ? (
-                            prenotazioni.map(pre => {
-                              return (
-                                <Col
-                                  key={pre.id}
-                                  className="d-flex">
-                                  <Card.Body className="d-flex flex-grow-1">
-                                    <Card>
-                                      <Card.Img
-                                        variant="top"
-                                        src={pre.user.avatar}
-                                      />
-                                      <Card.Body className="d-flex flex-column justify-content-end">
-                                        <Card.Title>
-                                          Dal {pre.startDate.substring(5, 11).split("-").reverse().join("-")} al{" "}
-                                          {pre.endDate.substring(5, 11).split("-").reverse().join("-")}
-                                        </Card.Title>
-                                        <Card.Text>Da: {pre.user.name}</Card.Text>
-                                        <Card.Text>
-                                          Stato:{" "}
-                                          {pre.state === "TAKING_CHARGE"
-                                            ? "DA CONFERMARE"
-                                            : pre.state === "PENDING_PAYMENT"
-                                            ? "IN ATTESA DEL PAGAMENTO"
-                                            : pre.state === "CONFIRMED"
-                                            ? "CONFERMATA"
-                                            : pre.state === "NOT_CONFIRMED"
-                                            ? "NON CONFERMATA"
-                                            : ""}
-                                        </Card.Text>
-                                        <Button variant="primary">
-                                          {pre.state === "TAKING_CHARGE"
-                                            ? "CONFERMA"
-                                            : pre.state === "PENDING_PAYMENT"
-                                            ? "IN ATTESA DEL PAGAMENTO"
-                                            : pre.state === "CONFIRMED"
-                                            ? "CONFERMATA"
-                                            : pre.state === "NOT_CONFIRMED"
-                                            ? "NON CONFERMATA"
-                                            : ""}
-                                        </Button>
-                                      </Card.Body>
-                                    </Card>
-                                  </Card.Body>
-                                </Col>
-                              );
-                            })
-                          ) : (
-                            <Col className="d-flex justify-content-center">
-                              <p>Nessuna prenotazione da parte dei Van Travelers</p>
-                            </Col>
-                          )}
-                        </Row>
-                      </Card>
-                    </Col>
-                    <Col className="d-flex flex-column overflow-y-scroll justify-content-center">
-                      <Container>
+                  <Col
+                    style={{ maxWidth: "800px" }}
+                    className="d-flex flex-column overflow-y-scroll">
+                    <Card className="">
+                      <Card.Header>I tuoi post</Card.Header>
+                      <Row className="d-flex flex-grow-1">
                         {posts && posts.length !== 0 ? (
-                          <>
-                            {posts
-                              .filter(elem => elem.author.id === user.id)
-                              .toReversed()
-                              .map((elem, i) => (
-                                <SinglePost
-                                  elem={elem}
-                                  key={`post${i}`}
-                                  cancella={delPost}
-                                  profile={user}
-                                  handleClose={handleClosePost}
-                                  handleShow={handleShowPost}
-                                  show={showPost}
-                                  setPostText={setPostText}
-                                  setModifica={setModifica}
-                                  setIdPost={setIdPost}
-                                />
-                              ))}
-
-                            {/* {posts.toReversed().map(
+                          <Col className="d-flex justify-content-center">
+                            {posts.toReversed().map(
                               (elem, i) =>
                                 i >= page * 5 - 5 &&
                                 i < page * 5 && (
@@ -439,8 +362,8 @@ const ProfileOwner = () => {
                                     setIdPost={setIdPost}
                                   />
                                 )
-                            )} */}
-                          </>
+                            )}
+                          </Col>
                         ) : (
                           <Row>
                             <Col className="d-flex justify-content-center">
@@ -448,29 +371,46 @@ const ProfileOwner = () => {
                             </Col>
                           </Row>
                         )}
-                      </Container>
-                    </Col>
-                    <div className="d-flex justify-content-center">
-                      <Pagination className="d-flex justify-content-center">
-                        <Pagination.Item
-                          onClick={() => {
-                            page > 1 && setPage(page - 1);
-                          }}>
-                          <BsCaretLeft />
-                        </Pagination.Item>
-                        <Pagination.Item disabled>{page - 1 === 0 ? "..." : page - 1}</Pagination.Item>
-                        <Pagination.Item active={true}>{page}</Pagination.Item>
-                        <Pagination.Item disabled>{page === posts.length / 5 ? "..." : page + 1}</Pagination.Item>
-                        <Pagination.Item
-                          onClick={() => {
-                            console.log(posts.length);
-                            page < posts.length / 5 && setPage(page + 1);
-                          }}>
-                          <BsCaretRight />
-                        </Pagination.Item>
-                      </Pagination>
-                    </div>
-                  </Row>
+                        <CardFooter>
+                          <div className="d-flex justify-content-center">
+                            <Pagination className="d-flex justify-content-center">
+                              <Pagination.Item
+                                onClick={() => {
+                                  page > 1 && setPage(page - 1);
+                                }}>
+                                <BsCaretLeft />
+                              </Pagination.Item>
+                              <Pagination.Item disabled>{page - 1 === 0 ? "..." : page - 1}</Pagination.Item>
+                              <Pagination.Item active={true}>{page}</Pagination.Item>
+                              <Pagination.Item disabled>{page === posts.length / 5 ? "..." : page + 1}</Pagination.Item>
+                              <Pagination.Item
+                                onClick={() => {
+                                  console.log(posts.length);
+                                  page < posts.length / 5 && setPage(page + 1);
+                                }}>
+                                <BsCaretRight />
+                              </Pagination.Item>
+                            </Pagination>
+                          </div>
+                        </CardFooter>
+                      </Row>
+                    </Card>
+                  </Col>
+                  {/* <Col>
+                      {date && calendario ? (
+                        <div className="mediaQueryCalendario mx-5">
+                          <h2>Le disponibilita per gli utenti</h2>
+                          <Calendario
+                            array={date}
+                            idDispo={idDispo}
+                          />
+                        </div>
+                      ) : (
+                        <div className="mediaQueryCalendario">
+                          <h4>Registra un mezzo per utilizzare questa funzionalità </h4>
+                        </div>
+                      )}
+                    </Col> */}
                 </Row>
               </Col>
             </Row>

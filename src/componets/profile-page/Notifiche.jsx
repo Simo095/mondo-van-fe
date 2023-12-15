@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Button, CardText, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { HiOutlineTrash } from "react-icons/hi2";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCancellaNotifica, fetchReadNotifica } from "../../redux/actions/fetchActions.js";
 const Notifiche = ({ notifica, i, setNotifiche }) => {
   const token = useSelector(state => state.login.token);
+
+  const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
   const [showDue, setShowDue] = useState(false);
@@ -13,50 +15,6 @@ const Notifiche = ({ notifica, i, setNotifiche }) => {
   const handleCloseDue = () => setShowDue(false);
   const handleShow = () => setShow(true);
   const handleShowDue = () => setShowDue(true);
-
-  const cancellaNotifica = async id => {
-    const cancella = await fetch(`http://localhost:8080/notifications/${notifica.id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-
-    if (cancella.ok) {
-      const risp = await fetch("http://localhost:8080/notifications", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      });
-      if (risp.ok) {
-        const notifiche = await risp.json();
-        setNotifiche(notifiche);
-      }
-    }
-  };
-
-  const handleRead = async () => {
-    handleClose();
-    const modifica = await fetch(`http://localhost:8080/notifications/${notifica.id}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    });
-    if (modifica.ok) {
-      const risp = await fetch("http://localhost:8080/notifications", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      });
-      if (risp.ok) {
-        const notifiche = await risp.json();
-        setNotifiche(notifiche);
-      }
-    }
-  };
 
   const handlerRisposta = async e => {
     e.preventDefault();
@@ -122,7 +80,7 @@ const Notifiche = ({ notifica, i, setNotifiche }) => {
         <HiOutlineTrash
           className="mt-2"
           onClick={() => {
-            cancellaNotifica(notifica.id);
+            dispatch(fetchCancellaNotifica(token, setNotifiche, notifica.id));
           }}
           style={{
             cursor: "pointer",
@@ -147,7 +105,7 @@ const Notifiche = ({ notifica, i, setNotifiche }) => {
         <Modal.Footer>
           <Button
             variant="secondary"
-            onClick={handleRead}>
+            onClick={() => dispatch(fetchReadNotifica(token, notifica.id, handleClose, setNotifiche))}>
             Letto
           </Button>
           <Button

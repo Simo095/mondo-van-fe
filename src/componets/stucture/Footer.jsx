@@ -27,7 +27,7 @@ const Footer = () => {
               <Col>
                 <Row className="d-flex flex-column mt-5">
                   <Col>Seguici sui social</Col>
-                  <Col>Linkedin</Col>
+                  <Col>Facebook</Col>
                   <Col>Instagram</Col>
                 </Row>
               </Col>

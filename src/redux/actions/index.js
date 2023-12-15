@@ -39,6 +39,24 @@ export const fetchPost = token => {
     }
   };
 };
+export const fetchMyPost = token => {
+  return async dispatch => {
+    try {
+      const risp = await fetch("http://localhost:8080/posts/my_post", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (risp.ok) {
+        const data = await risp.json();
+        dispatch(addPosts(data.content));
+      }
+    } catch (error) {
+      console.log("si e' verificato un errore", error.message);
+    }
+  };
+};
 export const fetchPostHome = () => {
   return async dispatch => {
     try {

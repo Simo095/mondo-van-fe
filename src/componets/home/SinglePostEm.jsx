@@ -6,7 +6,7 @@ const SinglePostEm = ({ elem }) => {
   const navigate = useNavigate();
   return (
     elem && (
-      <div className="border border-1 rounded-3 shadow my-3 p-3 bg-light">
+      <div className="SinglePostER border border-1 rounded-3 shadow my-3 p-3 bg-light">
         <Row className="mb-2">
           <Col
             sm={2}
@@ -24,13 +24,15 @@ const SinglePostEm = ({ elem }) => {
             sm={5}
             lg={7}
             className=" order-5 order-sm-0">
-            <div className="d-flex flex-column">
+            <div className="d-flex flex-column align-items-center">
               {/* <h6>{elem.author.name}</h6> */}
 
-              <Link to={elem.permalink}>
+              <Link
+                className="SinglePostER"
+                to={elem.permalink}>
                 <p
-                  className="w-100 mb-0"
-                  style={{ whiteSpace: "wrap", textOverflow: "ellipsis", overflow: "hidden", fontSize: "18px" }}>
+                  className=" w-100 mb-0"
+                  style={{ whiteSpace: "wrap", textOverflow: "ellipsis", overflow: "hidden", fontSize: "15px" }}>
                   {elem.title}
                 </p>
               </Link>

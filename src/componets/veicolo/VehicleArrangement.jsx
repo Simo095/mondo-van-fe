@@ -58,7 +58,7 @@ const VehicleArrangement = () => {
   };
 
   return (
-    <div className="Register">
+    <div className="RegisterVan">
       <div className="d-flex justify-content-between position-relative">
         <h1>Allestimento del Van</h1>
 
@@ -127,7 +127,7 @@ const VehicleArrangement = () => {
                 md={2}>
                 <Col className="ColArrangement">
                   <h4>Accessori</h4>
-                  <p>
+                  <p className="m-0 p-0">
                     Cita tutti gli accessori presenti nel tuo Van, sottolineando quelli più particolari o utili per i
                     viaggi.
                   </p>
@@ -155,10 +155,9 @@ const VehicleArrangement = () => {
                   </Form.Group>
                 </Col>
                 <Col className="ColArrangement">
-                  <h3>Disposizione notte</h3>
-                  <p>
-                    Illustra come sono disposti i letti all'interno del Van e il numero di persone che possono dormire
-                    comodamente.
+                  <h4>Disposizione notte</h4>
+                  <p className="m-0 p-0">
+                    Illustra come sono disposti i letti all'interno del Van e il numero di persone che possono dormire.
                   </p>
                   <Form.Group className=" my-3 d-flex">
                     <FormSelect
@@ -189,8 +188,8 @@ const VehicleArrangement = () => {
                   </Form.Group>
                 </Col>
                 <Col className="ColArrangement">
-                  <h5>Cucina</h5>
-                  <p>
+                  <h4>Cucina</h4>
+                  <p className="m-0 p-0">
                     Descrivi la cucina del tuo Van, specificando se è presente un frigo, un fornello a gas o altri
                     elettrodomestici utili per cucinare.
                   </p>
@@ -238,8 +237,8 @@ const VehicleArrangement = () => {
                   </Form.Group>
                 </Col>
                 <Col className="ColArrangement">
-                  <h3>Bagno</h3>
-                  <p>
+                  <h4>Bagno</h4>
+                  <p className="mb-4 p-0">
                     Indica se il tuo Van è dotato di bagno, WC, acqua calda o altri accessori per l'igiene personale.
                   </p>
                   <Form.Group className="d-flex mb-2 gap-3">

@@ -48,7 +48,7 @@ const SinglePost = ({
   return (
     elem &&
     profile && (
-      <div className="border border-1 rounded-3 shadow my-3 p-3 bg-light">
+      <div className="border border-1 w-50 rounded-3 shadow my-3 p-3 bg-light">
         <Row className=" justify-content-between mb-2">
           <Col xs="auto">
             <Image
@@ -128,13 +128,17 @@ const SinglePost = ({
               </>
             )}
           </Col>
-          <p className="">{elem.text}</p>
+          <p
+            className=""
+            style={{ fontSize: "15px", fontFamily: "Rethink Sans, sans-serif" }}>
+            {elem.text}
+          </p>
           <Col
             xs={12}
             className="d-flex justify-content-center">
             <Image
               src={elem.img ? elem.img : ""}
-              width="30%"
+              width="100%"
               className="rounded-4 shadow"
             />
           </Col>
