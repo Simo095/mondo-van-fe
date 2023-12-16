@@ -7,7 +7,7 @@ const SinglePostEm = ({ elem }) => {
   return (
     elem && (
       <div className="SinglePostER border border-1 rounded-3 shadow my-3 p-3 bg-light">
-        <Row className="mb-2">
+        <Row className="mb-2 d-flex align-items-center">
           <Col
             sm={2}
             className="me-3">
@@ -25,8 +25,6 @@ const SinglePostEm = ({ elem }) => {
             lg={7}
             className=" order-5 order-sm-0">
             <div className="d-flex flex-column align-items-center">
-              {/* <h6>{elem.author.name}</h6> */}
-
               <Link
                 className="SinglePostER"
                 to={elem.permalink}>
@@ -36,7 +34,6 @@ const SinglePostEm = ({ elem }) => {
                   {elem.title}
                 </p>
               </Link>
-              {/* <p style={{ fontWeight: "300", fontSize: "12px" }}> {calcolaData()}</p> */}
             </div>
           </Col>
           <Col
@@ -50,11 +47,15 @@ const SinglePostEm = ({ elem }) => {
               style={{ objectFit: "cover" }}
             />
           </Col>
-          {/* <Col
+          <Col
             xs={12}
             sm={3}
             className="text-primary text-end "></Col>
-          <p className="">{elem.text}</p> */}
+          <p
+            className="m-0 mt-2"
+            style={{ whiteSpace: "wrap", textOverflow: "ellipsis", overflow: "hidden", fontSize: "13px" }}>
+            Autore: {elem.author.name}
+          </p>
         </Row>
       </div>
     )

@@ -1,53 +1,42 @@
-import { Card, Col, Container, Nav, Row, Spinner } from "react-bootstrap";
-
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import SideBar from "../../componets/stucture/SideBar";
-
-import FormAddPost from "./FormAddPost";
+import { Card, CardFooter, Col, Container, Nav, Pagination, Row, Spinner } from "react-bootstrap";
 import ModaleCover from "./ModaleCover";
-import MyPosts from "./MyPosts";
-import { fetchMyPost } from "../../redux/actions";
-import { fetchPrenotazioni } from "../../redux/actions/fetchActions";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import SideBar from "../stucture/SideBar";
+import ProfileVehicle from "../veicolo/ProfileVehicle";
 import Prenotazione from "./Prenotazione";
+import MyPosts from "./MyPosts";
+import FormAddPost from "./FormAddPost";
+import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
+import { fetchPrenotazioni } from "../../redux/actions/fetchActions";
 
-const ProfileCustomer = () => {
+const MyProfileOwner = () => {
   const user = useSelector(state => state.login.user);
-  const token = useSelector(state => state.login.token);
   const postsOwner = useSelector(state => state.post.myPost);
   const [show, setShow] = useState(false);
-  const [prenotazioni, setPrenotazioni] = useState(null);
   const [loadingPre, setLoadingPre] = useState(false);
-  const dispatch = useDispatch();
+  const [prenotazioni, setPrenotazioni] = useState(null);
   const [postText, setPostText] = useState();
   const [modifica, setModifica] = useState(false);
   const [idPost, setIdPost] = useState("");
-
   const [showPost, setShowPost] = useState(false);
-  const handleClosePost = () => setShowPost(false);
-  const handleShowPost = () => setShowPost(true);
-
+  const handleClosePost = () => setShow(false);
+  const handleShowPost = () => setShow(true);
   const delPost = async postId => {
     try {
-      const resp = await fetch(`http://localhost:8080/posts/${postId}`, {
+      const resp = await fetch(``, {
         method: "DELETE",
         headers: {
-          Authorization: "Bearer " + token
+          Authorization: "Bearer "
         }
       });
       if (resp.ok) {
-        console.log("ciao");
-        dispatch(fetchMyPost(token));
       }
     } catch (error) {
       console.log("si e' verificato un errore", error.message);
     }
   };
-
-  useEffect(() => {
-    dispatch(fetchPrenotazioni(token, setPrenotazioni, setLoadingPre));
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Container
@@ -79,6 +68,9 @@ const ProfileCustomer = () => {
                   </Nav.Item>
                 </Nav>
               </Col>
+              <Col style={{ maxWidth: "800px" }}>
+                <ProfileVehicle />
+              </Col>
               <Col
                 className="d-flex  justify-content-center"
                 style={{ maxWidth: "800px" }}>
@@ -109,7 +101,6 @@ const ProfileCustomer = () => {
                   </Row>
                 </Card>
               </Col>
-
               <Col style={{ maxWidth: "800px" }}>
                 <Container className="">
                   <h4>I tuoi post</h4>
@@ -120,14 +111,18 @@ const ProfileCustomer = () => {
                     fluid
                     className="d-flex">
                     {postsOwner && postsOwner.length !== 0 && (
-                      <div className="d-flex overflow-x-scroll oV gap-3">
+                      <div className="d-flex overflow-x-scroll gap-3">
                         {postsOwner.toReversed().map((elem, i) => (
+                          // i >= page * 5 - 5 &&
+                          // i < page * 5 && (
                           <MyPosts
                             elem={elem}
                             key={`post${i}`}
                             cancella={delPost}
                             profile={user}
+                            handleClose={handleClosePost}
                             handleShow={handleShowPost}
+                            show={showPost}
                             setPostText={setPostText}
                             setModifica={setModifica}
                             setIdPost={setIdPost}
@@ -147,4 +142,4 @@ const ProfileCustomer = () => {
     </Container>
   );
 };
-export default ProfileCustomer;
+export default MyProfileOwner;

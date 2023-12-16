@@ -19,6 +19,8 @@ import ChangeImg from "./componets/veicolo/ChangeImg";
 import Result from "./componets/results-page/Result";
 import Register from "./componets/login-register-auth/Register";
 import ComeFunziona from "./componets/stucture/ComeFunziona";
+import AllPost from "./componets/blog-post/AllPost";
+import MyProfileOwner from "./componets/profile-page/MyProfileOwner";
 
 const App = () => {
   return (
@@ -71,8 +73,12 @@ const App = () => {
           />
 
           <Route
-            path="/profile_owner"
+            path="/profile_owner2"
             element={<ProfileOwner />}
+          />
+          <Route
+            path="/profile_owner"
+            element={<MyProfileOwner />}
           />
           <Route
             path="/profile_vehicle"
@@ -109,6 +115,10 @@ const App = () => {
           <Route
             path="/rules"
             element={<ComeFunziona />}
+          />
+          <Route
+            path="/posts"
+            element={<AllPost />}
           />
         </Routes>
       </BrowserRouter>

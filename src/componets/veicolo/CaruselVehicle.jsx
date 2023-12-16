@@ -4,9 +4,10 @@ import Dropzone from "react-dropzone";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-const CaruselVehicle = ({ vehicle, cover, token, height }) => {
+const CaruselVehicle = ({ cover, token, height, vehicle }) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [coverImg, setCover] = useState(null);

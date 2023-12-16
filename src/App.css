@@ -33,7 +33,7 @@
   border-top-right-radius: 0;
 }
 .shadow-home {
-  box-shadow: inset 0px 25px 28px -4px #000000;
+  background: linear-gradient(45deg, #144658, #074e68) !important;
 }
 
 /* Navbar-- */
@@ -60,6 +60,12 @@
 .NavBar {
   font-family: "Rowdies", sans-serif;
 }
+.AllPost {
+  max-width: 800px;
+}
+.SinglePostAll:hover {
+  scale: 1.01;
+}
 
 .Register {
   font-family: "Rowdies", sans-serif;
@@ -80,6 +86,9 @@
   font-family: "Rethink Sans", sans-serif;
 }
 .ComeFunziona p {
+  font-family: "Rethink Sans", sans-serif;
+}
+.ProfileVehicle {
   font-family: "Rethink Sans", sans-serif;
 }
 .ComeFunziona h3 {

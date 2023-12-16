@@ -47,7 +47,6 @@ const RegisterCustomer = () => {
       })
     });
     if (risposta.ok) {
-      const o = await risposta.json();
       setRispOk(true);
       setLoading(false);
     } else {
@@ -85,6 +84,7 @@ const RegisterCustomer = () => {
 
   useEffect(() => {
     dispatch(fetchProvince(setProvinces));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

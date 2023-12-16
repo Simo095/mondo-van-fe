@@ -12,10 +12,10 @@ const CardInterni = ({ vehicle }) => {
             <p style={{ width: "200px" }}>{vehicle.vehiclesArrangement.descriptionKitchen}</p>
           </div>
         </div>
-        <div className="overflow-y-scroll oV">
+        <div>
           <div className="d-flex flex-column">
             <span>Bagno</span>
-            <div>
+            <div className="overflow-y-scroll oV">
               <h6>Bagno: {vehicle.vehiclesArrangement.bathroom ? "Si" : "No"}</h6>
               <h6>Acqua potabile: {vehicle.vehiclesArrangement.water ? "Si" : "No"}</h6>
               <h6>Acqua Calda: {vehicle.vehiclesArrangement.hotWater ? "Si" : "No"}</h6>
@@ -24,18 +24,18 @@ const CardInterni = ({ vehicle }) => {
             </div>
           </div>
         </div>
-        <div className="overflow-y-scroll oV">
+        <div>
           <div className="d-flex flex-column">
             <span>Accessori</span>
-            <div>
+            <div className="overflow-y-scroll oV">
               <p style={{ width: "200px" }}>{vehicle.vehiclesArrangement.accessoriesDescription}</p>
             </div>
           </div>
         </div>
-        <div className="overflow-y-scroll oV">
-          <div className="d-flex flex-column">
+        <div className="">
+          <div className="d-flex flex-column overflow-y-scroll">
             <span>Letti</span>
-            <div>
+            <div className="overflow-y-scroll oV">
               <p style={{ width: "200px" }}>
                 Posti letto: {vehicle.vehiclesArrangement.bads}
                 <br></br>

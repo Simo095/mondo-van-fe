@@ -1,9 +1,10 @@
 .cardInterni {
   height: 300px;
-  border-radius: 4px;
+  border-radius: 10px;
   display: flex;
   gap: 5px;
   padding: 0.4em;
+  background-color: white;
 }
 
 .cardInterni div {
@@ -29,15 +30,18 @@
 }
 
 .cardInterni div span {
-  min-width: 14em;
   padding: 0.5em;
   text-align: center;
-  /* transform: rotate(-90deg); */
+  transform: rotate(0deg);
   transition: all 0.5s;
+
   text-transform: uppercase;
+  text-orientation: upright;
+  writing-mode: vertical-lr;
   letter-spacing: 0.1em;
 }
 
 .cardInterni div:hover span {
-  transform: rotate(0);
+  transform: rotate(90);
+  writing-mode: horizontal-tb;
 }

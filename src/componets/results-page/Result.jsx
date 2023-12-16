@@ -111,7 +111,7 @@ const Result = () => {
   return (
     <>
       {r.length !== 0 && vehicle ? (
-        <Container sm={8}>
+        <Col sm={8}>
           <Row
             style={{ height: "100vh" }}
             className="d-flex oV  overflow-y-scroll">
@@ -361,7 +361,7 @@ const Result = () => {
               </Row>
             </Col>
           </Row>
-        </Container>
+        </Col>
       ) : (
         <></>
       )}

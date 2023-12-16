@@ -2,7 +2,7 @@ import { Col, Image, Row } from "react-bootstrap";
 import { BsDashLg, BsPencilFill, BsPlusLg, BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 
-const SinglePost = ({
+const MyFriendsPost = ({
   elem,
   cancella,
   profile,
@@ -15,31 +15,7 @@ const SinglePost = ({
 }) => {
   const list = useSelector(state => state.login.user.friends);
   const dispatch = useDispatch();
-  // const calcolaData = () => {
-  //   const createdate = new Date(elem.createdAt);
-  //   const createMin = createdate.getMinutes();
-  //   const createOre = createdate.getHours();
-  //   const createGiorni = createdate.getDay();
-  //   const createMesi = createdate.getMonth();
-  //   const createAnno = createdate.getFullYear();
-  //   const actualdate = new Date();
-  //   const actualMin = actualdate.getMinutes();
-  //   const actualOre = actualdate.getHours();
-  //   const actualGiorni = actualdate.getDay();
-  //   const actualMesi = actualdate.getMonth();
-  //   const actualAnno = actualdate.getFullYear();
-  //   if (actualAnno === createAnno) {
-  //     if (actualMesi === createMesi) {
-  //       if (actualGiorni === createGiorni) {
-  //         if (actualOre === createOre) {
-  //           if (actualMin === createMin) {
-  //             return "adesso";
-  //           } else return `${actualMin - createMin} ${actualMin - createMin === 1 ? "minuto fa" : "minuti fa"}`;
-  //         } else return `${actualOre - createOre} ${actualOre - createOre === 1 ? "ora fa" : "ore fa"}`;
-  //       } else return `${actualGiorni - createGiorni} ${actualGiorni - createGiorni === 1 ? "giorno fa" : "giorni fa"}`;
-  //     } else return `${actualMesi - createMesi} ${actualMesi - createMesi === 1 ? "mese fa" : "mesi fa"}`;
-  //   } else return `${actualAnno - createAnno} ${actualAnno - createAnno === 1 ? "anno fa" : "anni fa"}`;
-  // };
+
   const calcolaData = () => {
     const createdateWithMs = new Date(elem.createdAt);
     const output = createdateWithMs.toLocaleString("it-IT");
@@ -92,7 +68,7 @@ const SinglePost = ({
                       //dispatch(deleteFriendAction(elem.author.id));
                     }}
                   />
-                  <span className="d-none d-sm-inline-block">SEGUI GIA'</span>
+                  <span>SEGUI GIA'</span>
                 </>
               ) : (
                 <>
@@ -106,27 +82,6 @@ const SinglePost = ({
                   <span className="d-none d-sm-inline-block">SEGUI</span>
                 </>
               ))}
-            {profile.id === elem.author.id && (
-              <>
-                {console.log(profile.id)}
-                <BsPencilFill
-                  onClick={() => {
-                    setIdPost(elem.id);
-                    handleShow();
-                    setModifica(true);
-                    setPostText(elem.text);
-                  }}
-                  style={{ cursor: "pointer", color: "red" }}
-                />
-                <BsTrash
-                  className="text-danger ms-2"
-                  onClick={() => {
-                    cancella(elem.id);
-                  }}
-                  style={{ cursor: "pointer", color: "red" }}
-                />
-              </>
-            )}
           </Col>
           <p
             className=""
@@ -155,4 +110,4 @@ const SinglePost = ({
     )
   );
 };
-export default SinglePost;
+export default MyFriendsPost;

@@ -183,7 +183,7 @@ const FormHome = () => {
           form="formPrimo"
           type="submit"
           className="btn-radius-start-0 btn-Form"
-          variant="success ">
+          style={{ backgroundColor: "#CF781D", borderColor: "#CF781D" }}>
           Parti!
         </Button>
       </Form>

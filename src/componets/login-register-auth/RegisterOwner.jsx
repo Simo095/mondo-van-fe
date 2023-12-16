@@ -119,7 +119,7 @@ const RegisterOwner = () => {
               style={{ color: "#75B798" }}
               onHide={() => {
                 setRispOk(false);
-                navigate("/profile_owner");
+                navigate("/");
               }}>
               <ModalHeader
                 style={{ background: "#051C12", borderColor: "green" }}

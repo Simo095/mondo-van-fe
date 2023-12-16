@@ -16,6 +16,7 @@ export const fetchUser = (token, navigate) => {
           navigate("/profile_customer");
         }
         if (user.role === "OWNER") {
+          dispatch(fetchVehicle(token));
           navigate("/profile_owner");
         }
       }
@@ -44,6 +45,26 @@ export const fetchVehicle = token => {
   };
 };
 
+export const fetchAnnouncement = (token, announcement) => {
+  return async dispatch => {
+    try {
+      const request = await fetch("http://localhost:8080/vehicles/announcement", {
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer " + token,
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({ announcement: announcement })
+      });
+      if (request.ok) {
+        const vehicle = await request.json();
+        dispatch(addVehicle(vehicle));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 export const fetchNotifiche = (token, setNotifiche) => {
   return async dispatch => {
     try {
@@ -132,18 +153,23 @@ export const fetchPrenotazioni = (token, setPrenotazioni, setLoadingPre) => {
 
 export const fetchDisponibilita = (token, setDisponibilita, setIdDispo) => {
   return async dispatch => {
-    const disponibilita = await fetch("http://localhost:8080/availability/my_availability", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token
+    try {
+      const disponibilita = await fetch("http://localhost:8080/availability/my_availability", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+
+      if (disponibilita.status === 200) {
+        const obj = await disponibilita.json();
+        const key = Object.keys(obj);
+        const array = key.map(k => obj[k]);
+        setDisponibilita(array);
+        setIdDispo(key);
       }
-    });
-    if (disponibilita.ok) {
-      const obj = await disponibilita.json();
-      const key = Object.keys(obj);
-      const array = key.map(k => obj[k]);
-      setDisponibilita(array);
-      setIdDispo(key);
+    } catch (error) {
+      console.log(error);
     }
   };
 };

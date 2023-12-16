@@ -73,7 +73,9 @@ const Calendario = ({ array, idDispo }) => {
   }, []);
 
   return (
-    <Container>
+    <Container
+      fluid
+      className="p-0">
       <Row className="row-cols-1 d-flex">
         <Col className="flex-grow-1">
           <Calendar

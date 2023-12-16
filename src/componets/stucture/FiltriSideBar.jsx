@@ -40,10 +40,30 @@ const FiltriSideBar = ({ startProps, endProps, beds, prov }) => {
     e.preventDefault();
     const startForm = startDate.toLocaleDateString("fr-CA");
     const endForm = endDate.toLocaleDateString("fr-CA");
+    console.log("start");
+    console.log(startDate);
+    console.log("end");
+    console.log(endForm);
+    console.log("province");
+    console.log(province);
+    console.log("nwebads");
+    console.log(newBeds);
+    console.log("is valid");
+    console.log(isValid);
+    console.log("isValidBad");
+    console.log(isValidBad);
+
+    // console.log("post set");
+    // console.log("is valid");
+    // console.log(isValid);
+    // console.log("isValidBad");
+    // console.log(isValidBad);
+
     if (isValid && isValidBad) {
       console.log("tutto");
+
       const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_prov_beds?start=${startForm}&end=${endDate}&beds=${newBeds}&province=${province}`,
+        `http://localhost:8080/sign_in/date_prov_beds?start=${startForm}&end=${endForm}&beds=${newBeds}&province=${province}`,
         {
           method: "GET"
         }
@@ -87,7 +107,6 @@ const FiltriSideBar = ({ startProps, endProps, beds, prov }) => {
       }
     }
     if (isValid && !isValidBad) {
-      console.log(startForm);
       const pageble = await fetch(
         `http://localhost:8080/sign_in/date_province?start=${startForm}&end=${endForm}&province=${province}`,
         {
@@ -105,24 +124,26 @@ const FiltriSideBar = ({ startProps, endProps, beds, prov }) => {
   };
   const handlerBeds = e => {
     setNewBeds(e.target.value);
+    if (e.target.value === "0") {
+      setIsValidBed(false);
+    } else {
+      setIsValidBed(true);
+    }
   };
   const handlerPrezzo = e => {
     setPrezzo(e.target.value);
   };
   const handleProvinceChange = event => {
     setProvince(event.target.value);
+    if (event.target.value === "Tutte le province") {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
   };
   useEffect(() => {
     handleProvinceClick();
-    setIsValid(province ? true : false);
-    setIsValidBed(newBeds ? true : false);
-    if (province === "Tutte le province") {
-      setIsValid(false);
-    }
-    if (newBeds === "Qualsiasi posto letto") {
-      setIsValidBed(false);
-    }
-  }, [province, newBeds]);
+  }, []);
   return (
     <div className="FiltriSideBar">
       {error ? <Alert variant="danger">Non ci sono disponibilita</Alert> : <></>}
@@ -185,7 +206,7 @@ const FiltriSideBar = ({ startProps, endProps, beds, prov }) => {
                       value={newBeds}
                       onChange={handlerBeds}
                       onClick={() => setError(false)}>
-                      <option>cambia i posti letto</option>
+                      <option value={0}>cambia i posti letto</option>
                       <option value={2}>2 letti</option>
                       <option value={3}>3 letti</option>
                       <option value={4}>4 letti</option>

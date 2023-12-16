@@ -22,7 +22,7 @@ const ResultPage = () => {
   const dispatch = useDispatch();
 
   const handlerResults = () => {
-    // console.log(results);
+    console.log(results);
   };
 
   useEffect(() => {

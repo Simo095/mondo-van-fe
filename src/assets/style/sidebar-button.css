@@ -1,7 +1,7 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.8em;
 }
 
 .up {
@@ -17,23 +17,23 @@
 }
 
 .card1 {
-  width: 90px;
-  height: 90px;
+  width: 130px;
+  height: 130px;
   outline: none;
   border: none;
   background: white;
-  border-radius: 90px 5px 5px 5px;
+  border-radius: 130px 5px 5px 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
 }
 
 .card2 {
-  width: 90px;
-  height: 90px;
+  width: 130px;
+  height: 130px;
   outline: none;
   border: none;
   background: white;
-  border-radius: 5px 90px 5px 5px;
+  border-radius: 5px 130px 5px 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
 }
@@ -45,12 +45,12 @@
 }
 
 .card3 {
-  width: 90px;
-  height: 90px;
+  width: 130px;
+  height: 130px;
   outline: none;
   border: none;
   background: white;
-  border-radius: 5px 5px 5px 90px;
+  border-radius: 5px 5px 5px 130px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
 }
@@ -61,12 +61,12 @@
 }
 
 .card4 {
-  width: 90px;
-  height: 90px;
+  width: 130px;
+  height: 130px;
   outline: none;
   border: none;
   background: white;
-  border-radius: 5px 5px 90px 5px;
+  border-radius: 5px 5px 130px 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
 }

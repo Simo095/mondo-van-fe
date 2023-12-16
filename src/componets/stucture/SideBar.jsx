@@ -1,141 +1,60 @@
 import { Button, Container, Form, Modal, Spinner } from "react-bootstrap";
 import Dropzone from "react-dropzone";
 import { FiLogOut } from "react-icons/fi";
+import { IoNotificationsSharp, IoSettingsSharp } from "react-icons/io5";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { fetchUser } from "../../redux/actions/fetchActions";
+import { useEffect, useState } from "react";
+import { fetchDisponibilita, fetchUser } from "../../redux/actions/fetchActions";
 import vanSide from "../../assets/icone/van-side.png";
 import lente from "../../assets/icone/lente.png";
 import blog from "../../assets/icone/Blog.png";
 import "../../assets/style/sidebar-button.css";
+import ModaleAvatar from "../profile-page/ModaleAvatar";
+import Calendario from "./Calendario";
 
 const SideBar = () => {
   const user = useSelector(state => state.login.user);
   const vehicle = useSelector(state => state.vehicles.vehicle);
   const token = useSelector(state => state.login.token);
   const [show, setShow] = useState(false);
-  const [coverImg, setCover] = useState(null);
+  const [disponibilita, setDisponibilita] = useState(null);
+  const [idDispo, setIdDispo] = useState(null);
+
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClose = () => setShow(false);
 
-  const handlerSubmitAvatar = async e => {
-    e.preventDefault();
-    const formCover = new FormData();
-    formCover.append("avatar", coverImg[0]);
-    setLoading(true);
-
-    const coverfetch = await fetch("http://localhost:8080/users/upload_avatar", {
-      method: "PATCH",
-      headers: {
-        Authorization: "Bearer " + token
-      },
-      body: formCover
-    });
-    if (coverfetch.ok) {
-      await dispatch(fetchUser(token, navigate));
-      setLoading(false);
-    }
-    handleClose();
-  };
+  useEffect(() => {
+    if (user.role === "OWNER") dispatch(fetchDisponibilita(token, setDisponibilita, setIdDispo));
+  }, []);
 
   return (
     <>
       <div className="SideBar">
-        <Modal show={show}>
-          <Modal.Header>
-            <Modal.Title>Immagine di copertina</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form
-              id="drop"
-              className="d-flex justify-content-center "
-              onSubmit={handlerSubmitAvatar}>
-              <Dropzone
-                onDrop={acceptedFiles => {
-                  setCover(acceptedFiles);
-                }}>
-                {({ getRootProps, getInputProps, acceptedFiles }) => (
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <div
-                      style={{
-                        border: "3px",
-                        borderStyle: "dashed",
-                        borderRadius: "30px",
-                        borderColor: "ActiveBorder"
-                      }}
-                      className="text-center">
-                      {acceptedFiles[0]
-                        ? acceptedFiles[0].path
-                        : "Tracina l'immagine che desideri come cover \noppure clicca sul qui per aprire explore e selezionarla"}
-                    </div>
-                    {loading ? (
-                      <Spinner
-                        animation="border"
-                        className="mt-5"
-                        variant="success"
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                )}
-              </Dropzone>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-between">
-            <RiArrowGoBackLine
-              onClick={handleClose}
-              style={{ cursor: "pointer" }}
-            />
-            <Button
-              style={{ background: "white", border: "white" }}
-              type="submit"
-              form="drop">
-              <RiSendPlaneFill style={{ cursor: "pointer", color: "blue" }} />
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        {user.role === "CUSTOMER" ? (
-          <Container className="main mt-5 ms-5">
-            <h2>VAN WORLD</h2>
+        <ModaleAvatar
+          show={show}
+          setShow={setShow}
+        />
+        {user && (
+          <Container
+            fluid
+            className="main">
+            <h2 className="text-center me-3">VAN WORLD</h2>
             <div className="up">
               <Button
-                href="/"
+                href={user.role === "OWNER" ? "/profile_owner" : user.role === "CUSTOMER" ? "profile_customer" : ""}
                 style={{
-                  backgroundImage: `url(${lente})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  backgroundSize: "contain",
-                  backgroundPositionY: "9px"
-                }}
-                className="card1"></Button>
-              <Button
-                href="#"
-                style={{
-                  backgroundImage: `url(${blog})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  backgroundSize: "contain"
-                }}
-                className="card2"></Button>
-            </div>
-            <div className="down">
-              <Button
-                href="/profile_customer"
-                style={{
-                  position: "relative",
                   backgroundImage: `url(${user.avatar})`,
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
                   backgroundSize: "cover"
                 }}
-                className="card3 d-flex align-items-start justify-content-end">
+                className="card1 d-flex justify-content-end">
+                {" "}
                 <FaRegPenToSquare
                   className="m-0"
                   onClick={e => {
@@ -146,9 +65,26 @@ const SideBar = () => {
                     cursor: "pointer",
                     position: "absolute",
                     fontSize: "1em",
-                    color: "white"
+                    color: "black"
                   }}
                 />
+              </Button>
+              <Button className="card2 d-flex text-black align-items-center">
+                <IoSettingsSharp
+                  color="black"
+                  fontSize={40}
+                />
+                Account
+              </Button>
+            </div>
+            <div className="down">
+              <Button
+                onClick={() => {
+                  //MODALE MOSTRA NOTIFICHE
+                }}
+                className="card3 text-black d-flex align-items-start justify-content-end">
+                <IoNotificationsSharp fontSize={40} />
+                Notifiche
               </Button>
               <Button
                 href="/log_out"
@@ -160,69 +96,16 @@ const SideBar = () => {
                 Logout
               </Button>
             </div>
-          </Container>
-        ) : user.role === "OWNER" ? (
-          <Container className="main mt-5 ms-5">
-            <h2>VAN WORLD</h2>
-            <div className="up">
-              <Button
-                href="/"
-                style={{
-                  backgroundImage: `url(${lente})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  backgroundSize: "contain",
-                  backgroundPositionY: "9px"
-                }}
-                className="card1"></Button>
-              <Button
-                href={vehicle ? "/profile_vehicle" : "/register_vehicle"}
-                style={{
-                  backgroundImage: `url(${vanSide})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  backgroundSize: "contain"
-                }}
-                className="card2"></Button>
-            </div>
-            <div className="down">
-              <Button
-                href="/profile_owner"
-                style={{
-                  position: "relative",
-                  backgroundImage: `url(${user.avatar})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  backgroundSize: "cover"
-                }}
-                className="card3 d-flex align-items-start justify-content-end">
-                <FaRegPenToSquare
-                  className="m-0"
-                  onClick={e => {
-                    e.preventDefault();
-                    setShow(true);
-                  }}
-                  style={{
-                    cursor: "pointer",
-                    position: "absolute",
-                    fontSize: "1em",
-                    color: "white"
-                  }}
+            {disponibilita && user.role === "OWNER" && (
+              <div className="my-3">
+                <h5>Le tue disponibilità</h5>
+                <Calendario
+                  array={disponibilita}
+                  idDispo={idDispo}
                 />
-              </Button>
-              <Button
-                href="/log_out"
-                className="card4 text-black">
-                <FiLogOut
-                  color="black"
-                  fontSize={40}
-                />
-                Logout
-              </Button>
-            </div>
+              </div>
+            )}
           </Container>
-        ) : (
-          <></>
         )}
       </div>
     </>
