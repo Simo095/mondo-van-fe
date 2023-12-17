@@ -50,22 +50,20 @@ const ProfileCustomer = () => {
   }, []);
 
   return (
-    <Container
-      fluid
-      className="MyProfileOwner d-flex flex-column flex-grow-1 flex-nowrap gap-5">
+    <Container fluid>
       <ModaleCover
         show={show}
         setShow={setShow}
       />
       {user ? (
-        <Row>
+        <Row className="row-cols-2">
           <Col
             xs={3}
-            className="sidebarCircle d-flex text-white shadow-home"
-            style={{ width: "320px", backgroundColor: "#144658", borderColor: "#144658" }}>
+            className="sidebarCircle d-flex text-white"
+            style={{ maxWidth: "320px", backgroundColor: "#144658", borderColor: "#144658" }}>
             <SideBar />
           </Col>
-          <Col>
+          <Col className="flex-grow-1">
             <Row className="d-flex gap-4 flex-column">
               <Col
                 sm={12}

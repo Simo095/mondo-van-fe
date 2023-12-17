@@ -46,8 +46,10 @@ const Home = () => {
               <Container
                 fluid
                 className="d-flex flex-column align-items-center position-relative">
-                <p className="shadow-p">
-                  NOLEGGIA UN VAN PER LA TUA PROSSIMA VACANZA, E VIVI UN AVVENTUA INDIMENTICABILE
+                <p
+                  className="text-white shadow-p"
+                  style={{ fontWeight: "bolder", backgroundColor: "#00000050" }}>
+                  NOLEGGIA UN VAN PER LA TUA PROSSIMA VACANZA, E VIVI UN AVVENTURA INDIMENTICABILE!
                 </p>
               </Container>
             </Col>
@@ -57,9 +59,9 @@ const Home = () => {
         <Col
           sm={4}
           style={{ width: "100vw" }}
-          className="text-black">
+          className="">
           <Row className="row-cols-1 mt-5 ">
-            <Col>
+            <Col className="ContainerTitle">
               <h3>Alcuni post dei nostri Van Travelrs</h3>
             </Col>
             <Col className="d-flex gap-3 overflow-y-scroll oV">
@@ -78,7 +80,7 @@ const Home = () => {
                 <></>
               )}
             </Col>
-            <Col>
+            <Col className="ContainerTitle">
               <h3>Qualche idea per un itinerario in Emilia Romagna</h3>
             </Col>
             <Col className="d-flex gap-3 overflow-y-scroll oV">

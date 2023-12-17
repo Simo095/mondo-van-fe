@@ -36,8 +36,8 @@ const ProfileVehicle = () => {
   return (
     <div className="ProfileVehicle">
       {vehicle ? (
-        <Container>
-          <h4>
+        <Container fluid>
+          <h4 className="logo my-2">
             {vehicle.name}
             {" - "}
             {vehicle.type === "CAMPERIZED_JEEP"

@@ -1,6 +1,6 @@
 import { Card, CardFooter, Col, Container, Nav, Pagination, Row, Spinner } from "react-bootstrap";
 import ModaleCover from "./ModaleCover";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import SideBar from "../stucture/SideBar";
 import ProfileVehicle from "../veicolo/ProfileVehicle";
@@ -9,10 +9,13 @@ import MyPosts from "./MyPosts";
 import FormAddPost from "./FormAddPost";
 import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
 import { fetchPrenotazioni } from "../../redux/actions/fetchActions";
+import { fetchMyPost } from "../../redux/actions";
 
 const MyProfileOwner = () => {
   const user = useSelector(state => state.login.user);
   const postsOwner = useSelector(state => state.post.myPost);
+  const token = useSelector(state => state.login.token);
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [loadingPre, setLoadingPre] = useState(false);
   const [prenotazioni, setPrenotazioni] = useState(null);
@@ -36,49 +39,57 @@ const MyProfileOwner = () => {
       console.log("si e' verificato un errore", error.message);
     }
   };
-  useEffect(() => {}, []);
+
+  useEffect(() => {
+    dispatch(fetchPrenotazioni(token, setPrenotazioni, setLoadingPre));
+  }, []);
 
   return (
     <Container
       fluid
-      className="MyProfileOwner d-flex flex-column flex-grow-1 flex-nowrap gap-5">
+      className="ContainerProfileMain">
       <ModaleCover
         show={show}
         setShow={setShow}
       />
       {user ? (
-        <Row>
-          <Col
-            xs={3}
-            className="sidebarCircle d-flex text-white shadow-home"
-            style={{ width: "320px", backgroundColor: "#144658", borderColor: "#144658" }}>
+        <Row className="row-cols-2">
+          <Col className="sidebarCircle d-flex">
             <SideBar />
           </Col>
-          <Col>
-            <Row className="d-flex gap-4 flex-column">
+          <Col
+            style={{ height: "115h" }}
+            className="flex-grow-1 overflow-y-scroll oV">
+            <Row className="d-flex flex-column">
               <Col
                 sm={12}
-                style={{ backgroundColor: "#144658", height: "60px" }}>
+                className="NavProfile">
                 <Nav>
                   <Nav.Item>
-                    <Nav.Link>BlogPost</Nav.Link>
+                    <Nav.Link
+                      href="/blogpost"
+                      className="text-decoration-none text-white">
+                      BlogPost
+                    </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link>Cerca un van</Nav.Link>
+                    <Nav.Link
+                      href="/"
+                      className="text-decoration-none text-white">
+                      Cerca un van
+                    </Nav.Link>
                   </Nav.Item>
                 </Nav>
               </Col>
-              <Col style={{ maxWidth: "800px" }}>
+              <Col className="ContainerProfile pt-4">
                 <ProfileVehicle />
               </Col>
-              <Col
-                className="d-flex  justify-content-center"
-                style={{ maxWidth: "800px" }}>
-                <Card className="d-flex flex-grow-1">
+              <Col className="d-flex ContainerProfileWhite py-4  justify-content-center">
+                <Card className="d-flex justify-content-center flex-grow-1">
                   <Card.Header style={{ backgroundColor: "#144658", borderColor: "#144658", color: "white" }}>
                     Prenotazioni
                   </Card.Header>
-                  <Row className="d-flex flex-grow-1">
+                  <Row className="">
                     {loadingPre ? (
                       <Col className="d-flex justify-content-center">
                         <Spinner variant="success" />
@@ -87,9 +98,14 @@ const MyProfileOwner = () => {
                       prenotazioni.map(pre => {
                         return (
                           <Col
+                            sm={3}
                             key={pre.id}
-                            className="d-flex">
-                            <Prenotazione pre={pre} />
+                            className="">
+                            <Prenotazione
+                              pre={pre}
+                              setPrenotazioni={setPrenotazioni}
+                              setLoadingPre={setLoadingPre}
+                            />
                           </Col>
                         );
                       })
@@ -101,20 +117,20 @@ const MyProfileOwner = () => {
                   </Row>
                 </Card>
               </Col>
-              <Col style={{ maxWidth: "800px" }}>
-                <Container className="">
-                  <h4>I tuoi post</h4>
-                  <div className="d-flex justify-content-center">
+              <Col className="ContainerProfileMain  my-3">
+                <h4 className="text-white">I tuoi post</h4>
+              </Col>
+              <Col className="ContainerProfileWhite ContainerProfile">
+                <Container>
+                  <div className="d-flex justify-content-center mt-3">
                     <FormAddPost user={user} />
                   </div>
                   <Container
                     fluid
                     className="d-flex">
                     {postsOwner && postsOwner.length !== 0 && (
-                      <div className="d-flex overflow-x-scroll gap-3">
+                      <div className="d-flex overflow-x-scroll oV gap-3">
                         {postsOwner.toReversed().map((elem, i) => (
-                          // i >= page * 5 - 5 &&
-                          // i < page * 5 && (
                           <MyPosts
                             elem={elem}
                             key={`post${i}`}

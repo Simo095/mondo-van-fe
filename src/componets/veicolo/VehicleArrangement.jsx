@@ -50,10 +50,7 @@ const VehicleArrangement = () => {
       })
     });
     if (richiesta.ok) {
-      const vehicle = await richiesta.json();
-      dispatch(addVehicle(vehicle));
-      navigate(`/profile_owner`);
-      console.log(vehicle);
+      navigate(`/change_vehicle`);
     }
   };
 

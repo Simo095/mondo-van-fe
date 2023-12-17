@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Carousel } from "react-bootstrap";
+import { Carousel, Container } from "react-bootstrap";
 
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { HiOutlineTrash } from "react-icons/hi2";

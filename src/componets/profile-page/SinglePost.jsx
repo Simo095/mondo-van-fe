@@ -48,9 +48,9 @@ const SinglePost = ({
   return (
     elem &&
     profile && (
-      <div className="border SinglePostAll border-1 w-50 rounded-3 shadow my-3 p-3 bg-light">
+      <div className="border SinglePostAll w-50 border-1 rounded-3 shadow my-3 p-3 bg-light">
         <Row className=" justify-content-between mb-2">
-          <Col xs="auto">
+          <Col>
             <Image
               src={
                 elem ? elem.author.avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"

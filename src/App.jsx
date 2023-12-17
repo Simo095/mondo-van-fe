@@ -18,6 +18,8 @@ import Register from "./componets/login-register-auth/Register";
 import ComeFunziona from "./componets/stucture/ComeFunziona";
 
 import MyProfileOwner from "./componets/profile-page/MyProfileOwner";
+import BlogPost from "./componets/blog-post/BlogPost";
+import ChangeVehicle from "./componets/veicolo/ChangeVehicle";
 
 const App = () => {
   return (
@@ -39,6 +41,10 @@ const App = () => {
           <Route
             path="/change_calendar"
             element={<ChangeCalendar />}
+          />
+          <Route
+            path="/change_vehicle"
+            element={<ChangeVehicle />}
           />
           <Route
             path="/change"
@@ -95,6 +101,10 @@ const App = () => {
           <Route
             path="/rules"
             element={<ComeFunziona />}
+          />
+          <Route
+            path="/blogpost"
+            element={<BlogPost />}
           />
         </Routes>
       </BrowserRouter>

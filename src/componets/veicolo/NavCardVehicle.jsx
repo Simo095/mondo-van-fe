@@ -3,48 +3,48 @@ import { Nav } from "react-bootstrap";
 const NavCardVehicle = ({ setMotorizzazione, setCreaAnnuncio, setInterni, setFoto }) => {
   return (
     <Nav
-      className="bg-secondary"
+      className=""
       variant="tabs"
       defaultActiveKey="#first">
       <Nav.Item
-        className="navItemsVehicle"
+        className="navItemsVehicle buttonCard"
         onClick={() => {
           setMotorizzazione(false);
           setCreaAnnuncio(false);
           setInterni(false);
           setFoto(true);
         }}>
-        <Nav.Link>Foto Veicolo</Nav.Link>
+        <Nav.Link className="text-decoration-none text-white">Foto Veicolo</Nav.Link>
       </Nav.Item>
       <Nav.Item
-        className="navItemsVehicle"
+        className="navItemsVehicle buttonCard"
         onClick={() => {
           setMotorizzazione(false);
           setCreaAnnuncio(false);
           setInterni(true);
           setFoto(false);
         }}>
-        <Nav.Link>Interni</Nav.Link>
+        <Nav.Link className="text-decoration-none text-white">Interni</Nav.Link>
       </Nav.Item>
       <Nav.Item
-        className="navItemsVehicle"
+        className="navItemsVehicle buttonCard"
         onClick={() => {
           setCreaAnnuncio(true);
           setMotorizzazione(false);
           setInterni(false);
           setFoto(false);
         }}>
-        <Nav.Link>Annuncio</Nav.Link>
+        <Nav.Link className="text-decoration-none text-white">Annuncio</Nav.Link>
       </Nav.Item>
       <Nav.Item
-        className="navItemsVehicle"
+        className="navItemsVehicle buttonCard"
         onClick={() => {
           setMotorizzazione(true);
           setCreaAnnuncio(false);
           setInterni(false);
           setFoto(false);
         }}>
-        <Nav.Link>Motorizzazione</Nav.Link>
+        <Nav.Link className="text-decoration-none text-white">Motorizzazione</Nav.Link>
       </Nav.Item>
     </Nav>
   );

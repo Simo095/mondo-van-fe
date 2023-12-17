@@ -18,8 +18,8 @@ const Result = () => {
   const r = useSelector(state => state.result.vehicles);
   const params = useParams();
 
-  const [interni, setInterni] = useState(false);
-  const [motorizzazione, setMotorizzazione] = useState(true);
+  const [interni, setInterni] = useState(true);
+  const [motorizzazione, setMotorizzazione] = useState(false);
   const [annuncio, setAnnuncio] = useState(false);
   const [vehicle, setVehicle] = useState();
   const [diff, setDiff] = useState();

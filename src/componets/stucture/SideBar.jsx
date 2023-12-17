@@ -1,35 +1,42 @@
-import { Button, Container, Form, Modal, Spinner } from "react-bootstrap";
-import Dropzone from "react-dropzone";
+import { Button, Container, Offcanvas } from "react-bootstrap";
+
 import { FiLogOut } from "react-icons/fi";
 import { IoNotificationsSharp, IoSettingsSharp } from "react-icons/io5";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
+
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchDisponibilita, fetchUser } from "../../redux/actions/fetchActions";
-import vanSide from "../../assets/icone/van-side.png";
-import lente from "../../assets/icone/lente.png";
-import blog from "../../assets/icone/Blog.png";
+import { fetchDisponibilita, fetchNotifiche } from "../../redux/actions/fetchActions";
+
 import "../../assets/style/sidebar-button.css";
+import "../../assets/style/card-notifica.css";
 import ModaleAvatar from "../profile-page/ModaleAvatar";
 import Calendario from "./Calendario";
 
+import Notifica from "../profile-page/Notifica";
+
 const SideBar = () => {
   const user = useSelector(state => state.login.user);
-  const vehicle = useSelector(state => state.vehicles.vehicle);
+
   const token = useSelector(state => state.login.token);
   const [show, setShow] = useState(false);
   const [disponibilita, setDisponibilita] = useState(null);
   const [idDispo, setIdDispo] = useState(null);
+  const [notifiche, setNotifiche] = useState(null);
 
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleClose = () => setShow(false);
+
+  const [showNotifiche, setShowNotifiche] = useState(false);
+  const handleCloseNotifiche = () => setShowNotifiche(false);
+  const handleShowNotifiche = () => {
+    console.log(notifiche);
+    setShowNotifiche(true);
+  };
 
   useEffect(() => {
     if (user.role === "OWNER") dispatch(fetchDisponibilita(token, setDisponibilita, setIdDispo));
+    dispatch(fetchNotifiche(token, setNotifiche));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -39,11 +46,33 @@ const SideBar = () => {
           show={show}
           setShow={setShow}
         />
+
+        <Offcanvas
+          show={showNotifiche}
+          onHide={handleCloseNotifiche}
+          placement="end">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Notifiche</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            {console.log(notifiche)}
+            {notifiche &&
+              notifiche.map(elem => (
+                <Notifica
+                  elem={elem}
+                  key={elem.id}
+                  setNotifiche={setNotifiche}
+                />
+              ))}
+          </Offcanvas.Body>
+        </Offcanvas>
+        {/*  */}
+
         {user && (
           <Container
             fluid
             className="main">
-            <h2 className="text-center me-3">VAN WORLD</h2>
+            <h2 className="text-center me-3 text-white">VAN WORLD</h2>
             <div className="up">
               <Button
                 href={user.role === "OWNER" ? "/profile_owner" : user.role === "CUSTOMER" ? "profile_customer" : ""}
@@ -69,7 +98,7 @@ const SideBar = () => {
                   }}
                 />
               </Button>
-              <Button className="card2 d-flex text-black align-items-center">
+              <Button className="card2 d-flex text-black align-items-end pb-3">
                 <IoSettingsSharp
                   color="black"
                   fontSize={40}
@@ -79,9 +108,7 @@ const SideBar = () => {
             </div>
             <div className="down">
               <Button
-                onClick={() => {
-                  //MODALE MOSTRA NOTIFICHE
-                }}
+                onClick={notifiche && handleShowNotifiche}
                 className="card3 text-black d-flex align-items-start justify-content-end">
                 <IoNotificationsSharp fontSize={40} />
                 Notifiche
@@ -98,7 +125,7 @@ const SideBar = () => {
             </div>
             {disponibilita && user.role === "OWNER" && (
               <div className="my-3">
-                <h5>Le tue disponibilità</h5>
+                <h5 className="text-white">Le tue disponibilità</h5>
                 <Calendario
                   array={disponibilita}
                   idDispo={idDispo}

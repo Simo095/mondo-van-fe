@@ -183,8 +183,13 @@ const FormHome = () => {
           form="formPrimo"
           type="submit"
           className="btn-radius-start-0 btn-Form"
-          style={{ backgroundColor: "#CF781D", borderColor: "#CF781D" }}>
-          Parti!
+          style={{
+            backgroundColor: "#ffc107",
+            borderColor: "#ffc107",
+            fontWeight: "bolder",
+            fontFamily: "Rowdies, sans-serif"
+          }}>
+          PARTI!
         </Button>
       </Form>
       {error ? <Alert variant="danger">Non ci sono disponibilita</Alert> : <></>}

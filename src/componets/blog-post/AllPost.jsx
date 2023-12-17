@@ -7,7 +7,7 @@ import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
 import { fetchPost } from "../../redux/actions";
 
 const AllPost = () => {
-  const posts = useSelector(state => state.post.postMyFriends);
+  const posts = useSelector(state => state.post.data);
   const user = useSelector(state => state.login.user);
   const token = useSelector(state => state.login.token);
   const [show, setShow] = useState(false);
@@ -42,62 +42,54 @@ const AllPost = () => {
   }, []);
   return (
     <div className="AllPost">
-      <Container>
+      <Container fluid>
+        <h5 className="mt-3 text-white">I post della nostra comunity</h5>
         <Row>
-          <Card className="mt-5">
-            <h5 className="mt-3">I post della nostra comunity</h5>
+          {posts && posts.length !== 0 ? (
+            <Col className="d-flex flex-column gap-3 justify-content-between align-items-center">
+              {posts.toReversed().map((elem, i) => (
+                <SinglePost
+                  elem={elem}
+                  key={`post${i}`}
+                  cancella={delPost}
+                  profile={user}
+                  handleClose={handleClosePost}
+                  handleShow={handleShowPost}
+                  show={showPost}
+                  setPostText={setPostText}
+                  setModifica={setModifica}
+                  setIdPost={setIdPost}
+                />
+              ))}
+            </Col>
+          ) : (
             <Row>
-              {posts && posts.length !== 0 ? (
-                <Col className="d-flex justify-content-between align-items-center">
-                  {posts.toReversed().map(
-                    (elem, i) =>
-                      i >= page * 1 - 1 &&
-                      i < page * 1 && (
-                        <SinglePost
-                          elem={elem}
-                          key={`post${i}`}
-                          cancella={delPost}
-                          profile={user}
-                          handleClose={handleClosePost}
-                          handleShow={handleShowPost}
-                          show={showPost}
-                          setPostText={setPostText}
-                          setModifica={setModifica}
-                          setIdPost={setIdPost}
-                        />
-                      )
-                  )}
-                </Col>
-              ) : (
-                <Row>
-                  <Col className="d-flex justify-content-center">
-                    <p>Nessun post...</p>
-                  </Col>
-                </Row>
-              )}
-              <CardFooter className="">
-                <div className="d-flex justify-content-center">
-                  <Pagination className="d-flex justify-content-center">
-                    <Pagination.Item
-                      onClick={() => {
-                        page > 1 && setPage(page - 1);
-                      }}>
-                      <BsCaretLeft />
-                    </Pagination.Item>
-                    <Pagination.Item disabled>{page - 1 === 0 ? "..." : page - 1}</Pagination.Item>
-                    <Pagination.Item active={true}>{page}</Pagination.Item>
-                    <Pagination.Item disabled>{page === posts.length / 5 ? "..." : page + 1}</Pagination.Item>
-                    <Pagination.Item
-                      onClick={() => {
-                        page < posts.length && setPage(page + 1);
-                      }}>
-                      <BsCaretRight />
-                    </Pagination.Item>
-                  </Pagination>
-                </div>
-              </CardFooter>
+              <Col className="d-flex justify-content-center">
+                <p>Nessun post...</p>
+              </Col>
             </Row>
-          </Card>
+          )}
+          <CardFooter className="">
+            <div className="d-flex justify-content-center">
+              <Pagination className="d-flex justify-content-center">
+                <Pagination.Item
+                  onClick={() => {
+                    page > 1 && setPage(page - 1);
+                  }}>
+                  <BsCaretLeft />
+                </Pagination.Item>
+                <Pagination.Item disabled>{page - 1 === 0 ? "..." : page - 1}</Pagination.Item>
+                <Pagination.Item active={true}>{page}</Pagination.Item>
+                <Pagination.Item disabled>{page === posts.length / 5 ? "..." : page + 1}</Pagination.Item>
+                <Pagination.Item
+                  onClick={() => {
+                    page < posts.length / 10 && setPage(page + 1);
+                  }}>
+                  <BsCaretRight />
+                </Pagination.Item>
+              </Pagination>
+            </div>
+          </CardFooter>
         </Row>
       </Container>
     </div>
