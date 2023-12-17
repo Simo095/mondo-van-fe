@@ -1,20 +1,14 @@
 import { useEffect, useState } from "react";
-import { Button, Card, CardBody, CardText, CardTitle, Col, Container, Form, Image, Nav, Row } from "react-bootstrap";
-import { BsFillFuelPumpFill } from "react-icons/bs";
-import { CiCalendar } from "react-icons/ci";
-import { MdHeight } from "react-icons/md";
-import { PiEngineBold } from "react-icons/pi";
-import { RxWidth } from "react-icons/rx";
-import { SlSpeedometer } from "react-icons/sl";
+import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import CardInterni from "../veicolo/CardInterni";
 import CaruselVehicle from "../veicolo/CaruselVehicle";
 import cover from "../../assets/user_placeholder.png";
-import cambio from "../../assets/icone/Cambio.png";
-import patente from "../../assets/icone/Patente.png";
-import cintura from "../../assets/icone/cinturaSicurezza.png";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
+import NavResultVehicle from "./NavResultVehicle";
+import Motorizzazione from "../veicolo/Motorizzazione";
+import PrenotazioneSideBar from "../stucture/PrenotazioneSideBar";
 
 const Result = () => {
   const token = useSelector(state => state.login.token);
@@ -26,7 +20,6 @@ const Result = () => {
 
   const [interni, setInterni] = useState(false);
   const [motorizzazione, setMotorizzazione] = useState(true);
-  const [prenotazione, setPrenotazione] = useState(false);
   const [annuncio, setAnnuncio] = useState(false);
   const [vehicle, setVehicle] = useState();
   const [diff, setDiff] = useState();
@@ -59,47 +52,6 @@ const Result = () => {
     }
   };
 
-  const handlerSubmit = async e => {
-    e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const messaggio = form.get("messaggio");
-    const notifica = await fetch("http://localhost:8080/notifications/for_reservation", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        text: messaggio,
-        object:
-          "Richiesta di prenotazione dal " +
-          startDate +
-          " al " +
-          endDate +
-          " al prezzo di " +
-          vehicle.pricePerDay * diff +
-          "€",
-        receiver: vehicle.id
-      })
-    });
-    if (notifica.ok) {
-      const reservation = await fetch(`http://localhost:8080/reservations/${vehicle.id}`, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({
-          start: startDate,
-          end: endDate
-        })
-      });
-      if (reservation.ok) {
-        console.log("Ok");
-      }
-    }
-  };
-
   useEffect(() => {
     vehicleFetchDetail();
     if (startDate && endDate) {
@@ -111,257 +63,119 @@ const Result = () => {
   return (
     <>
       {r.length !== 0 && vehicle ? (
-        <Col sm={8}>
+        <Container
+          fluid
+          className="Result">
+          <div className="d-flex justify-content-between my-4 position-relative">
+            <h4>
+              {vehicle.name}
+              {" - "}
+              {vehicle.type === "CAMPERIZED_JEEP"
+                ? "JEEP ATTREZZATA"
+                : vehicle.type === "ROOFTOOP_CAR"
+                ? "MACCHINA ATTREZZATA"
+                : vehicle.type === "VAN"
+                ? "VAN"
+                : vehicle.type === "CAMPER"
+                ? "CAMPER"
+                : vehicle.type === "OTHER"
+                ? "ALTRO"
+                : ""}
+              {" - "}
+              {vehicle.shortDescriptions ? vehicle.shortDescriptions : ""}
+            </h4>
+
+            <div className="d-flex align-items-center">
+              <IoArrowBackCircleOutline
+                onClick={() => {
+                  console.log(params);
+                  navigate(-1);
+                }}
+                className="fs-1"
+                style={{ cursor: "pointer", zIndex: "1" }}
+              />
+            </div>
+          </div>
           <Row
-            style={{ height: "100vh" }}
-            className="d-flex oV  overflow-y-scroll">
-            <Col className="">
-              <Row className="d-flex Result flex-column align-items-center mt-5">
-                <div className="d-flex justify-content-between mb-5 position-relative">
-                  <h3>
-                    {vehicle.name}
-                    {" - "}
-                    {vehicle.type === "CAMPERIZED_JEEP"
-                      ? "JEEP ATTREZZATA"
-                      : vehicle.type === "ROOFTOOP_CAR"
-                      ? "MACCHINA ATTREZZATA"
-                      : vehicle.type === "VAN"
-                      ? "VAN"
-                      : vehicle.type === "CAMPER"
-                      ? "CAMPER"
-                      : vehicle.type === "OTHER"
-                      ? "ALTRO"
-                      : ""}
-                    {" - "}
-                    {vehicle.shortDescriptions ? vehicle.shortDescriptions : ""}
-                  </h3>
-
-                  <div className="d-flex align-items-center">
-                    <IoArrowBackCircleOutline
-                      onClick={() => {
-                        console.log(params);
-                        navigate(-1);
-                      }}
-                      className="fs-1"
-                      style={{ cursor: "pointer", zIndex: "1" }}
-                    />
-                  </div>
-                </div>
-
-                <Col className="mb-3">
-                  <CaruselVehicle
-                    vehicle={vehicle}
-                    cover={cover}
-                    token={token}
-                    height={600}
+            md={1}
+            lg={2}>
+            <Col lg={8}>
+              <CaruselVehicle
+                vehicle={vehicle}
+                cover={cover}
+                token={token}
+                height={600}
+              />
+              {vehicle && (
+                <>
+                  <NavResultVehicle
+                    setAnnuncio={setAnnuncio}
+                    setMotorizzazione={setMotorizzazione}
+                    setInterni={setInterni}
                   />
-                </Col>
 
-                <Col>
-                  {vehicle && (
-                    <>
-                      <Card>
-                        <Card.Header style={{ backgroundColor: "white" }}>
-                          <Nav
-                            variant="tabs"
-                            defaultActiveKey="#first">
-                            <Nav.Item
-                              className="navItemsVehicle"
-                              onClick={() => {
-                                setMotorizzazione(true);
-                                setInterni(false);
-                                setPrenotazione(false);
-                                setAnnuncio(false);
-                              }}>
-                              <Nav.Link>Motorizzazione</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item
-                              className="navItemsVehicle"
-                              onClick={() => {
-                                setMotorizzazione(false);
-                                setInterni(true);
-                                setPrenotazione(false);
-                                setAnnuncio(false);
-                              }}>
-                              <Nav.Link>Interni</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item
-                              className="navItemsVehicle"
-                              onClick={() => {
-                                setMotorizzazione(false);
-                                setInterni(false);
-                                setPrenotazione(false);
-                                setAnnuncio(true);
-                              }}>
-                              <Nav.Link>Annuncio</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item
-                              className="navItemsVehicle"
-                              onClick={() => {
-                                setMotorizzazione(false);
-                                setInterni(false);
-                                setPrenotazione(true);
-                                setAnnuncio(false);
-                              }}>
-                              <Nav.Link>Prenotazione</Nav.Link>
-                            </Nav.Item>
-                          </Nav>
-                        </Card.Header>
-
-                        {motorizzazione && vehicle && (
-                          <>
-                            <Card.Body className="">
-                              <Row className="row-cols-1">
-                                <Col className="d-flex mb-4">
-                                  <Card.Title>
-                                    {vehicle.brand} - {vehicle.model} - Username: {vehicle.name}
-                                  </Card.Title>
-                                </Col>
-                                <Col>
-                                  <Row>
-                                    <Col className="d-flex flex-column">
-                                      <Row className="mb-3">
-                                        <Col
-                                          sm={3}
-                                          className="d-flex flex-column gap-1 align-items-center justify-content-centet">
-                                          <SlSpeedometer fontSize={40} />
-                                          <Card.Text>{vehicle.kilometers} KM</Card.Text>
-                                        </Col>
-
-                                        <Col
-                                          sm={3}
-                                          className="d-flex flex-column gap-1 align-items-center justify-content-centet">
-                                          <CiCalendar fontSize={40} />
-                                          <Card.Text>{vehicle.firstEnrollment.substring(0, 4)}</Card.Text>
-                                        </Col>
-
-                                        <Col
-                                          sm={3}
-                                          className="d-flex mt-1 flex-column gap-2 align-items-center justify-content-centet">
-                                          <Image
-                                            style={{ width: "45px" }}
-                                            src={patente}
-                                          />
-                                          <Card.Text>{vehicle.license}</Card.Text>
-                                        </Col>
-                                        <Col
-                                          sm={3}
-                                          className="d-flex flex-column gap-1 align-items-center justify-content-centet">
-                                          <Image
-                                            style={{ width: "38px" }}
-                                            src={cintura}
-                                          />
-                                          <Card.Text>{vehicle.sits}</Card.Text>
-                                        </Col>
-                                      </Row>
-                                      <Row>
-                                        <Col
-                                          sm={3}
-                                          className="d-flex flex-column gap-1 align-items-center justify-content-centet">
-                                          <PiEngineBold fontSize={40} />
-                                          <Card.Text>
-                                            {vehicle.displacement} cm<sup>3</sup>
-                                          </Card.Text>
-                                        </Col>
-                                        <Col
-                                          sm={3}
-                                          className="d-flex flex-column gap-2 align-items-center justify-content-centet">
-                                          <BsFillFuelPumpFill fontSize={37} />
-                                          <Card.Text>{vehicle.supply}</Card.Text>
-                                        </Col>
-                                        <Col
-                                          sm={3}
-                                          className="d-flex flex-column gap-1 align-items-center justify-content-centet">
-                                          <Image
-                                            style={{ width: "35px" }}
-                                            src={cambio}
-                                          />
-                                          <Card.Text>
-                                            {vehicle.transmission === "MANUAL"
-                                              ? "MANUALE"
-                                              : vehicle.transmission === "AUTO"
-                                              ? "AUTOMATICO"
-                                              : vehicle.transmission === "SEMI_AUTO"
-                                              ? "SEMI AUTOMATICO"
-                                              : ""}
-                                          </Card.Text>
-                                        </Col>
-                                      </Row>
-                                      <Row>
-                                        <CardTitle>Sagoma veicolo</CardTitle>
-                                        <Col
-                                          sm={3}
-                                          className="d-flex flex-column gap-1 align-items-center justify-content-centet">
-                                          <MdHeight fontSize={40} />
-                                          <Card.Text>{vehicle.height}m</Card.Text>
-                                        </Col>
-
-                                        <Col
-                                          sm={3}
-                                          className="d-flex flex-column gap-1 align-items-center justify-content-centet">
-                                          <RxWidth fontSize={40} />
-                                          <Card.Text>{vehicle.length}m</Card.Text>
-                                        </Col>
-                                      </Row>
-                                    </Col>
-                                  </Row>
-                                </Col>
-                              </Row>
-                            </Card.Body>
-                          </>
-                        )}
-
-                        {interni && vehicle && (
-                          <Card.Body>
-                            <CardInterni vehicle={vehicle}></CardInterni>
-                          </Card.Body>
-                        )}
-                        {annuncio && (
-                          <CardBody>{vehicle.announcement ? vehicle.announcement : "Nessun annuncio"}</CardBody>
-                        )}
-                        {prenotazione && (
-                          <CardBody>
-                            <CardTitle>
-                              Prenota {vehicle.name} in provincia di{" "}
-                              {r.map((elem, i) => {
-                                return elem.name === vehicle.name ? r[i].province : "";
-                              })}
-                            </CardTitle>
-                            <CardText>
-                              dal {startDate.substring(5, 11).split("-").reverse().join("-")} al{" "}
-                              {endDate.substring(5, 11).split("-").reverse().join("-")} al prezzo di{" "}
-                              {vehicle.pricePerDay * diff} €
-                            </CardText>
-                            <Row className="d-flex flex-column">
-                              <Form onSubmit={handlerSubmit}>
-                                <Col className="d-flex justify-content-center gap-5">
-                                  <Form.Group className="mb-3">
-                                    <Form.Control
-                                      name="messaggio"
-                                      id="messaggio"
-                                      as="textarea"
-                                      style={{ backgroundColor: "#00000000" }}
-                                      rows={6}
-                                      placeholder="Mettiti in contatto col proprietario del van!"
-                                      required
-                                    />
-                                  </Form.Group>
-                                </Col>
-                                <Col className="d-flex justify-content-center gap-5">
-                                  <Button type="submit">Invia</Button>
-                                </Col>
-                              </Form>
-                            </Row>
-                          </CardBody>
-                        )}
-                      </Card>
-                    </>
+                  {interni && vehicle && (
+                    <Container
+                      fluid
+                      style={{ backgroundColor: "#144658" }}
+                      className="py-3">
+                      <CardInterni vehicle={vehicle}></CardInterni>
+                    </Container>
                   )}
-                </Col>
-              </Row>
+                  {annuncio &&
+                    (vehicle.announcement ? (
+                      <Container
+                        fluid
+                        style={{ backgroundColor: "#144658" }}
+                        className="py-3">
+                        <Container
+                          className="bg-white"
+                          style={{ borderRadius: "10px" }}>
+                          <Row xs={1}>
+                            <Col className="my-3">
+                              <p>{vehicle.announcement}</p>
+                            </Col>
+                          </Row>
+                        </Container>
+                      </Container>
+                    ) : (
+                      <Container
+                        fluid
+                        style={{ backgroundColor: "#144658" }}
+                        className="py-3">
+                        <Container
+                          className="bg-white d-flex justify-content-center"
+                          style={{ borderRadius: "10px" }}>
+                          <Row xs={1}>
+                            <Col className="my-3">
+                              <p>Nessun annuncio...</p>
+                            </Col>
+                          </Row>
+                        </Container>
+                      </Container>
+                    ))}
+                </>
+              )}
+              {motorizzazione && vehicle && (
+                <Container
+                  fluid
+                  style={{ backgroundColor: "#144658" }}
+                  className="py-3">
+                  <Motorizzazione vehicle={vehicle} />
+                </Container>
+              )}
+            </Col>
+            <Col lg={4}>
+              <PrenotazioneSideBar
+                vehicleProp={vehicle}
+                result={r}
+                startDateProps={startDate}
+                endDateProps={endDate}
+                diffProps={diff}
+              />
             </Col>
           </Row>
-        </Col>
+        </Container>
       ) : (
         <></>
       )}

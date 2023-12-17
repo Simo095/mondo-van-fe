@@ -6,12 +6,9 @@ import Home from "./componets/home/Home";
 import RegisterCustomer from "./componets/login-register-auth/RegisterCustomer";
 import RegisterOwner from "./componets/login-register-auth/RegisterOwner";
 import ProfileCustomer from "./componets/profile-page/ProfileCustomer";
-import ProfileOwner from "./componets/profile-page/ProfileOwner";
+
 import Auth from "./componets/login-register-auth/Auth";
 import OutGone from "./componets/login-register-auth/OutGone";
-import ProfileVehicle from "./componets/veicolo/ProfileVehicle";
-import RegisterVehicle from "./componets/veicolo/RegisterVehicle";
-import UploadDocument from "./componets/veicolo/UploadDocument";
 import VehicleArrangement from "./componets/veicolo/VehicleArrangement";
 import ChangeCalendar from "./componets/profile-page/ChangeCalendar";
 import ResultPage from "./componets/results-page/ResultPage";
@@ -19,7 +16,7 @@ import ChangeImg from "./componets/veicolo/ChangeImg";
 import Result from "./componets/results-page/Result";
 import Register from "./componets/login-register-auth/Register";
 import ComeFunziona from "./componets/stucture/ComeFunziona";
-import AllPost from "./componets/blog-post/AllPost";
+
 import MyProfileOwner from "./componets/profile-page/MyProfileOwner";
 
 const App = () => {
@@ -48,10 +45,6 @@ const App = () => {
             element={<ChangeImg />}
           />
           <Route
-            path="/upload_document"
-            element={<UploadDocument />}
-          />
-          <Route
             path="/log_out"
             element={<OutGone />}
           />
@@ -64,25 +57,12 @@ const App = () => {
             element={<RegisterOwner />}
           />
           <Route
-            path="/register_vehicle"
-            element={<RegisterVehicle />}
-          />
-          <Route
             path="/profile_customer"
             element={<ProfileCustomer />}
-          />
-
-          <Route
-            path="/profile_owner2"
-            element={<ProfileOwner />}
           />
           <Route
             path="/profile_owner"
             element={<MyProfileOwner />}
-          />
-          <Route
-            path="/profile_vehicle"
-            element={<ProfileVehicle />}
           />
           <Route
             path="/vehicle_arrangement"
@@ -115,10 +95,6 @@ const App = () => {
           <Route
             path="/rules"
             element={<ComeFunziona />}
-          />
-          <Route
-            path="/posts"
-            element={<AllPost />}
           />
         </Routes>
       </BrowserRouter>

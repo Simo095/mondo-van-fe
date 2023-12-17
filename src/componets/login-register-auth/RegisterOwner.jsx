@@ -55,7 +55,6 @@ const RegisterOwner = () => {
       })
     });
     if (risposta.ok) {
-      const o = await risposta.json();
       setRispOk(true);
       setLoading(false);
     } else {
@@ -92,6 +91,7 @@ const RegisterOwner = () => {
   const handlerFlip = () => setFlip(!flip);
   useEffect(() => {
     dispatch(fetchProvince(setProvinces));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

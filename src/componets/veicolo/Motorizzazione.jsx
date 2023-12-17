@@ -68,7 +68,13 @@ const Motorizzazione = ({ vehicle }) => {
                   sm={3}
                   className="d-flex flex-column gap-2 align-items-center justify-content-centet">
                   <BsFillFuelPumpFill fontSize={30} />
-                  <p>{vehicle.supply}</p>
+                  <p>
+                    {vehicle.supply === "GASOLINE"
+                      ? "Benzina"
+                      : vehicle.supply === "LPG_DIESEL"
+                      ? "Gpl e Diesel"
+                      : "Diesel"}
+                  </p>
                 </Col>
                 <Col
                   sm={3}
@@ -79,11 +85,11 @@ const Motorizzazione = ({ vehicle }) => {
                   />
                   <p>
                     {vehicle.transmission === "MANUAL"
-                      ? "MANUALE"
+                      ? "Manuale"
                       : vehicle.transmission === "AUTO"
-                      ? "AUTOMATICO"
+                      ? "Automatico"
                       : vehicle.transmission === "SEMI_AUTO"
-                      ? "SEMI AUTOMATICO"
+                      ? "Semi-automatico"
                       : ""}
                   </p>
                 </Col>

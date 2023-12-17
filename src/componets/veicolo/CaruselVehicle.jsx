@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { Button, Carousel, Form, Modal, Spinner } from "react-bootstrap";
-import Dropzone from "react-dropzone";
+import { Carousel } from "react-bootstrap";
+
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { HiOutlineTrash } from "react-icons/hi2";
-import { RiArrowGoBackLine, RiSendPlaneFill } from "react-icons/ri";
-import { useSelector } from "react-redux";
+
 import { useNavigate } from "react-router";
+import ModaleAddCoverVehicle from "./ModaleAddCoverVehicle";
 
 const CaruselVehicle = ({ cover, token, height, vehicle }) => {
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [coverImg, setCover] = useState(null);
 
   const navigate = useNavigate();
 
@@ -29,85 +27,13 @@ const CaruselVehicle = ({ cover, token, height, vehicle }) => {
     }
   };
 
-  const handlerSubmitCover = async e => {
-    e.preventDefault();
-    const formCover = new FormData();
-    formCover.append("img", coverImg[0]);
-    setLoading(true);
-    if (cover) {
-      const coverfetch = await fetch("http://localhost:8080/vehicles/upload_img", {
-        method: "PATCH",
-        headers: {
-          Authorization: "Bearer " + token
-        },
-        body: formCover
-      });
-      if (coverfetch.ok) {
-        navigate("/change");
-      }
-    }
-    setLoading(false);
-  };
-
   return (
     <>
-      <Modal show={show}>
-        <Modal.Header>
-          <Modal.Title>Immagine di copertina</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form
-            id="drop"
-            className="d-flex justify-content-center "
-            onSubmit={handlerSubmitCover}>
-            <Dropzone
-              onDrop={acceptedFiles => {
-                setCover(acceptedFiles);
-              }}>
-              {({ getRootProps, getInputProps, acceptedFiles }) => (
-                <>
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <div
-                      style={{
-                        border: "3px",
-                        borderStyle: "dashed",
-                        borderRadius: "30px",
-                        borderColor: "ActiveBorder"
-                      }}
-                      className="text-center">
-                      {acceptedFiles[0]
-                        ? acceptedFiles[0].path
-                        : "Tracina l'immagine che desideri come cover \noppure clicca sul qui per aprire explore e selezionarla"}
-                    </div>
-                    {loading ? (
-                      <Spinner
-                        animation="border"
-                        className="mt-5"
-                        variant="success"
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                </>
-              )}
-            </Dropzone>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-between">
-          <RiArrowGoBackLine
-            onClick={handleClose}
-            style={{ cursor: "pointer" }}
-          />
-          <Button
-            style={{ background: "white", border: "white" }}
-            type="submit"
-            form="drop">
-            <RiSendPlaneFill style={{ cursor: "pointer", color: "blue" }} />
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModaleAddCoverVehicle
+        show={show}
+        handleClose={handleClose}
+        token={token}
+      />
       <Carousel
         interval={null}
         indicators={false}>

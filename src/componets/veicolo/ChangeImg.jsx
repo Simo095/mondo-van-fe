@@ -17,7 +17,7 @@ const ChangeImg = () => {
     if (objVehicle.ok) {
       const vehicle = await objVehicle.json();
       dispatch(addVehicle(vehicle));
-      navigate("/profile_vehicle");
+      navigate("/profile_owner");
     }
   };
   useEffect(() => {

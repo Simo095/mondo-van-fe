@@ -49,13 +49,15 @@ const ModaleCover = ({ show, setShow }) => {
             {({ getRootProps, getInputProps, acceptedFiles }) => (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <div class="containerDrop">
-                  <div class="headerDrop">
+                <div className="containerDrop">
+                  <div className="headerDrop">
                     <MdOutlineCloudUpload fontSize={100} />
                     <p>Clicca per cercare</p>
                     <p>oppure</p>
                   </div>
-                  <label class="footerDrop">{acceptedFiles[0] ? acceptedFiles[0].path : "Trascina l'immagine"}</label>
+                  <label className="footerDrop">
+                    {acceptedFiles[0] ? acceptedFiles[0].path : "Trascina l'immagine"}
+                  </label>
                 </div>
 
                 {loading ? (
