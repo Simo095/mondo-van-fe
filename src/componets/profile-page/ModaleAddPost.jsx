@@ -40,6 +40,7 @@ const ModaleAddPost = ({ handleClose, show, profile, postText, setPostText, modi
           setPostText("");
           setTitle("");
           dispatch(fetchMyPost(token));
+          dispatch(fetchPost(token));
           handleClose(false);
         } else {
           throw new Error(risp.status);

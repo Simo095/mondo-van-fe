@@ -15,7 +15,7 @@ const FormAddPost = ({ user }) => {
 
   return (
     <>
-      <Container fluid="mt-3">
+      <Container className="mt-4">
         <Row className="border rounded-3 border-1 shadow mb-3 gy-3 bg-light">
           <Col className="">
             <Row>

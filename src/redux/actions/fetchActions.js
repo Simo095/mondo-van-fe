@@ -1,4 +1,4 @@
-import { addUser, addVehicle } from ".";
+import { addFriends, addUser, addVehicle } from ".";
 
 export const fetchUser = (token, navigate) => {
   return async dispatch => {
@@ -19,6 +19,48 @@ export const fetchUser = (token, navigate) => {
           dispatch(fetchVehicle(token));
           navigate("/profile_owner");
         }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const fetchAddFriend = (token, idFriend) => {
+  return async dispatch => {
+    try {
+      const respSucces = await fetch(`http://localhost:8080/users/${idFriend}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (respSucces.ok) {
+        const user = await respSucces.json();
+        console.log("meseriome");
+        console.log(user);
+        dispatch(addFriends(user.friends));
+        dispatch(addUser(user));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const fetchDeleteFriend = (token, idFriend) => {
+  return async dispatch => {
+    try {
+      const respSucces = await fetch(`http://localhost:8080/users/${idFriend}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (respSucces.ok) {
+        const user = await respSucces.json();
+        console.log("meseriome");
+        console.log(user);
+        dispatch(addFriends(user.friends));
+        dispatch(addUser(user));
       }
     } catch (error) {
       console.log(error);

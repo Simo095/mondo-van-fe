@@ -1,6 +1,7 @@
 import { Col, Image, Row } from "react-bootstrap";
 import { BsDashLg, BsPencilFill, BsPlusLg, BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchAddFriend, fetchDeleteFriend } from "../../redux/actions/fetchActions";
 
 const SinglePost = ({
   elem,
@@ -14,6 +15,7 @@ const SinglePost = ({
   setIdPost
 }) => {
   const list = useSelector(state => state.login.user.friends);
+  const token = useSelector(state => state.login.token);
   const dispatch = useDispatch();
   // const calcolaData = () => {
   //   const createdate = new Date(elem.createdAt);
@@ -89,7 +91,7 @@ const SinglePost = ({
                     className="me-2"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
-                      //dispatch(deleteFriendAction(elem.author.id));
+                      dispatch(fetchDeleteFriend(token, elem.author.id));
                     }}
                   />
                   <span className="d-none d-sm-inline-block">SEGUI GIA'</span>
@@ -100,7 +102,8 @@ const SinglePost = ({
                     className="me-2"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
-                      //dispatch(addFriendAction(elem.author));
+                      console.log(elem);
+                      dispatch(fetchAddFriend(token, elem.author.id));
                     }}
                   />
                   <span className="d-none d-sm-inline-block">SEGUI</span>

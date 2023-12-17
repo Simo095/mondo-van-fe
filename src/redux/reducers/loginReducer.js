@@ -1,8 +1,9 @@
-import { ADD_ROLE, ADD_TOKEN, ADD_USER } from "../actions";
+import { ADD_MY_FRIENDS, ADD_ROLE, ADD_TOKEN, ADD_USER } from "../actions";
 const initialState = {
   token: "",
   role: "",
-  user: null
+  user: null,
+  friends: []
 };
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -20,6 +21,11 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload
+      };
+    case ADD_MY_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload
       };
     //aggiungi i vari casi di login e come salvare il token per averlo disponibile ovunque e comunque per le richiesta al backend
     default:

@@ -11,6 +11,7 @@ export const ADD_POSTS_HOME = "ADD_POSTS_HOME";
 export const ADD_POSTS_EM = "ADD_POSTS_EM";
 export const ADD_MY_POSTS = "ADD_MY_POSTS";
 export const ADD_MY_POSTS_FRIENDS = "ADD_MY_POSTS_FRIENDS";
+export const ADD_MY_FRIENDS = "ADD_MY_FRIENDS";
 export const addToken = token => ({ type: ADD_TOKEN, payload: token });
 export const addRole = role => ({ type: ADD_ROLE, payload: role });
 export const addUser = user => ({ type: ADD_USER, payload: user });
@@ -24,6 +25,7 @@ export const addPostsHome = data => ({ type: ADD_POSTS_HOME, payload: data });
 export const addPostsEmiliaRomagna = data => ({ type: ADD_POSTS_EM, payload: data });
 export const addMyPosts = data => ({ type: ADD_MY_POSTS, payload: data });
 export const addMyPostsFriends = data => ({ type: ADD_MY_POSTS_FRIENDS, payload: data });
+export const addFriends = data => ({ type: ADD_MY_FRIENDS, payload: data });
 
 export const fetchPost = token => {
   return async dispatch => {
