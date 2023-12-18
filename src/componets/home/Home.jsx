@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap";
-import sfondoHome from "../../assets/VW-Giallo.jpg";
+import sfondoHome from "../../assets/img/VW-Giallo.jpg";
 import NavBar from "../../componets/stucture/NavBar";
 import Footer from "../../componets/stucture/Footer";
 import FormHome from "./FormHome";
@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect, useState } from "react";
 import { fetchPostHome, fetchPostHomeEmiliaRomagna } from "../../redux/actions";
-import SinglePostHome from "./SinglePostHome";
-import SinglePostEm from "./SinglePostEm";
+import SinglePostHome from "../blog-post/SinglePostHome";
+import SinglePostEm from "../blog-post/SinglePostEm";
 
 const Home = () => {
   const posts = useSelector(state => state.post.home);

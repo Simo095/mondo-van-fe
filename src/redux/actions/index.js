@@ -12,6 +12,10 @@ export const ADD_POSTS_EM = "ADD_POSTS_EM";
 export const ADD_MY_POSTS = "ADD_MY_POSTS";
 export const ADD_MY_POSTS_FRIENDS = "ADD_MY_POSTS_FRIENDS";
 export const ADD_MY_FRIENDS = "ADD_MY_FRIENDS";
+export const ADD_EVENT_CALENDAR = "ADD_EVENT_CALENDAR";
+export const ADD_ARRAY_CALENDAR = "ADD_ARRAY_CALENDAR";
+
+export const VEHICLE_CUSTOMER_PROFILE = "VEHICLE_CUSTOMER_PROFILE";
 export const addToken = token => ({ type: ADD_TOKEN, payload: token });
 export const addRole = role => ({ type: ADD_ROLE, payload: role });
 export const addUser = user => ({ type: ADD_USER, payload: user });
@@ -26,6 +30,10 @@ export const addPostsEmiliaRomagna = data => ({ type: ADD_POSTS_EM, payload: dat
 export const addMyPosts = data => ({ type: ADD_MY_POSTS, payload: data });
 export const addMyPostsFriends = data => ({ type: ADD_MY_POSTS_FRIENDS, payload: data });
 export const addFriends = data => ({ type: ADD_MY_FRIENDS, payload: data });
+export const addEventCalendar = data => ({ type: ADD_EVENT_CALENDAR, payload: data });
+export const addArrayCalendar = data => ({ type: ADD_ARRAY_CALENDAR, payload: data });
+
+export const addVehicleCustomerProfile = data => ({ type: VEHICLE_CUSTOMER_PROFILE, payload: data });
 
 export const fetchPost = token => {
   return async dispatch => {
@@ -89,7 +97,6 @@ export const fetchPostHome = () => {
       });
       if (risp.ok) {
         const data = await risp.json();
-        console.log(data.content);
         dispatch(addPostsHome(data.content));
       }
     } catch (error) {
@@ -105,9 +112,25 @@ export const fetchPostHomeEmiliaRomagna = () => {
       });
       if (risp.ok) {
         const data = await risp.json();
-        console.log("em");
-        console.log(data.data);
         dispatch(addPostsEmiliaRomagna(data.data));
+      }
+    } catch (error) {
+      console.log("si e' verificato un errore", error.message);
+    }
+  };
+};
+export const fetchDeletePost = (token, postId) => {
+  return async dispatch => {
+    try {
+      const resp = await fetch(`http://localhost:8080/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (resp.ok) {
+        dispatch(fetchMyPost(token));
+        dispatch(fetchPost(token));
       }
     } catch (error) {
       console.log("si e' verificato un errore", error.message);

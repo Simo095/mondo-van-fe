@@ -1,90 +1,133 @@
-import { Card, Col, Container, Nav, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Nav, Row, Spinner } from "react-bootstrap";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchPrenotazioni, fetchVehicleCustomerPage } from "../../redux/actions/fetchActions";
 
 import SideBar from "../../componets/stucture/SideBar";
+import FormAddPost from "../blog-post/FormAddPost";
 
-import FormAddPost from "./FormAddPost";
-import ModaleCover from "./ModaleCover";
-import MyPosts from "./MyPosts";
-import { fetchMyPost } from "../../redux/actions";
-import { fetchPrenotazioni } from "../../redux/actions/fetchActions";
+import VanCustomerPage from "../results-page/VanCustomerPage";
+import MyPosts from "../blog-post/MyPosts";
 import Prenotazione from "./Prenotazione";
 
 const ProfileCustomer = () => {
   const user = useSelector(state => state.login.user);
   const token = useSelector(state => state.login.token);
   const postsOwner = useSelector(state => state.post.myPost);
-  const [show, setShow] = useState(false);
+  const vehicleSuggest = useSelector(state => state.result.vehicleCustomerProfile);
   const [prenotazioni, setPrenotazioni] = useState(null);
   const [loadingPre, setLoadingPre] = useState(false);
   const dispatch = useDispatch();
-  const [postText, setPostText] = useState();
-  const [modifica, setModifica] = useState(false);
-  const [idPost, setIdPost] = useState("");
 
-  const [showPost, setShowPost] = useState(false);
-  const handleClosePost = () => setShowPost(false);
-  const handleShowPost = () => setShowPost(true);
-
-  const delPost = async postId => {
-    try {
-      const resp = await fetch(`http://localhost:8080/posts/${postId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      });
-      if (resp.ok) {
-        console.log("ciao");
-        dispatch(fetchMyPost(token));
-      }
-    } catch (error) {
-      console.log("si e' verificato un errore", error.message);
+  const placeHolder = [
+    {
+      id: 1,
+      name: "PlaceHoleder",
+      model: "PlaceHoleder",
+      brand: "PlaceHoleder",
+      desc: "Aimè non ci sono van nella tua regione",
+      sits: 99,
+      pricePerDay: 0,
+      province: "Provincia",
+      avatar: [
+        "https://res.cloudinary.com/dhwybes2b/image/upload/v1702053853/qtx9eypbotnbyc9w84ko.jpg",
+        "https://res.cloudinary.com/dhwybes2b/image/upload/v1702053853/qtx9eypbotnbyc9w84ko.jpg",
+        "https://res.cloudinary.com/dhwybes2b/image/upload/v1702053853/qtx9eypbotnbyc9w84ko.jpg"
+      ],
+      listStatus: [
+        { idServiceStatus: 4, date: "2000-01-01", state: "AVAILABLE" },
+        { idServiceStatus: 4, date: "2000-01-01", state: "AVAILABLE" },
+        { idServiceStatus: 4, date: "2000-01-01", state: "AVAILABLE" }
+      ]
+    },
+    {
+      id: 1,
+      name: "PlaceHoleder",
+      model: "PlaceHoleder",
+      brand: "PlaceHoleder",
+      desc: "Aimè non ci sono van nella tua regione",
+      sits: 99,
+      pricePerDay: 0,
+      province: "Provincia",
+      avatar: [
+        "https://res.cloudinary.com/dhwybes2b/image/upload/v1702053853/qtx9eypbotnbyc9w84ko.jpg",
+        "https://res.cloudinary.com/dhwybes2b/image/upload/v1702053853/qtx9eypbotnbyc9w84ko.jpg",
+        "https://res.cloudinary.com/dhwybes2b/image/upload/v1702053853/qtx9eypbotnbyc9w84ko.jpg"
+      ],
+      listStatus: [
+        { idServiceStatus: 4, date: "2000-01-01", state: "AVAILABLE" },
+        { idServiceStatus: 4, date: "2000-01-01", state: "AVAILABLE" },
+        { idServiceStatus: 4, date: "2000-01-01", state: "AVAILABLE" }
+      ]
+    },
+    {
+      id: 1,
+      name: "PlaceHoleder",
+      model: "PlaceHoleder",
+      brand: "PlaceHoleder",
+      desc: "Aimè non ci sono van nella tua regione",
+      sits: 99,
+      pricePerDay: 0,
+      province: "Provincia",
+      avatar: [
+        "https://res.cloudinary.com/dhwybes2b/image/upload/v1702053853/qtx9eypbotnbyc9w84ko.jpg",
+        "https://res.cloudinary.com/dhwybes2b/image/upload/v1702053853/qtx9eypbotnbyc9w84ko.jpg",
+        "https://res.cloudinary.com/dhwybes2b/image/upload/v1702053853/qtx9eypbotnbyc9w84ko.jpg"
+      ],
+      listStatus: [
+        { idServiceStatus: 4, date: "2000-01-01", state: "AVAILABLE" },
+        { idServiceStatus: 4, date: "2000-01-01", state: "AVAILABLE" },
+        { idServiceStatus: 4, date: "2000-01-01", state: "AVAILABLE" }
+      ]
     }
-  };
+  ];
 
   useEffect(() => {
+    dispatch(fetchVehicleCustomerPage(token));
     dispatch(fetchPrenotazioni(token, setPrenotazioni, setLoadingPre));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Container fluid>
-      <ModaleCover
-        show={show}
-        setShow={setShow}
-      />
+    <Container
+      fluid
+      className="ContainerProfileMain">
       {user ? (
         <Row className="row-cols-2">
-          <Col
-            xs={3}
-            className="sidebarCircle d-flex text-white"
-            style={{ maxWidth: "320px", backgroundColor: "#144658", borderColor: "#144658" }}>
+          <Col className="sidebarCircle d-flex">
             <SideBar />
           </Col>
-          <Col className="flex-grow-1">
-            <Row className="d-flex gap-4 flex-column">
+          <Col
+            style={{ height: "115h" }}
+            className="flex-grow-1 overflow-y-scroll oV">
+            <Row className="d-flex flex-column">
               <Col
                 sm={12}
-                style={{ backgroundColor: "#144658", height: "60px" }}>
+                className="NavProfile">
                 <Nav>
                   <Nav.Item>
-                    <Nav.Link>BlogPost</Nav.Link>
+                    <Nav.Link
+                      href="/blogpost"
+                      className="text-decoration-none text-white">
+                      BlogPost
+                    </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link>Cerca un van</Nav.Link>
+                    <Nav.Link
+                      href="/"
+                      className="text-decoration-none text-white">
+                      Cerca un van
+                    </Nav.Link>
                   </Nav.Item>
                 </Nav>
               </Col>
-              <Col
-                className="d-flex  justify-content-center"
-                style={{ maxWidth: "800px" }}>
-                <Card className="d-flex flex-grow-1">
-                  <Card.Header style={{ backgroundColor: "#144658", borderColor: "#144658", color: "white" }}>
-                    Prenotazioni
-                  </Card.Header>
-                  <Row className="d-flex flex-grow-1">
+              <Col>
+                <h3 className="text-white mb-3">Prenotazioni</h3>
+              </Col>
+              <Col className="d-flex ContainerProfile ContainerProfileWhite py-4 justify-content-center">
+                <Container className="d-flex justify-content-center flex-grow-1">
+                  <Row className="d-flex flex-nowrap overflow-x-scroll oV">
                     {loadingPre ? (
                       <Col className="d-flex justify-content-center">
                         <Spinner variant="success" />
@@ -93,9 +136,14 @@ const ProfileCustomer = () => {
                       prenotazioni.map(pre => {
                         return (
                           <Col
+                            sm={4}
                             key={pre.id}
-                            className="d-flex">
-                            <Prenotazione pre={pre} />
+                            className="">
+                            <Prenotazione
+                              pre={pre}
+                              setPrenotazioni={setPrenotazioni}
+                              setLoadingPre={setLoadingPre}
+                            />
                           </Col>
                         );
                       })
@@ -105,35 +153,59 @@ const ProfileCustomer = () => {
                       </Col>
                     )}
                   </Row>
-                </Card>
+                </Container>
+              </Col>
+              <Col className="ContainerProfileMain  my-3">
+                <h4 className="text-white">I tuoi post</h4>
               </Col>
 
-              <Col style={{ maxWidth: "800px" }}>
-                <Container className="">
-                  <h4>I tuoi post</h4>
-                  <div className="d-flex justify-content-center">
+              <Col className="ContainerProfileWhite ContainerProfile">
+                <Container>
+                  <div className="d-flex justify-content-center mt-3">
                     <FormAddPost user={user} />
                   </div>
                   <Container
                     fluid
                     className="d-flex">
-                    {postsOwner && postsOwner.length !== 0 && (
+                    {postsOwner && postsOwner.length !== 0 ? (
                       <div className="d-flex overflow-x-scroll oV gap-3">
                         {postsOwner.toReversed().map((elem, i) => (
                           <MyPosts
                             elem={elem}
                             key={`post${i}`}
-                            cancella={delPost}
+                            token={token}
                             profile={user}
-                            handleShow={handleShowPost}
-                            setPostText={setPostText}
-                            setModifica={setModifica}
-                            setIdPost={setIdPost}
                           />
                         ))}
                       </div>
+                    ) : (
+                      <Col className="d-flex justify-content-center">
+                        <p>Nessuna post da mostrare... Crea il tuo primo post!</p>
+                      </Col>
                     )}
                   </Container>
+                </Container>
+              </Col>
+              <Col className="ContainerProfileMain  my-3">
+                <h4 className="text-white">Alcuni van nella tua regione</h4>
+              </Col>
+              <Col className="ContainerProfileWhite ContainerProfile">
+                <Container
+                  fluid
+                  className="d-flex mt-4">
+                  {vehicleSuggest && vehicleSuggest.length !== 0 ? (
+                    <div className="d-flex overflow-x-scroll oV gap-3">
+                      {vehicleSuggest.map((elem, i) => (
+                        <VanCustomerPage elem={elem} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="d-flex overflow-x-scroll oV gap-3">
+                      {placeHolder.map((elem, i) => (
+                        <VanCustomerPage elem={elem} />
+                      ))}
+                    </div>
+                  )}
                 </Container>
               </Col>
             </Row>

@@ -1,9 +1,9 @@
 import { Image, NavItem } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
-import logo from "../../assets/LogoVanWorld.png";
+import logo from "../../assets/img/LogoVanWorld.png";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { BsSignpost2 } from "react-icons/bs";

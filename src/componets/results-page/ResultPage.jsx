@@ -10,7 +10,7 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { FaArrowRight, FaEuroSign } from "react-icons/fa";
 import cintura from "../../assets/icone/cinturaSicurezza.png";
 import { GiPositionMarker } from "react-icons/gi";
-import cover from "../../assets/user_placeholder.png";
+import cover from "../../assets/img/user_placeholder.png";
 import CaruselVehicle from "../veicolo/CaruselVehicle";
 import { endDate, startDate } from "../../redux/actions";
 

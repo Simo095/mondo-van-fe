@@ -1,17 +1,17 @@
 import { Alert, Button, Col, FormControl, Image, Modal, Row, Spinner } from "react-bootstrap";
+import Dropzone from "react-dropzone";
 
 import { useDispatch, useSelector } from "react-redux";
-
-import Dropzone from "react-dropzone";
 import { useState } from "react";
 import { fetchMyPost, fetchPost } from "../../redux/actions";
-import { BsCalendar3, BsCheck2, BsImageFill, BsPatchPlusFill, BsThreeDots } from "react-icons/bs";
-import { MdOutlineCloudUpload } from "react-icons/md";
+
+import { BsCheck2, BsImageFill } from "react-icons/bs";
 
 const ModaleAddPost = ({ handleClose, show, profile, postText, setPostText, modifica }) => {
   const token = useSelector(state => state.login.token);
   const dispatch = useDispatch();
   const [image, setImage] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [categoria, setCategoria] = useState("");
   const [title, setTitle] = useState("");
@@ -55,8 +55,6 @@ const ModaleAddPost = ({ handleClose, show, profile, postText, setPostText, modi
   const handleImage = async id => {
     const formImage = new FormData();
     formImage.append("img", image[0]);
-    console.log("ehe");
-    console.log(formImage.get("img"));
     try {
       const risp = await fetch(`http://localhost:8080/posts/upload_img/${id}`, {
         method: "PATCH",
@@ -68,6 +66,7 @@ const ModaleAddPost = ({ handleClose, show, profile, postText, setPostText, modi
       if (risp.ok) {
         setImage(null);
         dispatch(fetchMyPost(token));
+        dispatch(fetchPost(token));
         handleClose(false);
       } else {
         throw new Error(risp.status);

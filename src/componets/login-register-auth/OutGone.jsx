@@ -13,7 +13,6 @@ const OutGone = () => {
     dispatch(addVehicle(null));
     dispatch(logged(false));
     dispatch(addPosts([]));
-    dispatch(logged(false));
     dispatch(addResult([]));
 
     navigate("/");

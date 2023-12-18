@@ -7,7 +7,7 @@ const Register = () => {
 
   return (
     <div
-      className="Register gradient-background"
+      className="Register"
       style={{ height: "100vh" }}>
       <div className="d-flex justify-content-between">
         <h1>Registrati ed entra a far parte della comunity!</h1>

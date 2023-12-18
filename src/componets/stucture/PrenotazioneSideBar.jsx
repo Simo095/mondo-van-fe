@@ -48,7 +48,6 @@ const PrenotazioneSideBar = ({ vehicleProp, result, startDateProps, endDateProps
         })
       });
       if (reservation.ok) {
-        console.log("Ok");
         handleShow();
       }
     }

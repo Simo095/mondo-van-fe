@@ -7,7 +7,6 @@ import { BsBlockquoteLeft, BsCalendar3, BsImageFill } from "react-icons/bs";
 const FormAddPost = ({ user }) => {
   const [postText, setPostText] = useState();
   const [modifica, setModifica] = useState(false);
-  const [idPost, setIdPost] = useState("");
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

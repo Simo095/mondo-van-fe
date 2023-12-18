@@ -38,7 +38,7 @@ const ModaleAvatar = ({ show, setShow }) => {
   return (
     <Modal show={show}>
       <Modal.Header>
-        <Modal.Title>Cambia immagine copertina</Modal.Title>
+        <Modal.Title>Cambia Avatar</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form

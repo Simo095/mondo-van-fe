@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import CardInterni from "../veicolo/CardInterni";
 import CaruselVehicle from "../veicolo/CaruselVehicle";
-import cover from "../../assets/user_placeholder.png";
+import cover from "../../assets/img/user_placeholder.png";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import NavResultVehicle from "./NavResultVehicle";
 import Motorizzazione from "../veicolo/Motorizzazione";

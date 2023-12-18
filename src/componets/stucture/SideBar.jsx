@@ -1,4 +1,4 @@
-import { Button, Container, Offcanvas } from "react-bootstrap";
+import { Button, Container, Image, Offcanvas } from "react-bootstrap";
 
 import { FiLogOut } from "react-icons/fi";
 import { IoNotificationsSharp, IoSettingsSharp } from "react-icons/io5";
@@ -20,8 +20,7 @@ const SideBar = () => {
 
   const token = useSelector(state => state.login.token);
   const [show, setShow] = useState(false);
-  const [disponibilita, setDisponibilita] = useState(null);
-  const [idDispo, setIdDispo] = useState(null);
+
   const [notifiche, setNotifiche] = useState(null);
 
   const dispatch = useDispatch();
@@ -29,12 +28,13 @@ const SideBar = () => {
   const [showNotifiche, setShowNotifiche] = useState(false);
   const handleCloseNotifiche = () => setShowNotifiche(false);
   const handleShowNotifiche = () => {
-    console.log(notifiche);
     setShowNotifiche(true);
   };
 
   useEffect(() => {
-    if (user.role === "OWNER") dispatch(fetchDisponibilita(token, setDisponibilita, setIdDispo));
+    if (user.role === "OWNER") {
+      dispatch(fetchDisponibilita(token));
+    }
     dispatch(fetchNotifiche(token, setNotifiche));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -66,7 +66,6 @@ const SideBar = () => {
               ))}
           </Offcanvas.Body>
         </Offcanvas>
-        {/*  */}
 
         {user && (
           <Container
@@ -76,13 +75,7 @@ const SideBar = () => {
             <div className="up">
               <Button
                 href={user.role === "OWNER" ? "/profile_owner" : user.role === "CUSTOMER" ? "profile_customer" : ""}
-                style={{
-                  backgroundImage: `url(${user.avatar})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  backgroundSize: "cover"
-                }}
-                className="card1 d-flex justify-content-end">
+                className="card1 d-flex p-0 justify-content-end">
                 {" "}
                 <FaRegPenToSquare
                   className="m-0"
@@ -96,6 +89,11 @@ const SideBar = () => {
                     fontSize: "1em",
                     color: "black"
                   }}
+                />
+                <Image
+                  src={user.avatar}
+                  className="p-0 m-0 ImgCard"
+                  style={{}}
                 />
               </Button>
               <Button className="card2 d-flex text-black align-items-end pb-3">
@@ -123,13 +121,10 @@ const SideBar = () => {
                 Logout
               </Button>
             </div>
-            {disponibilita && user.role === "OWNER" && (
+            {user.role === "OWNER" && (
               <div className="my-3">
                 <h5 className="text-white">Le tue disponibilità</h5>
-                <Calendario
-                  array={disponibilita}
-                  idDispo={idDispo}
-                />
+                <Calendario />
               </div>
             )}
           </Container>

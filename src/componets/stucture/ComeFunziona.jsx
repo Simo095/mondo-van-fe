@@ -3,8 +3,8 @@ import { Col, Container, Image, Row } from "react-bootstrap";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 
-import logo from "../../assets/LogoVanWorld.png";
-import comunity from "../../assets/Comunity.jpeg";
+import logo from "../../assets/img/LogoVanWorld.png";
+import comunity from "../../assets/img/Comunity.jpeg";
 
 const ComeFunziona = () => {
   return (

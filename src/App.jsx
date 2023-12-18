@@ -17,9 +17,9 @@ import Result from "./componets/results-page/Result";
 import Register from "./componets/login-register-auth/Register";
 import ComeFunziona from "./componets/stucture/ComeFunziona";
 
-import MyProfileOwner from "./componets/profile-page/MyProfileOwner";
 import BlogPost from "./componets/blog-post/BlogPost";
 import ChangeVehicle from "./componets/veicolo/ChangeVehicle";
+import ProfileOwner from "./componets/profile-page/ProfileOwner";
 
 const App = () => {
   return (
@@ -68,7 +68,7 @@ const App = () => {
           />
           <Route
             path="/profile_owner"
-            element={<MyProfileOwner />}
+            element={<ProfileOwner />}
           />
           <Route
             path="/vehicle_arrangement"

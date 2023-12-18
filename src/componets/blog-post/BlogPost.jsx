@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import FormAddPost from "../profile-page/FormAddPost";
+import FormAddPost from "./FormAddPost.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import AllPost from "./AllPost";
 import NavBar from "../stucture/NavBar.jsx";
@@ -12,6 +12,7 @@ const BlogPost = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPost(token));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Container
@@ -19,7 +20,7 @@ const BlogPost = () => {
       className="ContainerProfileMain">
       <NavBar />
       <Container
-        style={{ maxWidth: "70vw", paddingTop: "2rem" }}
+        style={{ maxWidth: "70vw", minWidth: "420px", paddingTop: "2rem" }}
         className="overflow-y-scroll containerBlog border rounded-3"
         fluid>
         <h2

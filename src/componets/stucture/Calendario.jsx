@@ -1,34 +1,26 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Calendar from "react-calendar";
 import { MdEventAvailable } from "react-icons/md";
 import { CgUnavailable } from "react-icons/cg";
 import { VscSaveAs } from "react-icons/vsc";
 import "react-calendar/dist/Calendar.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { addEventCalendar } from "../../redux/actions";
 
-const Calendario = ({ array, idDispo }) => {
+const Calendario = () => {
   const [selectedDate, setSelectedDate] = useState(null);
-  const [events, setEvents] = useState([]);
+
   const token = useSelector(state => state.login.token);
+  const events = useSelector(state => state.login.eventCalendar);
+  const array = useSelector(state => state.login.calendarArray);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const DateClick = date => {
     setSelectedDate(date);
-  };
-
-  const CreateEvent = () => {
-    const event = array.map((elem, i) => {
-      const split = elem.split(",");
-      const newEvent = {
-        id: idDispo[i],
-        date: split[1],
-        title: split[0]
-      };
-      return newEvent;
-    });
-    setEvents(event);
   };
 
   const UpdateEvent = eventId => {
@@ -42,7 +34,7 @@ const Calendario = ({ array, idDispo }) => {
       }
       return event;
     });
-    setEvents(updated_Events);
+    dispatch(addEventCalendar(updated_Events));
   };
 
   const ModifyFetch = async e => {
@@ -67,10 +59,6 @@ const Calendario = ({ array, idDispo }) => {
       }
     }
   };
-
-  useEffect(() => {
-    CreateEvent();
-  }, []);
 
   return (
     <Container
@@ -149,7 +137,7 @@ const Calendario = ({ array, idDispo }) => {
                             ) : null}
                             <VscSaveAs
                               className="update-btn"
-                              onClick={e => ModifyFetch(e)}
+                              onClick={ModifyFetch}
                             />
                           </Col>
                           <Col></Col>

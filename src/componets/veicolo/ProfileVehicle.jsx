@@ -12,7 +12,7 @@ import NavCardVehicle from "./NavCardVehicle";
 import { FaPenToSquare } from "react-icons/fa6";
 import { FaFileUpload } from "react-icons/fa";
 import { IoAddCircle } from "react-icons/io5";
-import cover from "../../assets/user_placeholder.png";
+import cover from "../../assets/img/user_placeholder.png";
 import RegisterVehicle from "./RegisterVehicle";
 
 const ProfileVehicle = () => {
@@ -37,7 +37,7 @@ const ProfileVehicle = () => {
     <div className="ProfileVehicle">
       {vehicle ? (
         <Container fluid>
-          <h4 className="logo my-2">
+          <h4 className="logo text-black my-2">
             {vehicle.name}
             {" - "}
             {vehicle.type === "CAMPERIZED_JEEP"

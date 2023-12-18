@@ -1,4 +1,13 @@
-import { addFriends, addUser, addVehicle } from ".";
+import {
+  addArrayCalendar,
+  addAvailability,
+  addAvailabilityId,
+  addEventCalendar,
+  addFriends,
+  addUser,
+  addVehicle,
+  addVehicleCustomerProfile
+} from ".";
 
 export const fetchUser = (token, navigate) => {
   return async dispatch => {
@@ -80,6 +89,24 @@ export const fetchVehicle = token => {
       if (objVehicle.ok) {
         const vehicle = await objVehicle.json();
         dispatch(addVehicle(vehicle));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export const fetchVehicleCustomerPage = token => {
+  return async dispatch => {
+    try {
+      const objVehicle = await fetch("http://localhost:8080/vehicles/customer_page", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (objVehicle.ok) {
+        const vehicles = await objVehicle.json();
+        dispatch(addVehicleCustomerProfile(vehicles.content));
       }
     } catch (error) {
       console.log(error);
@@ -175,6 +202,27 @@ export const fetchPrenotazioni = (token, setPrenotazioni, setLoadingPre) => {
   return async dispatch => {
     setLoadingPre(true);
     try {
+      const risp = await fetch("http://localhost:8080/reservations/my_reservations", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (risp.ok) {
+        const pre = await risp.json();
+        setPrenotazioni(pre.content);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingPre(false);
+    }
+  };
+};
+export const fetchPrenotazioniOwner = (token, setPrenotazioni, setLoadingPre) => {
+  return async dispatch => {
+    setLoadingPre(true);
+    try {
       const risp = await fetch("http://localhost:8080/reservations", {
         method: "GET",
         headers: {
@@ -192,8 +240,26 @@ export const fetchPrenotazioni = (token, setPrenotazioni, setLoadingPre) => {
     }
   };
 };
+export const fetchDeleteReservation = (token, idPre, setPrenotazioni, setLoadingPre, navigate) => {
+  return async dispatch => {
+    try {
+      const cancella = await fetch(`http://localhost:8080/reservations/${idPre}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (cancella.ok) {
+        dispatch(fetchPrenotazioniOwner(token, setPrenotazioni, setLoadingPre));
+        dispatch(fetchDisponibilita(token));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
-export const fetchDisponibilita = (token, setDisponibilita, setIdDispo) => {
+export const fetchDisponibilita = token => {
   return async dispatch => {
     try {
       const disponibilita = await fetch("http://localhost:8080/availability/my_availability", {
@@ -207,8 +273,17 @@ export const fetchDisponibilita = (token, setDisponibilita, setIdDispo) => {
         const obj = await disponibilita.json();
         const key = Object.keys(obj);
         const array = key.map(k => obj[k]);
-        setDisponibilita(array);
-        setIdDispo(key);
+        const event = array.map((elem, i) => {
+          const split = elem.split(",");
+          const newEvent = {
+            id: key[i],
+            date: split[1],
+            title: split[0]
+          };
+          return newEvent;
+        });
+        dispatch(addEventCalendar(event));
+        dispatch(addArrayCalendar(array));
       }
     } catch (error) {
       console.log(error);

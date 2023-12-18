@@ -1,18 +1,45 @@
 import { useState } from "react";
 import { Col, Image, Modal, Row } from "react-bootstrap";
-import { BsDashLg, BsPencilFill, BsPlusLg, BsTrash } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { BsPencilFill, BsTrash } from "react-icons/bs";
 
-const MyPosts = ({ elem, cancella, profile, handleShow, setPostText, setModifica, setIdPost }) => {
-  const calcolaData = () => {
-    const createdateWithMs = new Date(elem.createdAt);
-    const output = createdateWithMs.toLocaleString("it-IT");
-    return output;
-  };
+import { fetchDeletePost } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+
+const MyPosts = ({ elem, token, profile }) => {
   const [showModale, setShowModale] = useState(false);
+  const [postText, setPostText] = useState();
+  const [modifica, setModifica] = useState(false);
+  const [idPost, setIdPost] = useState("");
+  const [show, setShow] = useState(false);
   const handleCloseQ = () => setShowModale(false);
   const handleshowModale = () => setShowModale(true);
+  const dispatch = useDispatch();
+  const calcolaData = () => {
+    const createdate = new Date(elem.createdAt);
+    const createMin = createdate.getMinutes();
+    const createOre = createdate.getHours();
+    const createGiorni = createdate.getDay();
+    const createMesi = createdate.getMonth();
+    const createAnno = createdate.getFullYear();
+    const actualdate = new Date();
+    const actualMin = actualdate.getMinutes();
+    const actualOre = actualdate.getHours();
+    const actualGiorni = actualdate.getDay();
+    const actualMesi = actualdate.getMonth();
+    const actualAnno = actualdate.getFullYear();
+    if (actualAnno === createAnno) {
+      if (actualMesi === createMesi) {
+        if (actualGiorni === createGiorni) {
+          if (actualOre === createOre) {
+            if (actualMin === createMin) {
+              return "adesso";
+            } else return `${actualMin - createMin} ${actualMin - createMin === 1 ? "minuto fa" : "minuti fa"}`;
+          } else return `${actualOre - createOre} ${actualOre - createOre === 1 ? "ora fa" : "ore fa"}`;
+        } else return `${actualGiorni - createGiorni} ${actualGiorni - createGiorni === 1 ? "giorno fa" : "giorni fa"}`;
+      } else return `${actualMesi - createMesi} ${actualMesi - createMesi === 1 ? "mese fa" : "mesi fa"}`;
+    } else return `${actualAnno - createAnno} ${actualAnno - createAnno === 1 ? "anno fa" : "anni fa"}`;
+  };
+
   return (
     elem &&
     profile && (
@@ -59,7 +86,6 @@ const MyPosts = ({ elem, cancella, profile, handleShow, setPostText, setModifica
                     <BsPencilFill
                       onClick={() => {
                         setIdPost(elem.id);
-                        handleShow();
                         setModifica(true);
                         setPostText(elem.text);
                       }}
@@ -68,7 +94,7 @@ const MyPosts = ({ elem, cancella, profile, handleShow, setPostText, setModifica
                     <BsTrash
                       className="text-danger ms-2"
                       onClick={() => {
-                        cancella(elem.id);
+                        dispatch(fetchDeletePost(token, elem.id));
                       }}
                       style={{ cursor: "pointer", color: "red" }}
                     />
@@ -80,6 +106,8 @@ const MyPosts = ({ elem, cancella, profile, handleShow, setPostText, setModifica
                 <Image
                   src={elem.img ? elem.img : ""}
                   className="rounded-4 shadow"
+                  width="100%"
+                  style={{ objectFit: "cover" }}
                 />
               </Col>
             </Row>
@@ -101,8 +129,9 @@ const MyPosts = ({ elem, cancella, profile, handleShow, setPostText, setModifica
             />
           </Col>
           <Col
+            onClick={handleshowModale}
             sm={5}
-            lg={7}
+            lg={6}
             className=" order-5 order-sm-0">
             <div className="d-flex flex-column">
               <h6>
@@ -119,13 +148,21 @@ const MyPosts = ({ elem, cancella, profile, handleShow, setPostText, setModifica
           <Col
             xs={12}
             sm={3}
-            className="text-primary text-end ">
+            className="text-primary">
+            <p>
+              {elem.category === "TRAVELERS_STORY"
+                ? "Storie di viaggi"
+                : elem.category === "RECOMMENDED_TRIPS"
+                ? "Viaggi raccomandati"
+                : elem.category === "MY_VAN"
+                ? "Il mio van"
+                : ""}
+            </p>
             {profile.id === elem.author.id && (
-              <>
+              <div className="text-end">
                 <BsPencilFill
                   onClick={() => {
                     setIdPost(elem.id);
-                    handleShow();
                     setModifica(true);
                     setPostText(elem.text);
                   }}
@@ -134,18 +171,19 @@ const MyPosts = ({ elem, cancella, profile, handleShow, setPostText, setModifica
                 <BsTrash
                   className="text-danger ms-2"
                   onClick={() => {
-                    cancella(elem.id);
+                    dispatch(fetchDeletePost(token, elem.id));
                   }}
                   style={{ cursor: "pointer", color: "red" }}
                 />
-              </>
+              </div>
             )}
           </Col>
-          <Link
+          <p
             onClick={handleshowModale}
             style={{
               textDecoration: "none",
               color: "black",
+              cursor: "pointer",
               fontSize: "15px",
               fontFamily: "Rethink Sans, sans-serif",
               whiteSpace: "nowrap",
@@ -154,9 +192,10 @@ const MyPosts = ({ elem, cancella, profile, handleShow, setPostText, setModifica
               marginBottom: "1rem"
             }}>
             {elem.text}
-          </Link>
+          </p>
           <Col
             xs={12}
+            onClick={handleshowModale}
             className="d-flex justify-content-center">
             <Image
               src={elem.img ? elem.img : ""}

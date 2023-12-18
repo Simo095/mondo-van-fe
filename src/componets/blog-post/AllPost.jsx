@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { Card, CardFooter, CardHeader, Col, Container, Pagination, Row } from "react-bootstrap";
+import { CardFooter, Col, Container, Pagination, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import SinglePost from "../profile-page/SinglePost";
+
+import SinglePost from "../blog-post/SinglePost";
 import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
 import { fetchPost } from "../../redux/actions";
 
@@ -10,31 +11,11 @@ const AllPost = () => {
   const posts = useSelector(state => state.post.data);
   const user = useSelector(state => state.login.user);
   const token = useSelector(state => state.login.token);
-  const [show, setShow] = useState(false);
-  const [postText, setPostText] = useState();
-  const [modifica, setModifica] = useState(false);
-  const [idPost, setIdPost] = useState("");
-  const [page, setPage] = useState();
-  const [showPost, setShowPost] = useState(false);
-  const handleClosePost = () => setShow(false);
-  const handleShowPost = () => setShow(true);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const delPost = async postId => {
-    try {
-      const resp = await fetch(``, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      });
-      if (resp.ok) {
-      }
-    } catch (error) {
-      console.log("si e' verificato un errore", error.message);
-    }
-  };
+  const [page, setPage] = useState();
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchPost(token));
     setPage(1);
@@ -51,14 +32,7 @@ const AllPost = () => {
                 <SinglePost
                   elem={elem}
                   key={`post${i}`}
-                  cancella={delPost}
                   profile={user}
-                  handleClose={handleClosePost}
-                  handleShow={handleShowPost}
-                  show={showPost}
-                  setPostText={setPostText}
-                  setModifica={setModifica}
-                  setIdPost={setIdPost}
                 />
               ))}
             </Col>

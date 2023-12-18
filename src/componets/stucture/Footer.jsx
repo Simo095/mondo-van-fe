@@ -1,5 +1,5 @@
 import { Col, Container, Image, Row } from "react-bootstrap";
-import logo from "../../assets/LogoVanWorld.png";
+import logo from "../../assets/img/LogoVanWorld.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {

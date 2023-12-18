@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, addVehicle, fetchMyPost, fetchPost } from "../../redux/actions";
+import { addUser, addVehicle, fetchMyPost } from "../../redux/actions";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
-import { fetchPrenotazioni } from "../../redux/actions/fetchActions";
+import { fetchDisponibilita } from "../../redux/actions/fetchActions";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const Auth = () => {
       const user = await respSucces.json();
       dispatch(addUser(user));
       if (user.role === "CUSTOMER") {
+        dispatch(fetchMyPost(token));
         navigate("/profile_customer");
       }
       if (user.role === "OWNER") {
@@ -32,6 +33,8 @@ const Auth = () => {
         if (objVehicle.ok) {
           const vehicle = await objVehicle.json();
           if (vehicle != null) {
+            dispatch(fetchMyPost(token));
+            dispatch(fetchDisponibilita(token));
             dispatch(addVehicle(vehicle));
           }
         }
@@ -42,7 +45,6 @@ const Auth = () => {
 
   useEffect(() => {
     fetchAuth();
-    dispatch(fetchMyPost(token));
   }, []);
 
   return <></>;

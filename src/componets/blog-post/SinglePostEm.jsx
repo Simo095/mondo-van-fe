@@ -1,9 +1,7 @@
 import { Col, Image, Row } from "react-bootstrap";
-import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 const SinglePostEm = ({ elem }) => {
-  const navigate = useNavigate();
   return (
     elem && (
       <div className="SinglePostER border border-1 rounded-3 shadow my-3 p-3 bg-light">

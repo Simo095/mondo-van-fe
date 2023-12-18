@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addVehicle } from "../../redux/actions";
-import logo from "../../assets/LogoVanWorld.png";
+import logo from "../../assets/img/LogoVanWorld.png";
 const VehicleArrangement = () => {
   const [rispOk, setRispOk] = useState(false);
 

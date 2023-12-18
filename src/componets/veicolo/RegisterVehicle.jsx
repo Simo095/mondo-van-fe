@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addVehicle } from "../../redux/actions";
 import { useNavigate } from "react-router";
 import { RiArrowGoBackLine } from "react-icons/ri";
-import { IoArrowBackCircleOutline, IoArrowRedo } from "react-icons/io5";
+import { IoArrowRedo } from "react-icons/io5";
 import { GrFormNextLink } from "react-icons/gr";
 import { fetchVehicle } from "../../redux/actions/fetchActions";
 
