@@ -27,7 +27,10 @@
   transition: 0.2s ease-in-out;
 }
 .ImgCard {
+  width: 130px;
+  height: 130px;
   border-radius: 130px 5px 5px 5px;
+  object-fit: cover;
 }
 
 .card2 {
@@ -97,7 +100,7 @@
 .card3:hover {
   cursor: pointer;
   scale: 1.1;
-  background-color: black;
+  background-color: #cad9ba;
 }
 
 .card3:hover .github {
@@ -110,6 +113,6 @@
   background-color: #be311a;
 }
 
-.card4:hover .discord {
+.card4:hover {
   fill: white;
 }

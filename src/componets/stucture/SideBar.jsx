@@ -17,17 +17,16 @@ import Notifica from "../profile-page/Notifica";
 
 const SideBar = () => {
   const user = useSelector(state => state.login.user);
-
   const token = useSelector(state => state.login.token);
-  const [show, setShow] = useState(false);
-
-  const [notifiche, setNotifiche] = useState(null);
-
   const dispatch = useDispatch();
 
+  const [show, setShow] = useState(false);
+  const [notifiche, setNotifiche] = useState(null);
   const [showNotifiche, setShowNotifiche] = useState(false);
   const handleCloseNotifiche = () => setShowNotifiche(false);
   const handleShowNotifiche = () => {
+    console.log("notifiche");
+    console.log(notifiche);
     setShowNotifiche(true);
   };
 
@@ -55,7 +54,6 @@ const SideBar = () => {
             <Offcanvas.Title>Notifiche</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            {console.log(notifiche)}
             {notifiche &&
               notifiche.map(elem => (
                 <Notifica
@@ -93,7 +91,6 @@ const SideBar = () => {
                 <Image
                   src={user.avatar}
                   className="p-0 m-0 ImgCard"
-                  style={{}}
                 />
               </Button>
               <Button className="card2 d-flex text-black align-items-end pb-3">
@@ -105,12 +102,34 @@ const SideBar = () => {
               </Button>
             </div>
             <div className="down">
-              <Button
-                onClick={notifiche && handleShowNotifiche}
-                className="card3 text-black d-flex align-items-start justify-content-end">
-                <IoNotificationsSharp fontSize={40} />
-                Notifiche
-              </Button>
+              {notifiche && notifiche.find(elem => elem.state === "READ") ? (
+                <Button
+                  onClick={notifiche && handleShowNotifiche}
+                  className="card3 text-black d-flex align-items-start justify-content-end">
+                  <IoNotificationsSharp fontSize={40} />
+                  Notifiche
+                </Button>
+              ) : (
+                <Button
+                  onClick={notifiche && handleShowNotifiche}
+                  className="card3 text-black d-flex align-items-start justify-content-end">
+                  <div className="d-flex relative">
+                    <div
+                      style={{
+                        width: "10px",
+                        height: "10px",
+                        borderRadius: "50%",
+                        backgroundColor: "red",
+                        position: "relative",
+                        top: "4px",
+                        left: "35px"
+                      }}></div>
+                    <IoNotificationsSharp fontSize={40} />
+                    Notifiche
+                  </div>
+                </Button>
+              )}
+
               <Button
                 href="/log_out"
                 className="card4 text-black">
