@@ -33,11 +33,11 @@ const Auth = () => {
         if (objVehicle.ok) {
           const vehicle = await objVehicle.json();
           if (vehicle != null) {
-            dispatch(fetchMyPost(token));
             dispatch(fetchDisponibilita(token));
             dispatch(addVehicle(vehicle));
           }
         }
+        dispatch(fetchMyPost(token));
         navigate("/profile_owner");
       }
     }
@@ -45,6 +45,7 @@ const Auth = () => {
 
   useEffect(() => {
     fetchAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <></>;

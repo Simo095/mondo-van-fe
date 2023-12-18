@@ -45,6 +45,7 @@ const Login = () => {
 
     if (request.ok) {
       const objResp = await request.json();
+      console.log(objResp);
       dispatch(addToken(objResp.token));
       dispatch(logged(true));
       navigate("/auth");

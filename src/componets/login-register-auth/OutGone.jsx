@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addPosts, addResult, addRole, addToken, addUser, addVehicle, logged } from "../../redux/actions";
+import { addMyPosts, addPosts, addResult, addRole, addToken, addUser, addVehicle, logged } from "../../redux/actions";
 import { useNavigate } from "react-router";
 
 const OutGone = () => {
@@ -13,12 +13,13 @@ const OutGone = () => {
     dispatch(addVehicle(null));
     dispatch(logged(false));
     dispatch(addPosts([]));
+    dispatch(addMyPosts([]));
     dispatch(addResult([]));
-
     navigate("/");
   };
   useEffect(() => {
     logout();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

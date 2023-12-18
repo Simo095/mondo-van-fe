@@ -1,13 +1,4 @@
-import {
-  addArrayCalendar,
-  addAvailability,
-  addAvailabilityId,
-  addEventCalendar,
-  addFriends,
-  addUser,
-  addVehicle,
-  addVehicleCustomerProfile
-} from ".";
+import { addArrayCalendar, addEventCalendar, addUser, addVehicle, addVehicleCustomerProfile } from ".";
 
 export const fetchUser = (token, navigate) => {
   return async dispatch => {
@@ -45,9 +36,6 @@ export const fetchAddFriend = (token, idFriend) => {
       });
       if (respSucces.ok) {
         const user = await respSucces.json();
-        console.log("meseriome");
-        console.log(user);
-        dispatch(addFriends(user.friends));
         dispatch(addUser(user));
       }
     } catch (error) {
@@ -66,9 +54,6 @@ export const fetchDeleteFriend = (token, idFriend) => {
       });
       if (respSucces.ok) {
         const user = await respSucces.json();
-        console.log("meseriome");
-        console.log(user);
-        dispatch(addFriends(user.friends));
         dispatch(addUser(user));
       }
     } catch (error) {

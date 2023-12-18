@@ -17,7 +17,6 @@ const AllPost = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPost(token));
     setPage(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

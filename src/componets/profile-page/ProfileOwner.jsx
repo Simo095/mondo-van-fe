@@ -15,11 +15,11 @@ const ProfileOwner = () => {
   const user = useSelector(state => state.login.user);
   const postsOwner = useSelector(state => state.post.myPost);
   const token = useSelector(state => state.login.token);
-  const dispatch = useDispatch();
 
   const [loadingPre, setLoadingPre] = useState(false);
   const [prenotazioni, setPrenotazioni] = useState(null);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPrenotazioniOwner(token, setPrenotazioni, setLoadingPre));
     // eslint-disable-next-line react-hooks/exhaustive-deps

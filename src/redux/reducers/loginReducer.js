@@ -1,9 +1,8 @@
-import { ADD_ARRAY_CALENDAR, ADD_EVENT_CALENDAR, ADD_MY_FRIENDS, ADD_ROLE, ADD_TOKEN, ADD_USER } from "../actions";
+import { ADD_ARRAY_CALENDAR, ADD_EVENT_CALENDAR, ADD_ROLE, ADD_TOKEN, ADD_USER } from "../actions";
 const initialState = {
   token: "",
   role: "",
   user: null,
-  friends: [],
   eventCalendar: [],
   calendarArray: []
 };
@@ -24,11 +23,7 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         user: action.payload
       };
-    case ADD_MY_FRIENDS:
-      return {
-        ...state,
-        friends: action.payload
-      };
+
     case ADD_EVENT_CALENDAR:
       return {
         ...state,

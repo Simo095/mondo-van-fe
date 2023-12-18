@@ -6,7 +6,7 @@ import { fetchDeletePost } from "../../redux/actions";
 import { useState } from "react";
 
 const SinglePost = ({ elem, profile }) => {
-  const list = useSelector(state => state.login.friends);
+  const list = useSelector(state => state.login.user.friends);
   const token = useSelector(state => state.login.token);
   const [showModale, setShowModale] = useState(false);
   const [postText, setPostText] = useState();
