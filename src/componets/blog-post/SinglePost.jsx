@@ -2,7 +2,7 @@ import { Col, Image, Modal, Row } from "react-bootstrap";
 import { BsDashLg, BsPencilFill, BsPlusLg, BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAddFriend, fetchDeleteFriend } from "../../redux/actions/fetchActions";
-import { addUserVisit, fetchDeletePost, fetchProfileUser } from "../../redux/actions";
+import { fetchDeletePost, fetchProfileUser } from "../../redux/actions";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 

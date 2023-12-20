@@ -1,5 +1,4 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
 import NavCardVehicle from "./NavCardVehicle";
 import { useState } from "react";
 import CaruselVehicle from "./CaruselVehicle";

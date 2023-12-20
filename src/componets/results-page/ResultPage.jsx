@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { Button, Card, CardBody, CardFooter, CardTitle, Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import FiltriSideBar from "../../componets/stucture/FiltriSideBar";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/style/card-vehicle.css";
@@ -19,24 +18,9 @@ const ResultPage = () => {
   const results = useSelector(state => state.result.vehicles);
   const startDateState = useSelector(state => state.result.startDate);
   const endDateState = useSelector(state => state.result.endDate);
-  const provinceState = useSelector(state => state.result.province);
-  const bedsState = useSelector(state => state.result.beds);
-  const priceState = useSelector(state => state.result.price);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const handlerResults = () => {
-    console.log(startDateState);
-    console.log(endDateState);
-    console.log(provinceState);
-    console.log(bedsState);
-    console.log(priceState);
-  };
-
-  useEffect(() => {
-    handlerResults();
-  }, []);
 
   return (
     <div className="ResultPage">

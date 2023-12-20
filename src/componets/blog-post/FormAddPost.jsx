@@ -2,7 +2,7 @@ import { Button, Col, Container, Image, Row } from "react-bootstrap";
 
 import ModaleAddPost from "./ModaleAddPost";
 import { useState } from "react";
-import { BsBlockquoteLeft, BsCalendar3, BsImageFill } from "react-icons/bs";
+// import { BsBlockquoteLeft, BsCalendar3, BsImageFill } from "react-icons/bs";
 
 const FormAddPost = ({ user }) => {
   const [postText, setPostText] = useState();

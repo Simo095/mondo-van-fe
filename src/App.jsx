@@ -6,7 +6,6 @@ import Home from "./componets/home/Home";
 import RegisterCustomer from "./componets/login-register-auth/RegisterCustomer";
 import RegisterOwner from "./componets/login-register-auth/RegisterOwner";
 import ProfileCustomer from "./componets/profile-page/ProfileCustomer";
-
 import Auth from "./componets/login-register-auth/Auth";
 import OutGone from "./componets/login-register-auth/OutGone";
 import VehicleArrangement from "./componets/veicolo/VehicleArrangement";
@@ -16,23 +15,12 @@ import ChangeImg from "./componets/veicolo/ChangeImg";
 import Result from "./componets/results-page/Result";
 import Register from "./componets/login-register-auth/Register";
 import ComeFunziona from "./componets/stucture/ComeFunziona";
-
 import BlogPost from "./componets/blog-post/BlogPost";
 import ChangeVehicle from "./componets/veicolo/ChangeVehicle";
 import ProfileOwner from "./componets/profile-page/ProfileOwner";
-import { useState } from "react";
 import Profile from "./componets/profile-page/Profile";
 
 const App = () => {
-  const [results, setResults] = useState([]);
-  const [params, setParams] = useState({});
-  const routeExtractors = {
-    start_date: params => params.start_date,
-    end_date: params => params.end_date,
-    price: params => params.prezzo,
-    beds: params => params.beds,
-    province: params => params.province
-  };
   return (
     <div className="App">
       <BrowserRouter>
