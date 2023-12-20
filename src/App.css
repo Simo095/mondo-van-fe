@@ -166,8 +166,21 @@ body {
 }
 .sidebarCircle {
   max-width: 320px;
-
   background: linear-gradient(180deg, #144658, #144658);
+}
+.ResultPage {
+  background: linear-gradient(180deg, #144658, #144658);
+}
+.Result {
+  background: linear-gradient(180deg, #144658, #144658);
+}
+.BtnPrenotazione {
+  background: linear-gradient(180deg, #144658, #144658);
+}
+.FiltriSideBar {
+  max-width: 320px;
+  background-color: white;
+  border-radius: 20px;
 }
 .NavProfile {
   background: linear-gradient(180deg, #144658, #144658);
@@ -177,7 +190,6 @@ body {
 }
 .ContainerProfile {
   border-radius: 20px;
-
   background-color: white;
 }
 
@@ -225,7 +237,7 @@ body {
     flex-direction: column !important;
   }
   .ColRegisterForm {
-    margin-top: 2.5rem;
+    margin-block: 2.5rem;
   }
 }
 @media (max-width: 990px) {
@@ -262,6 +274,11 @@ body {
     margin-bottom: 2rem;
   }
 }
+@media (max-width: 531px) {
+  .NavProfileLinkImg {
+    display: none;
+  }
+}
 @media (max-width: 575px) {
   .Register {
     height: 155vh !important;
@@ -287,19 +304,41 @@ body {
   .Register textarea {
     height: 100px !important;
   }
-}
-@media (max-width: 1240px) {
+  .ImgFooter {
+    display: none;
+  }
   .FiltriSideBar {
     display: none;
   }
+}
+@media (max-width: 576px) {
+  .ImgFooter {
+    display: block;
+  }
+}
+@media (max-width: 1382px) {
+  .QueryCenterResult {
+    justify-content: center;
+  }
+}
+@media (max-width: 1240px) {
+  /* .FiltriSideBar {
+    display: none;
+  } */
   .sidebarCircle {
     display: none !important;
+  }
+  .ComeFunziona {
+    height: 200vh;
   }
   .ColSidebarFiltri {
     display: none;
   }
 }
 @media (min-width: 1240px) {
+  .NavProfileLink {
+    display: none;
+  }
   .mediaQueryCalendario {
     display: none;
   }

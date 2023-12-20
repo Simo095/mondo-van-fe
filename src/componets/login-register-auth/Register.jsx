@@ -10,7 +10,7 @@ const Register = () => {
       className="Register"
       style={{ height: "100vh" }}>
       <div className="d-flex justify-content-between">
-        <h1>Registrati ed entra a far parte della comunity!</h1>
+        <h1 className="logo text-black fs-1">Registrati ed entra a far parte della comunity!</h1>
         <div className="d-flex align-items-center">
           Home
           <IoArrowBackCircleOutline
@@ -45,17 +45,26 @@ const Register = () => {
               backgroundPositionX: "83%",
               height: "90vh"
             }}>
-            <h3>Noleggiare un furgone con Van World è semplice e veloce. Basta Registrarsi.</h3>
+            <h3 className="logo text-black fs-3">
+              Noleggiare un furgone con Van World è semplice e veloce. Basta Registrarsi.
+            </h3>
             <Button
               href="/register_owner"
-              className="my-5"
+              className="mt-5"
               style={{ background: "transparent", border: "none", color: "black" }}>
               Registrati come proprietario
             </Button>
+            <h3 className="logo text-black fs-5 mt-3">o</h3>
             <Button
               href="/register_customer"
               style={{ background: "transparent", border: "none", color: "black" }}>
               Registrati come cliente
+            </Button>
+            <h3 className="logo text-black fs-5 mt-3">Oppure</h3>
+            <Button
+              href="/login"
+              style={{ background: "transparent", border: "none", color: "black" }}>
+              Effettua il login
             </Button>
           </Col>
         </Row>

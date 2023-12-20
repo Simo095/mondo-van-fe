@@ -1,8 +1,8 @@
-import { Col, Container, Nav, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Image, Nav, NavbarBrand, Offcanvas, Row, Spinner } from "react-bootstrap";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPrenotazioni, fetchVehicleCustomerPage } from "../../redux/actions/fetchActions";
+import { fetchNotifiche, fetchPrenotazioni, fetchVehicleCustomerPage } from "../../redux/actions/fetchActions";
 
 import SideBar from "../../componets/stucture/SideBar";
 import FormAddPost from "../blog-post/FormAddPost";
@@ -10,6 +10,9 @@ import FormAddPost from "../blog-post/FormAddPost";
 import VanCustomerPage from "../results-page/VanCustomerPage";
 import MyPosts from "../blog-post/MyPosts";
 import Prenotazione from "./Prenotazione";
+import ModaleAvatar from "./ModaleAvatar";
+import Notifica from "./Notifica";
+import { FaRegPenToSquare } from "react-icons/fa6";
 
 const ProfileCustomer = () => {
   const user = useSelector(state => state.login.user);
@@ -18,6 +21,13 @@ const ProfileCustomer = () => {
   const vehicleSuggest = useSelector(state => state.result.vehicleCustomerProfile);
   const [prenotazioni, setPrenotazioni] = useState(null);
   const [loadingPre, setLoadingPre] = useState(false);
+  const [show, setShow] = useState(false);
+  const [notifiche, setNotifiche] = useState(null);
+  const [showNotifiche, setShowNotifiche] = useState(false);
+  const handleCloseNotifiche = () => setShowNotifiche(false);
+  const handleShowNotifiche = () => {
+    setShowNotifiche(true);
+  };
   const dispatch = useDispatch();
 
   const placeHolder = [
@@ -86,6 +96,7 @@ const ProfileCustomer = () => {
   useEffect(() => {
     dispatch(fetchVehicleCustomerPage(token));
     dispatch(fetchPrenotazioni(token, setPrenotazioni, setLoadingPre));
+    dispatch(fetchNotifiche(token, setNotifiche));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -93,6 +104,30 @@ const ProfileCustomer = () => {
     <Container
       fluid
       className="ContainerProfileMain">
+      <ModaleAvatar
+        show={show}
+        setShow={setShow}
+      />
+
+      <Offcanvas
+        show={showNotifiche}
+        onHide={handleCloseNotifiche}
+        placement="end">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Notifiche</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {notifiche &&
+            notifiche.map(elem => (
+              <Notifica
+                elem={elem}
+                key={elem.id}
+                setNotifiche={setNotifiche}
+              />
+            ))}
+        </Offcanvas.Body>
+      </Offcanvas>
+
       {user ? (
         <Row className="row-cols-2">
           <Col className="sidebarCircle d-flex">
@@ -105,7 +140,7 @@ const ProfileCustomer = () => {
               <Col
                 sm={12}
                 className="NavProfile">
-                <Nav>
+                <Nav className="d-flex align-items-center mt-1">
                   <Nav.Item>
                     <Nav.Link
                       href="/blogpost"
@@ -120,10 +155,53 @@ const ProfileCustomer = () => {
                       Cerca un van
                     </Nav.Link>
                   </Nav.Item>
+                  <Nav.Item className="NavProfileLink">
+                    <Nav.Link
+                      href="/"
+                      className="text-decoration-none text-white ">
+                      Account
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item className="flex-grow-1 NavProfileLink">
+                    {notifiche && (
+                      <Button
+                        onClick={notifiche && handleShowNotifiche}
+                        className="text-white bg-transparent border-0 d-flex align-items-start justify-content-end"
+                        style={{ fontWeight: "bold", fontFamily: "Rethink Sans, sans-serif" }}>
+                        Notifiche
+                      </Button>
+                    )}
+                  </Nav.Item>
+                  <NavbarBrand className="NavProfileLink NavProfileLinkImg ">
+                    <Button
+                      href={
+                        user.role === "OWNER" ? "/profile_owner" : user.role === "CUSTOMER" ? "profile_customer" : ""
+                      }
+                      className="NavProfileLink NavProfileLinkImg bg-transparent border-0 justify-content-end">
+                      {" "}
+                      <FaRegPenToSquare
+                        className="m-0"
+                        onClick={e => {
+                          e.preventDefault();
+                          setShow(true);
+                        }}
+                        style={{
+                          cursor: "pointer",
+                          position: "absolute",
+                          fontSize: "1em",
+                          color: "black"
+                        }}
+                      />
+                      <Image
+                        src={user.avatar}
+                        rounded
+                      />
+                    </Button>
+                  </NavbarBrand>
                 </Nav>
               </Col>
               <Col>
-                <h3 className="text-white mb-3">Prenotazioni</h3>
+                <h3 className="text-white my-3">Bentornato, {user.name}. Ecco le tue prenotazioni</h3>
               </Col>
               <Col className="d-flex ContainerProfile ContainerProfileWhite py-4 justify-content-center">
                 <Container className="d-flex justify-content-center flex-grow-1">
@@ -149,7 +227,7 @@ const ProfileCustomer = () => {
                       })
                     ) : (
                       <Col className="d-flex justify-content-center">
-                        <p>Nessuna prenotazione da parte dei Van Travelers</p>
+                        <p>Non hai effettuato nessuna prenotazione</p>
                       </Col>
                     )}
                   </Row>

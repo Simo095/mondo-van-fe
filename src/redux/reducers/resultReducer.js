@@ -1,10 +1,22 @@
-import { ADD_ENDDATE, ADD_RESULT, ADD_STARTDATE, LOGGED, VEHICLE_CUSTOMER_PROFILE } from "../actions";
+import {
+  ADD_ENDDATE,
+  ADD_RESULT,
+  ADD_STARTDATE,
+  BEDS,
+  LOGGED,
+  PRICE,
+  PROVINCE,
+  VEHICLE_CUSTOMER_PROFILE
+} from "../actions";
 
 const initialState = {
   vehicles: [],
   logged: false,
   startDate: null,
   endDate: null,
+  price: null,
+  province: "",
+  beds: "",
   vehicleCustomerProfile: []
 };
 const resultReducer = (state = initialState, action) => {
@@ -12,7 +24,7 @@ const resultReducer = (state = initialState, action) => {
     case ADD_RESULT:
       return {
         ...state,
-        vehicles: [...action.payload]
+        vehicles: action.payload
       };
     case VEHICLE_CUSTOMER_PROFILE:
       return {
@@ -33,6 +45,21 @@ const resultReducer = (state = initialState, action) => {
       return {
         ...state,
         endDate: action.payload
+      };
+    case PROVINCE:
+      return {
+        ...state,
+        province: action.payload
+      };
+    case BEDS:
+      return {
+        ...state,
+        beds: action.payload
+      };
+    case PRICE:
+      return {
+        ...state,
+        price: action.payload
       };
     default:
       return state;

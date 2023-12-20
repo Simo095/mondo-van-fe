@@ -30,6 +30,7 @@
 }
 
 .cardInterni div span {
+  font-weight: bold;
   padding: 0.5em;
   text-align: center;
   transform: rotate(0deg);

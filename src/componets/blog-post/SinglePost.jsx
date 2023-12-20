@@ -162,7 +162,7 @@ const SinglePost = ({ elem, profile }) => {
                 : ""}
             </p>
             {profile.id !== elem.author.id &&
-              (list.find(x => x.id === elem.author.id) ? (
+              (list.find(x => x === elem.author.id) ? (
                 <div
                   style={{ cursor: "pointer" }}
                   onClick={() => {
@@ -224,13 +224,17 @@ const SinglePost = ({ elem, profile }) => {
             xs={12}
             className="d-flex justify-content-center"
             onClick={handleshowModale}>
-            <Image
-              src={elem.img ? elem.img : ""}
-              width="100%"
-              height={300}
-              style={{ objectFit: "cover" }}
-              className="rounded-4 shadow"
-            />
+            {elem.img ? (
+              <Image
+                src={elem.img}
+                width="100%"
+                height={300}
+                style={{ objectFit: "cover" }}
+                className="rounded-4 shadow"
+              />
+            ) : (
+              <></>
+            )}
           </Col>
         </Row>
       </div>

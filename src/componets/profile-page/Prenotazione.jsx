@@ -61,7 +61,9 @@ const Prenotazione = ({ pre, setPrenotazioni, setLoadingPre }) => {
             </Card.Body>
           </Card>
         ) : (
-          <Card onClick={handleShow}>
+          <Card
+            className="cardSpecialPrenotazioni"
+            onClick={handleShow}>
             <Card.Img
               variant="top"
               height={150}

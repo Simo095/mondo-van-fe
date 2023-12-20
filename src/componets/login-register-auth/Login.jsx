@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToken, logged } from "../../redux/actions";
-import { FormGroup } from "react-bootstrap";
+import { Alert, FormGroup } from "react-bootstrap";
 import { VscSignIn } from "react-icons/vsc";
 import "../../assets/style/card-login.css";
 
@@ -26,9 +26,13 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [image, setImage] = useState("");
+  const [rispOk, setRispOk] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error401, setError401] = useState(false);
 
   const hadlerForm = async event => {
     event.preventDefault();
+    setLoading(true);
     const data = new FormData(event.currentTarget);
     data.get("password");
     data.get("email");
@@ -45,10 +49,16 @@ const Login = () => {
 
     if (request.ok) {
       const objResp = await request.json();
-      console.log(objResp);
+      setRispOk(true);
+      setLoading(false);
       dispatch(addToken(objResp.token));
       dispatch(logged(true));
       navigate("/auth");
+    } else {
+      if (request.status === 401) {
+        setError401(true);
+        setLoading(false);
+      }
     }
   };
 
@@ -61,6 +71,9 @@ const Login = () => {
   return (
     <div className="Login">
       <Container
+        onClick={() => {
+          setError401(false);
+        }}
         style={{ height: "100vh" }}
         className="containerLogin d-flex align-items-center justify-content-center">
         <Container className="CardContainer">
@@ -69,6 +82,11 @@ const Login = () => {
           <Container className="ContainerCard">
             <Row className="log-card">
               <Col className="d-flex flex-column align-items-center justify-content-center">
+                {error401 ? (
+                  <Alert variant="danger">Controlla i dati inseriti, se non sei registrato registrati prima...</Alert>
+                ) : (
+                  <></>
+                )}
                 <VscSignIn fontSize={80} />
                 <p>Sign in</p>
               </Col>
@@ -115,20 +133,38 @@ const Login = () => {
       <Container fluid>
         <Row className="LoginRow">
           <Col
-            className="LoginImg"
+            className="LoginImg d-flex justify-content-center align-items-centr"
             style={{
               backgroundImage: `url(${image})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
               height: "100vh"
-            }}></Col>
+            }}>
+            {loading ? (
+              <div className="">
+                <Alert
+                  variant="light"
+                  className="loader"></Alert>
+              </div>
+            ) : (
+              <></>
+            )}
+          </Col>
           <Col
             sm={4}
             className="d-flex align-items-center">
-            <Container>
+            <Container
+              onClick={() => {
+                setError401(false);
+              }}>
               <Row>
                 <Col className="d-flex justify-content-center align-items-center flex-column">
+                  {error401 ? (
+                    <Alert variant="danger">Controlla i dati inseriti, se non sei registrato registrati prima...</Alert>
+                  ) : (
+                    <></>
+                  )}
                   <VscSignIn fontSize={80} />
                   <p>Sign in</p>
                 </Col>

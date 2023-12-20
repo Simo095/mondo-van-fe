@@ -20,8 +20,18 @@ import ComeFunziona from "./componets/stucture/ComeFunziona";
 import BlogPost from "./componets/blog-post/BlogPost";
 import ChangeVehicle from "./componets/veicolo/ChangeVehicle";
 import ProfileOwner from "./componets/profile-page/ProfileOwner";
+import { useState } from "react";
 
 const App = () => {
+  const [results, setResults] = useState([]);
+  const [params, setParams] = useState({});
+  const routeExtractors = {
+    start_date: params => params.start_date,
+    end_date: params => params.end_date,
+    price: params => params.prezzo,
+    beds: params => params.beds,
+    province: params => params.province
+  };
   return (
     <div className="App">
       <BrowserRouter>
@@ -75,7 +85,12 @@ const App = () => {
             element={<VehicleArrangement />}
           />
           <Route
-            path="/results_page/:start_date/:end_date"
+            path="/results_page"
+            element={<ResultPage />}
+          />
+          {/* /:start_date/:end_date */}
+          {/* <Route
+            path="/results_page/:start_date/:end_date/:prezzo"
             element={<ResultPage />}
           />
           <Route
@@ -89,7 +104,7 @@ const App = () => {
           <Route
             path="/results_page/:start_date/:end_date/:beds/:province"
             element={<ResultPage />}
-          />
+          /> */}
           <Route
             path="/result/:id"
             element={<Result />}

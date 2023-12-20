@@ -24,6 +24,8 @@ const RegisterCustomer = () => {
   const [firstForm, setFirstForm] = useState(null);
   const [rispOk, setRispOk] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error400, setError400] = useState(false);
+  const [error404, setError404] = useState(false);
 
   const handlerSubmit = async e => {
     e.preventDefault();
@@ -50,6 +52,14 @@ const RegisterCustomer = () => {
       setRispOk(true);
       setLoading(false);
     } else {
+      if (risposta.status === 400) {
+        setError400(true);
+        setLoading(false);
+      }
+      if (risposta.status === 404) {
+        setError404(true);
+        setLoading(false);
+      }
     }
   };
   const handlerFirstForm = e => {
@@ -92,7 +102,7 @@ const RegisterCustomer = () => {
       className="Register"
       style={{ height: "100vh" }}>
       <div className="d-flex justify-content-between">
-        <h1>Registrati ed entra a far parte della comunity!</h1>
+        <h1 className="logo text-black fs-1">Registrati ed entra a far parte della comunity!</h1>
         <div className="d-flex align-items-center">
           <IoArrowBackCircleOutline
             onClick={() => {
@@ -124,14 +134,18 @@ const RegisterCustomer = () => {
             </Modal>
           )}
 
-          <Col sm={5}>
+          {error400 ? <Alert variant="danger">Questa E-Mail è gia presente, forse sei gia registrato...</Alert> : <></>}
+          {error404 ? <Alert variant="danger"> La citta inserita non risulta, controlla i dati...</Alert> : <></>}
+          <Col
+            sm={5}
+            className="d-flex justify-content-center align-items-center">
             <Image
               fluid
               className="e2e-ImageModuleContent-img ImageModuleContent-mainImage-IG1"
               srcSet="https://mir-s3-cdn-cf.behance.net/project_modules/disp/3f483f97004499.5ebb3291132b2.gif 500w"
               alt="Travel GIFs"
               shouldblockrightclickevents="true"
-              style={{ marginTop: "2rem" }}
+              style={{ marginTop: "2rem", minWidth: "350px" }}
             />
           </Col>
           <Col
@@ -147,13 +161,18 @@ const RegisterCustomer = () => {
             ) : (
               <></>
             )}
-            <Container className="CardContainerRegister">
+            <Container
+              onClick={() => {
+                setError400(false);
+                setError404(false);
+              }}
+              className="CardContainerRegister">
               <div className="circle1"></div>
               <div className="circle2"></div>
               <Container className="ContainerCard">
                 <Row className="log-cardRegister">
                   <Col className="d-flex flex-column align-items-center justify-content-center">
-                    <p>Registrati e dopo potrai inserire i dettagli del tuo mezzo</p>
+                    <p>Inserisci i tuoi dati</p>
                   </Col>
                   <ReactCardFlip
                     isFlipped={flip}
@@ -167,9 +186,6 @@ const RegisterCustomer = () => {
                         background: "#00000000",
                         border: "none"
                       }}>
-                      {/* <Card.Header className="w-75 text-center border-0">
-                        Inserisci i tuoi dati e dopo potrai inserire i dettagli del tuo mezzo
-                      </Card.Header> */}
                       <div>
                         <Row className="d-flex flex-column">
                           <Form onSubmit={handlerFirstForm}>

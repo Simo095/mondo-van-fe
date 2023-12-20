@@ -53,7 +53,7 @@ const PrenotazioneSideBar = ({ vehicleProp, result, startDateProps, endDateProps
     }
   };
   return (
-    <Container>
+    <Container className="ContainerProfile">
       <Modal
         show={show}
         onHide={handleClose}>
@@ -65,13 +65,13 @@ const PrenotazioneSideBar = ({ vehicleProp, result, startDateProps, endDateProps
         </Modal.Header>
         <Modal.Body style={{ background: "#051C12", color: "white" }}>Bene, il messaggio è arrivato!</Modal.Body>
       </Modal>
-      <h4>
+      <h4 className="fs-3 mt-3">
         Prenota {vehicleProp.name} in provincia di{" "}
         {result.map((elem, i) => {
           return elem.name === vehicleProp.name ? result[i].province : "";
         })}
       </h4>
-      <h5>
+      <h5 className="mb-3">
         dal {startDateProps.substring(5, 11).split("-").reverse().join("-")} al{" "}
         {endDateProps.substring(5, 11).split("-").reverse().join("-")} al prezzo di{" "}
         {vehicleProp.pricePerDay * diffProps} €
@@ -101,7 +101,11 @@ const PrenotazioneSideBar = ({ vehicleProp, result, startDateProps, endDateProps
             required
           />
         </Form.Group>
-        <Button type="submit">Invia richiesta</Button>
+        <Button
+          type="submit"
+          className="mb-2 BtnPrenotazione">
+          Invia richiesta
+        </Button>
       </Form>
     </Container>
   );

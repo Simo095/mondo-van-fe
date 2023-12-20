@@ -4,7 +4,7 @@ const NavResultVehicle = ({ setMotorizzazione, setInterni, setAnnuncio }) => {
   return (
     <Nav
       variant="tabs"
-      className="mt-3"
+      className="mt-3 border-0"
       defaultActiveKey="#first border-0">
       <Nav.Item
         className="navItemsVehicle"
@@ -13,7 +13,7 @@ const NavResultVehicle = ({ setMotorizzazione, setInterni, setAnnuncio }) => {
           setInterni(true);
           setAnnuncio(false);
         }}>
-        <Nav.Link>Interni</Nav.Link>
+        <Nav.Link className="text-decoration-none text-white">Interni</Nav.Link>
       </Nav.Item>
       <Nav.Item
         className="navItemsVehicle"
@@ -22,7 +22,7 @@ const NavResultVehicle = ({ setMotorizzazione, setInterni, setAnnuncio }) => {
           setInterni(false);
           setAnnuncio(true);
         }}>
-        <Nav.Link>Annuncio</Nav.Link>
+        <Nav.Link className="text-decoration-none text-white">Annuncio</Nav.Link>
       </Nav.Item>
       <Nav.Item
         className="navItemsVehicle"
@@ -31,7 +31,7 @@ const NavResultVehicle = ({ setMotorizzazione, setInterni, setAnnuncio }) => {
           setInterni(false);
           setAnnuncio(false);
         }}>
-        <Nav.Link>Specifiche tecniche</Nav.Link>
+        <Nav.Link className="text-decoration-none text-white">Specifiche tecniche</Nav.Link>
       </Nav.Item>
     </Nav>
   );

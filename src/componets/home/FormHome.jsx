@@ -4,7 +4,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { addResult } from "../../redux/actions";
+import { addBeds, addEndDate, addProvince, addResult, addStartDate } from "../../redux/actions";
 const FormHome = () => {
   const [provinces, setProvinces] = useState();
   const [province, setProvince] = useState("");
@@ -14,68 +14,85 @@ const FormHome = () => {
   const [isValid, setIsValid] = useState(false);
   const [isValidBad, setIsValidBed] = useState(false);
   const [error, setError] = useState(false);
+  const [errorDate, setErrorDate] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handlerSubmit = async e => {
     e.preventDefault();
-    const start = startDate.toLocaleDateString("fr-CA");
-    const end = endDate.toLocaleDateString("fr-CA");
-    if (isValid && isValidBad) {
-      const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_prov_beds?start=${start}&end=${end}&beds=${beds}&province=${province}`,
-        {
-          method: "GET"
-        }
-      );
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page/${start}/${end}/${beds}/${province}`);
-      } else {
-        setError(true);
-      }
-    }
+    if (startDate && endDate) {
+      const start = startDate.toLocaleDateString("fr-CA");
+      const end = endDate.toLocaleDateString("fr-CA");
 
-    if (!isValid && !isValidBad) {
-      const pageble = await fetch(`http://localhost:8080/sign_in/date?start=${start}&end=${end}`, {
-        method: "GET"
-      });
-      if (pageble.ok) {
-        const content = await pageble.json();
-        console.log(content);
-        dispatch(addResult(content.content));
-        navigate(`/results_page/${start}/${end}`);
-      } else {
-        setError(true);
-      }
-    }
-    if (!isValid && isValidBad) {
-      const pageble = await fetch(`http://localhost:8080/sign_in/date_beds?start=${start}&end=${end}&beds=${beds}`, {
-        method: "GET"
-      });
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page/${start}/${end}/${beds}`);
-      } else {
-        setError(true);
-      }
-    }
-    if (isValid && !isValidBad) {
-      const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_province?start=${start}&end=${end}&province=${province}`,
-        {
-          method: "GET"
+      if (isValid && isValidBad) {
+        const pageble = await fetch(
+          `http://localhost:8080/sign_in/date_prov_beds?start=${start}&end=${end}&beds=${beds}&province=${province}`,
+          {
+            method: "GET"
+          }
+        );
+        if (pageble.ok) {
+          const content = await pageble.json();
+          dispatch(addResult(content.content));
+          dispatch(addStartDate(start));
+          dispatch(addEndDate(end));
+          dispatch(addProvince(province));
+          dispatch(addBeds(beds));
+          navigate(`/results_page`);
+        } else {
+          setError(true);
         }
-      );
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page/${start}/${end}/${province}`);
-      } else {
-        setError(true);
       }
+
+      if (!isValid && !isValidBad) {
+        const pageble = await fetch(`http://localhost:8080/sign_in/date?start=${start}&end=${end}`, {
+          method: "GET"
+        });
+        if (pageble.ok) {
+          const content = await pageble.json();
+          dispatch(addStartDate(start));
+          dispatch(addEndDate(end));
+          dispatch(addResult(content.content));
+          navigate(`/results_page`);
+        } else {
+          setError(true);
+        }
+      }
+      if (!isValid && isValidBad) {
+        const pageble = await fetch(`http://localhost:8080/sign_in/date_beds?start=${start}&end=${end}&beds=${beds}`, {
+          method: "GET"
+        });
+        if (pageble.ok) {
+          const content = await pageble.json();
+          dispatch(addResult(content.content));
+          dispatch(addStartDate(start));
+          dispatch(addEndDate(end));
+          dispatch(addBeds(beds));
+          navigate(`/results_page`);
+        } else {
+          setError(true);
+        }
+      }
+      if (isValid && !isValidBad) {
+        const pageble = await fetch(
+          `http://localhost:8080/sign_in/date_province?start=${start}&end=${end}&province=${province}`,
+          {
+            method: "GET"
+          }
+        );
+        if (pageble.ok) {
+          const content = await pageble.json();
+          dispatch(addResult(content.content));
+          dispatch(addStartDate(start));
+          dispatch(addEndDate(end));
+          dispatch(addProvince(province));
+          navigate(`/results_page`);
+        } else {
+          setError(true);
+        }
+      }
+    } else {
+      setErrorDate(true);
     }
   };
 
@@ -193,6 +210,11 @@ const FormHome = () => {
         </Button>
       </Form>
       {error ? <Alert variant="danger">Non ci sono disponibilita</Alert> : <></>}
+      {errorDate ? (
+        <Alert variant="danger">Seleziona due date, se vuoi cercare solo un giorno inserisci la stessa data</Alert>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

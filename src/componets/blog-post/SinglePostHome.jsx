@@ -1,11 +1,18 @@
 import { Col, Image, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const SinglePostHome = ({ elem }) => {
+  const logged = useSelector(state => state.login.logged);
+  const navigate = useNavigate();
   return (
     elem && (
       <div className="SinglePost border border-1 rounded-3 shadow my-3 p-3 bg-light">
-        <Row className="mb-2">
+        <Row
+          className="mb-2"
+          onClick={() => navigate(logged ? "/blogpost" : "/register")}>
           <Col
+            style={{ cursor: "pointer" }}
             sm={2}
             className="me-3">
             <Image

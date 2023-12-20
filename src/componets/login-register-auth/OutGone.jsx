@@ -1,6 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addMyPosts, addPosts, addResult, addRole, addToken, addUser, addVehicle, logged } from "../../redux/actions";
+import {
+  addArrayCalendar,
+  addEndDate,
+  addEventCalendar,
+  addMyPosts,
+  addPosts,
+  addResult,
+  addRole,
+  addStartDate,
+  addToken,
+  addUser,
+  addVehicle,
+  logged
+} from "../../redux/actions";
 import { useNavigate } from "react-router";
 
 const OutGone = () => {
@@ -15,6 +28,10 @@ const OutGone = () => {
     dispatch(addPosts([]));
     dispatch(addMyPosts([]));
     dispatch(addResult([]));
+    dispatch(addArrayCalendar([]));
+    dispatch(addEventCalendar([]));
+    dispatch(addStartDate());
+    dispatch(addEndDate());
     navigate("/");
   };
   useEffect(() => {

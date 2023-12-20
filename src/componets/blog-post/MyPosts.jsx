@@ -197,13 +197,17 @@ const MyPosts = ({ elem, token, profile }) => {
             xs={12}
             onClick={handleshowModale}
             className="d-flex justify-content-center">
-            <Image
-              src={elem.img ? elem.img : ""}
-              width="100%"
-              height={300}
-              style={{ objectFit: "cover" }}
-              className="rounded-4 shadow"
-            />
+            {elem.img ? (
+              <Image
+                src={elem.img}
+                width="100%"
+                height={300}
+                style={{ objectFit: "cover" }}
+                className="rounded-4 shadow"
+              />
+            ) : (
+              <></>
+            )}
           </Col>
         </Row>
       </div>

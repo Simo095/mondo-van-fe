@@ -66,7 +66,7 @@ const Home = () => {
             </Col>
             <Col className="d-flex gap-3 overflow-y-scroll oV">
               {posts ? (
-                posts.toReversed().map(
+                posts.map(
                   (elem, i) =>
                     i >= page * 5 - 5 &&
                     i < page * 5 && (

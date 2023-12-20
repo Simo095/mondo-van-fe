@@ -61,13 +61,15 @@ const Result = () => {
   }, []);
 
   return (
-    <>
+    <Container
+      className="Result py-2"
+      fluid>
       {r.length !== 0 && vehicle ? (
         <Container
           fluid
-          className="Result">
+          className="">
           <div className="d-flex justify-content-between my-4 position-relative">
-            <h4>
+            <h4 className="logo fs-3">
               {vehicle.name}
               {" - "}
               {vehicle.type === "CAMPERIZED_JEEP"
@@ -87,8 +89,8 @@ const Result = () => {
 
             <div className="d-flex align-items-center">
               <IoArrowBackCircleOutline
+                color="white"
                 onClick={() => {
-                  console.log(params);
                   navigate(-1);
                 }}
                 className="fs-1"
@@ -97,6 +99,7 @@ const Result = () => {
             </div>
           </div>
           <Row
+            className=""
             md={1}
             lg={2}>
             <Col lg={8}>
@@ -179,7 +182,7 @@ const Result = () => {
       ) : (
         <></>
       )}
-    </>
+    </Container>
   );
 };
 export default Result;

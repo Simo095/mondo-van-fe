@@ -32,8 +32,11 @@ const Footer = () => {
                 </Row>
               </Col>
               <Col>
-                <Row className="d-flex flex-column">
-                  <Image src={logo} />
+                <Row className="d-flex  flex-column">
+                  <Image
+                    className="ImgFooter"
+                    src={logo}
+                  />
                 </Row>
               </Col>
               <Col>
