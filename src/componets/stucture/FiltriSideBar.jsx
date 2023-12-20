@@ -301,10 +301,6 @@ const FiltriSideBar = () => {
     if (newBeds === "Qualsiasi posto letto") {
       setIsValidBed(false);
     }
-    console.log("bedsState");
-    console.log(bedsState);
-    console.log("newBads");
-    console.log(newBeds);
   }, []);
 
   return (

@@ -21,6 +21,7 @@ import BlogPost from "./componets/blog-post/BlogPost";
 import ChangeVehicle from "./componets/veicolo/ChangeVehicle";
 import ProfileOwner from "./componets/profile-page/ProfileOwner";
 import { useState } from "react";
+import Profile from "./componets/profile-page/Profile";
 
 const App = () => {
   const [results, setResults] = useState([]);
@@ -81,6 +82,10 @@ const App = () => {
             element={<ProfileOwner />}
           />
           <Route
+            path="/profile/:id"
+            element={<Profile />}
+          />
+          <Route
             path="/vehicle_arrangement"
             element={<VehicleArrangement />}
           />
@@ -88,23 +93,6 @@ const App = () => {
             path="/results_page"
             element={<ResultPage />}
           />
-          {/* /:start_date/:end_date */}
-          {/* <Route
-            path="/results_page/:start_date/:end_date/:prezzo"
-            element={<ResultPage />}
-          />
-          <Route
-            path="/results_page/:start_date/:end_date/:beds"
-            element={<ResultPage />}
-          />
-          <Route
-            path="/results_page/:start_date/:end_date/:province"
-            element={<ResultPage />}
-          />
-          <Route
-            path="/results_page/:start_date/:end_date/:beds/:province"
-            element={<ResultPage />}
-          /> */}
           <Route
             path="/result/:id"
             element={<Result />}

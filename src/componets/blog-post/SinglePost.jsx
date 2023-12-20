@@ -2,8 +2,9 @@ import { Col, Image, Modal, Row } from "react-bootstrap";
 import { BsDashLg, BsPencilFill, BsPlusLg, BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAddFriend, fetchDeleteFriend } from "../../redux/actions/fetchActions";
-import { fetchDeletePost } from "../../redux/actions";
+import { addUserVisit, fetchDeletePost, fetchProfileUser } from "../../redux/actions";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const SinglePost = ({ elem, profile }) => {
   const list = useSelector(state => state.login.user.friends);
@@ -16,6 +17,7 @@ const SinglePost = ({ elem, profile }) => {
   const handleCloseQ = () => setShowModale(false);
   const handleshowModale = () => setShowModale(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const calcolaData = () => {
     const createdate = new Date(elem.createdAt);
     const createMin = createdate.getMinutes();
@@ -63,7 +65,11 @@ const SinglePost = ({ elem, profile }) => {
                   width="80px"
                   height="80px"
                   roundedCircle
-                  style={{ objectFit: "cover" }}
+                  style={{ objectFit: "cover", cursor: "pointer" }}
+                  onClick={() => {
+                    dispatch(fetchProfileUser(token, elem.author.id));
+                    navigate(`/profile/${elem.author.id}`);
+                  }}
                 />
               </Col>
               <Col
@@ -84,7 +90,6 @@ const SinglePost = ({ elem, profile }) => {
                 className="text-primary text-end ">
                 {profile.id === elem.author.id && (
                   <>
-                    {console.log(profile.id)}
                     <BsPencilFill
                       onClick={() => {
                         setIdPost(elem.id);
@@ -104,7 +109,11 @@ const SinglePost = ({ elem, profile }) => {
                   </>
                 )}
               </Col>
-              <p onClick={handleshowModale}>{elem.text}</p>
+              <p
+                style={{ cursor: "pointer" }}
+                onClick={handleshowModale}>
+                {elem.text}
+              </p>
               <Col className="d-flex justify-content-center">
                 <Image
                   src={elem.img ? elem.img : ""}
@@ -128,10 +137,14 @@ const SinglePost = ({ elem, profile }) => {
               width="60px"
               height="60px"
               roundedCircle
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", cursor: "pointer" }}
+              onClick={() => {
+                dispatch(fetchProfileUser(token, elem.author.id, navigate));
+              }}
             />
           </Col>
           <Col
+            style={{ cursor: "pointer" }}
             onClick={handleshowModale}
             sm={5}
             lg={7}
@@ -222,6 +235,7 @@ const SinglePost = ({ elem, profile }) => {
           </p>
           <Col
             xs={12}
+            style={{ cursor: "pointer" }}
             className="d-flex justify-content-center"
             onClick={handleshowModale}>
             {elem.img ? (

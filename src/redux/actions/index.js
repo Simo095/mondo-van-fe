@@ -16,6 +16,9 @@ export const VEHICLE_CUSTOMER_PROFILE = "VEHICLE_CUSTOMER_PROFILE";
 export const PROVINCE = "PROVINCE";
 export const BEDS = "BEDS";
 export const PRICE = "PRICE";
+export const ADD_USER_VISIT = "ADD_USER_VISIT";
+export const ADD_VEHICLE_VISIT = "ADD_VEHICLE_VISIT";
+export const ADD_POST_USER_VISIT = "ADD_POST_USER_VISIT";
 
 export const addToken = token => ({ type: ADD_TOKEN, payload: token });
 export const addRole = role => ({ type: ADD_ROLE, payload: role });
@@ -35,6 +38,9 @@ export const addMyPosts = myPosts => ({ type: ADD_MY_POSTS, payload: myPosts });
 export const addEventCalendar = data => ({ type: ADD_EVENT_CALENDAR, payload: data });
 export const addArrayCalendar = data => ({ type: ADD_ARRAY_CALENDAR, payload: data });
 export const addVehicleCustomerProfile = data => ({ type: VEHICLE_CUSTOMER_PROFILE, payload: data });
+export const addUserVisit = user => ({ type: ADD_USER_VISIT, payload: user });
+export const addVehicleVisit = vehicle => ({ type: ADD_VEHICLE_VISIT, payload: vehicle });
+export const addPostUserVisit = posts => ({ type: ADD_POST_USER_VISIT, payload: posts });
 
 export const fetchPost = token => {
   return async dispatch => {
@@ -115,6 +121,63 @@ export const fetchDeletePost = (token, postId) => {
       if (resp.ok) {
         dispatch(fetchMyPost(token));
         dispatch(fetchPost(token));
+      }
+    } catch (error) {
+      console.log("si e' verificato un errore", error.message);
+    }
+  };
+};
+
+export const fetchProfileUser = (token, userId, navigate) => {
+  return async dispatch => {
+    try {
+      const requestUser = await fetch(`http://localhost:8080/users/${userId}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (requestUser.ok) {
+        const user = await requestUser.json();
+        if (user.role === "OWNER") {
+          dispatch(addUserVisit(user));
+          const objVehicle = await fetch("http://localhost:8080/vehicles/my_vehicle", {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + token
+            }
+          });
+          if (objVehicle.ok) {
+            const vehicle = await objVehicle.json();
+            dispatch(addVehicleVisit(vehicle));
+
+            const risp = await fetch(`http://localhost:8080/posts/user/${user.id}`, {
+              method: "GET",
+              headers: {
+                Authorization: "Bearer " + token
+              }
+            });
+            if (risp.ok) {
+              const data = await risp.json();
+              dispatch(addPostUserVisit(data.content));
+              navigate(`/profile/${user.id}`);
+            }
+          }
+        }
+        if (user.role === "CUSTOMER") {
+        }
+        dispatch(addUserVisit(user));
+        const risp = await fetch(`http://localhost:8080/posts/user/${user.id}`, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        });
+        if (risp.ok) {
+          const data = await risp.json();
+          dispatch(addPostUserVisit(data.content));
+          navigate(`/profile/${user.id}`);
+        }
       }
     } catch (error) {
       console.log("si e' verificato un errore", error.message);

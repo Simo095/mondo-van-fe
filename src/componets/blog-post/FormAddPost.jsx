@@ -20,7 +20,7 @@ const FormAddPost = ({ user }) => {
             <Row>
               <Col xs="auto">
                 <Image
-                  src={user ? user.avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"}
+                  src={user.avatar}
                   alt="userImg"
                   width="60px"
                   height="60px"
@@ -45,7 +45,7 @@ const FormAddPost = ({ user }) => {
           <Col
             xs={12}
             className="">
-            <Row>
+            {/* <Row>
               <Col
                 xs={12}
                 md={5}>
@@ -78,7 +78,7 @@ const FormAddPost = ({ user }) => {
                   <span style={{ color: "grey", fontSize: "14px" }}>Scrivi un articolo</span>
                 </p>
               </Col>
-            </Row>
+            </Row> */}
           </Col>
         </Row>
         <ModaleAddPost

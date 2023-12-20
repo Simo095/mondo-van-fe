@@ -23,15 +23,17 @@ const Register = () => {
         </div>
       </div>
       <Container>
-        <Row className="d-flex flex-grow-1 justify-content-center align-items-center">
-          <Col sm={5}>
+        <Row className="d-flex RegisterRow flex-grow-1 justify-content-center align-items-center">
+          <Col
+            className="d-flex justify-content-center align-items-center"
+            sm={5}>
             <Image
               fluid
               className="e2e-ImageModuleContent-img ImageModuleContent-mainImage-IG1"
               srcSet="https://mir-s3-cdn-cf.behance.net/project_modules/disp/3f483f97004499.5ebb3291132b2.gif 500w"
               alt="Travel GIFs"
               shouldblockrightclickevents="true"
-              style={{ marginTop: "2rem" }}
+              style={{ marginTop: "2rem", minWidth: "350px" }}
             />
           </Col>
           <Col

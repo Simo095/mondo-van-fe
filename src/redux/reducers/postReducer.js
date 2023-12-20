@@ -1,10 +1,21 @@
-import { ADD_MY_POSTS, ADD_POSTS, ADD_POSTS_EM, ADD_POSTS_HOME } from "../actions";
+import {
+  ADD_MY_POSTS,
+  ADD_POSTS,
+  ADD_POSTS_EM,
+  ADD_POSTS_HOME,
+  ADD_POST_USER_VISIT,
+  ADD_USER_VISIT,
+  ADD_VEHICLE_VISIT
+} from "../actions";
 
 const initialState = {
   data: [],
   home: [],
   em: [],
-  myPost: []
+  myPost: [],
+  visitUser: null,
+  visitVehicle: null,
+  postUserVisit: null
 };
 
 const postReducers = (state = initialState, action) => {
@@ -13,6 +24,21 @@ const postReducers = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload
+      };
+    case ADD_USER_VISIT:
+      return {
+        ...state,
+        visitUser: action.payload
+      };
+    case ADD_VEHICLE_VISIT:
+      return {
+        ...state,
+        visitVehicle: action.payload
+      };
+    case ADD_POST_USER_VISIT:
+      return {
+        ...state,
+        postUserVisit: action.payload
       };
     case ADD_POSTS_HOME:
       return {
