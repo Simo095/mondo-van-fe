@@ -29,7 +29,7 @@ const Prenotazione = ({ pre, setPrenotazioni, setLoadingPre }) => {
         setPrenotazioni={setPrenotazioni}
         setLoadingPre={setLoadingPre}
       />
-      <Card.Body className="d-flex ">
+      <Card.Body className="d-flex">
         {user.role === "CUSTOMER" ? (
           <Card
             className="cardSpecialPrenotazioni"

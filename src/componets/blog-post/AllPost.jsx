@@ -30,7 +30,7 @@ const AllPost = () => {
               {posts.toReversed().map((elem, i) => (
                 <SinglePost
                   elem={elem}
-                  key={`post${i}`}
+                  key={elem.id}
                   profile={user}
                 />
               ))}

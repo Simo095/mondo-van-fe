@@ -6,6 +6,7 @@ import {
   LOGGED,
   PRICE,
   PROVINCE,
+  RESET_RESULT,
   VEHICLE_CUSTOMER_PROFILE
 } from "../actions";
 
@@ -60,6 +61,17 @@ const resultReducer = (state = initialState, action) => {
       return {
         ...state,
         price: action.payload
+      };
+    case RESET_RESULT:
+      return {
+        vehicles: [],
+        logged: false,
+        startDate: null,
+        endDate: null,
+        price: null,
+        province: "",
+        beds: "",
+        vehicleCustomerProfile: []
       };
     default:
       return state;

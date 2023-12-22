@@ -20,15 +20,16 @@ import { addToken, logged } from "../../redux/actions";
 import { Alert, FormGroup } from "react-bootstrap";
 import { VscSignIn } from "react-icons/vsc";
 import "../../assets/style/card-login.css";
+import "../../assets/style/spinner-login.css";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [image, setImage] = useState("");
-  const [rispOk, setRispOk] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error401, setError401] = useState(false);
+  const [error404, setError404] = useState(false);
 
   const hadlerForm = async event => {
     event.preventDefault();
@@ -49,7 +50,6 @@ const Login = () => {
 
     if (request.ok) {
       const objResp = await request.json();
-      setRispOk(true);
       setLoading(false);
       dispatch(addToken(objResp.token));
       dispatch(logged(true));
@@ -57,6 +57,10 @@ const Login = () => {
     } else {
       if (request.status === 401) {
         setError401(true);
+        setLoading(false);
+      }
+      if (request.status === 404) {
+        setError404(true);
         setLoading(false);
       }
     }
@@ -111,7 +115,6 @@ const Login = () => {
               <Button
                 form="formSmall"
                 type="submit"
-                variant="success"
                 className="btn-login">
                 Entra
               </Button>
@@ -124,6 +127,16 @@ const Login = () => {
                 }}
                 to="/register">
                 Don't have any accounts?
+              </Link>
+              <Link
+                style={{
+                  color: "black",
+                  textDecoration: "none",
+                  fontSize: "1em",
+                  letterSpacing: "1px"
+                }}
+                to="/register">
+                Forgot password?
               </Link>
             </Row>
           </Container>
@@ -140,17 +153,7 @@ const Login = () => {
               backgroundSize: "cover",
               backgroundPosition: "center",
               height: "100vh"
-            }}>
-            {loading ? (
-              <div className="">
-                <Alert
-                  variant="light"
-                  className="loader"></Alert>
-              </div>
-            ) : (
-              <></>
-            )}
-          </Col>
+            }}></Col>
           <Col
             sm={4}
             className="d-flex align-items-center">
@@ -158,13 +161,37 @@ const Login = () => {
               onClick={() => {
                 setError401(false);
               }}>
-              <Row>
+              <Row className="d-flex flex-column">
+                <Col className="d-flex justify-content-center mb-5">
+                  {loading ? (
+                    <div class="spinnerLogin ">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </Col>
                 <Col className="d-flex justify-content-center align-items-center flex-column">
                   {error401 ? (
                     <Alert variant="danger">Controlla i dati inseriti, se non sei registrato registrati prima...</Alert>
                   ) : (
                     <></>
                   )}
+                  {error404 ? (
+                    <Alert variant="danger">Controlla i dati inseriti, se non sei registrato registrati prima...</Alert>
+                  ) : (
+                    <></>
+                  )}
+
                   <VscSignIn fontSize={80} />
                   <p>Sign in</p>
                 </Col>
@@ -197,6 +224,7 @@ const Login = () => {
                   <Col className="d-flex justify-content-center">
                     <Button
                       className="registerButton"
+                      style={{ backgroundColor: "#FFC007" }}
                       type="submit">
                       Entra!
                     </Button>
@@ -227,7 +255,6 @@ const Login = () => {
                     Forgot password?
                   </Link>
                 </Col>
-                <Col className="text-center"></Col>
               </Row>
             </Container>
           </Col>

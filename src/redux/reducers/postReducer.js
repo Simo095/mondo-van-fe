@@ -5,7 +5,8 @@ import {
   ADD_POSTS_HOME,
   ADD_POST_USER_VISIT,
   ADD_USER_VISIT,
-  ADD_VEHICLE_VISIT
+  ADD_VEHICLE_VISIT,
+  RESET_POST
 } from "../actions";
 
 const initialState = {
@@ -54,6 +55,16 @@ const postReducers = (state = initialState, action) => {
       return {
         ...state,
         em: action.payload
+      };
+    case RESET_POST:
+      return {
+        data: [],
+        home: [],
+        em: [],
+        myPost: [],
+        visitUser: null,
+        visitVehicle: null,
+        postUserVisit: null
       };
     default:
       return state;

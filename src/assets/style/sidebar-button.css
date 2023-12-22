@@ -21,11 +21,11 @@
   height: 130px;
   outline: none;
   border: none;
-  background: white;
   border-radius: 130px 5px 5px 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
 }
+
 .ImgCard {
   width: 130px;
   height: 130px;
@@ -38,16 +38,11 @@
   height: 130px;
   outline: none;
   border: none;
-  background: white;
+  /* background-color: #efd68b; */
+  background-color: white;
   border-radius: 5px 130px 5px 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
-}
-
-.twitter {
-  margin-top: 1.5em;
-  margin-left: -0.9em;
-  fill: #03a9f4;
 }
 
 .card3 {
@@ -55,15 +50,11 @@
   height: 130px;
   outline: none;
   border: none;
-  background: white;
+  /* background-color: #cad9ba; */
+  background-color: white;
   border-radius: 5px 5px 5px 130px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
-}
-
-.github {
-  margin-top: -0.6em;
-  margin-left: 1.2em;
 }
 
 .card4 {
@@ -71,7 +62,8 @@
   height: 130px;
   outline: none;
   border: none;
-  background: white;
+  /* background-color: #be311a; */
+  background-color: white;
   border-radius: 5px 5px 130px 5px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
@@ -83,18 +75,10 @@
   background-color: #cad9ba;
 }
 
-.card1:hover .instagram {
-  fill: white;
-}
-
 .card2:hover {
   cursor: pointer;
   scale: 1.1;
   background-color: #efd68b;
-}
-
-.card2:hover .twitter {
-  fill: white;
 }
 
 .card3:hover {
@@ -103,16 +87,8 @@
   background-color: #cad9ba;
 }
 
-.card3:hover .github {
-  fill: white;
-}
-
 .card4:hover {
   cursor: pointer;
   scale: 1.1;
   background-color: #be311a;
-}
-
-.card4:hover {
-  fill: white;
 }

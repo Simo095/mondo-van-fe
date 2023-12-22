@@ -67,61 +67,59 @@ const NavBar = () => {
           <Nav>
             {user ? (
               user.role === "CUSTOMER" ? (
-                <Container className="d-flex justify-content-center">
-                  <div className="d-flex flex-column align-items-center justify-content-end">
-                    <BsSignpost2
-                      fontSize={30}
-                      href="/blogpost"
-                    />
+                <div className="d-flex align-items-center">
+                  <NavItem>
+                    <Nav.Link
+                      className="color-link-nav"
+                      href="/blogpost">
+                      Blogpost
+                    </Nav.Link>
+                  </NavItem>
+                  <Container className="d-flex justify-content-center">
                     <Link
-                      className="color-link-nav text-decoration-none"
-                      to="/blogpost">
-                      BlogPost
+                      className="color-link-nav"
+                      to="/profile_customer">
+                      <Image
+                        src={user.avatar}
+                        alt="immagine profilo"
+                        className="mt-2"
+                        roundedCircle
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          objectFit: "cover"
+                        }}
+                      />
                     </Link>
-                  </div>
-                  <Link
-                    className="color-link-nav"
-                    to="/profile_customer">
-                    <Image
-                      src={user.avatar}
-                      alt="immagine profilo"
-                      roundedCircle
-                      style={{
-                        width: "60px",
-                        height: "60px",
-                        objectFit: "cover"
-                      }}
-                    />
-                  </Link>
-                </Container>
+                  </Container>
+                </div>
               ) : (
-                <Container className="d-flex justify-content-center">
-                  <div className="d-flex flex-column align-items-center justify-content-end">
-                    <BsSignpost2
-                      fontSize={30}
-                      href="/blogpost"
-                    />
+                <div className="d-flex align-items-center">
+                  <NavItem>
+                    <Nav.Link
+                      className="color-link-nav"
+                      href="/blogpost">
+                      Blogpost
+                    </Nav.Link>
+                  </NavItem>
+                  <Container className="d-flex justify-content-center">
                     <Link
-                      className="color-link-nav text-white text-decoration-none"
-                      to="/blogpost">
-                      BlogPost
+                      className="color-link-nav"
+                      to="/profile_owner">
+                      <Image
+                        src={user.avatar}
+                        alt="immagine profilo"
+                        className="mt-2"
+                        roundedCircle
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          objectFit: "cover"
+                        }}
+                      />
                     </Link>
-                  </div>
-                  <Link
-                    className="color-link-nav"
-                    to="/profile_owner">
-                    <Image
-                      src={user.avatar}
-                      alt="immagine profilo"
-                      roundedCircle
-                      style={{
-                        width: "60px",
-                        height: "60px",
-                        objectFit: "cover"
-                      }}
-                    />
-                  </Link>
-                </Container>
+                  </Container>
+                </div>
               )
             ) : (
               <></>

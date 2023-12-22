@@ -56,13 +56,13 @@ const Register = () => {
               style={{ background: "transparent", border: "none", color: "black" }}>
               Registrati come proprietario
             </Button>
-            <h3 className="logo text-black fs-5 mt-3">o</h3>
+            {/* <h3 className="logo text-black fs-5 mt-3">o</h3> */}
             <Button
               href="/register_customer"
               style={{ background: "transparent", border: "none", color: "black" }}>
               Registrati come cliente
             </Button>
-            <h3 className="logo text-black fs-5 mt-3">Oppure</h3>
+            {/* <h3 className="logo text-black fs-5 mt-3">Oppure</h3> */}
             <Button
               href="/login"
               style={{ background: "transparent", border: "none", color: "black" }}>

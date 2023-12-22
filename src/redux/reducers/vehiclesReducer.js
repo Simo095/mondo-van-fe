@@ -1,4 +1,4 @@
-import { ADD_VEHICLE } from "../actions";
+import { ADD_VEHICLE, RESET_VEHICLE } from "../actions";
 
 const initialState = {
   vehicle: null
@@ -9,6 +9,10 @@ const vehiclesReducer = (state = initialState, action) => {
       return {
         ...state,
         vehicle: action.payload
+      };
+    case RESET_VEHICLE:
+      return {
+        vehicle: null
       };
     default:
       return state;

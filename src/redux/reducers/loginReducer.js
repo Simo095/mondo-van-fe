@@ -1,4 +1,4 @@
-import { ADD_ARRAY_CALENDAR, ADD_EVENT_CALENDAR, ADD_ROLE, ADD_TOKEN, ADD_USER } from "../actions";
+import { ADD_ARRAY_CALENDAR, ADD_EVENT_CALENDAR, ADD_ROLE, ADD_TOKEN, ADD_USER, RESET_LOGIN } from "../actions";
 const initialState = {
   token: "",
   role: "",
@@ -33,6 +33,14 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         calendarArray: action.payload
+      };
+    case RESET_LOGIN:
+      return {
+        token: "",
+        role: "",
+        user: null,
+        eventCalendar: [],
+        calendarArray: []
       };
     default:
       return state;

@@ -1,18 +1,15 @@
 import { Button, Col, Container, Image, Nav, NavbarBrand, Offcanvas, Row, Spinner } from "react-bootstrap";
-
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import SideBar from "../stucture/SideBar";
 import ProfileVehicle from "../veicolo/ProfileVehicle";
 import Prenotazione from "./Prenotazione";
-
-import FormAddPost from "../blog-post/FormAddPost";
-
-import { fetchPrenotazioniOwner } from "../../redux/actions/fetchActions";
 import MyPosts from "../blog-post/MyPosts";
 import ModaleAvatar from "./ModaleAvatar";
 import Notifica from "./Notifica";
+import FormAddPost from "../blog-post/FormAddPost";
 import { FaRegPenToSquare } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchPrenotazioniOwner } from "../../redux/actions/fetchActions";
 
 const ProfileOwner = () => {
   const user = useSelector(state => state.login.user);
@@ -24,10 +21,9 @@ const ProfileOwner = () => {
   const [show, setShow] = useState(false);
   const [notifiche, setNotifiche] = useState(null);
   const [showNotifiche, setShowNotifiche] = useState(false);
+
   const handleCloseNotifiche = () => setShowNotifiche(false);
-  const handleShowNotifiche = () => {
-    setShowNotifiche(true);
-  };
+  const handleShowNotifiche = () => setShowNotifiche(true);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -134,12 +130,14 @@ const ProfileOwner = () => {
                   </NavbarBrand>
                 </Nav>
               </Col>
-
+              <Col>
+                <h3 className="text-white mb-3">Bentornato, {user.name}.</h3>{" "}
+              </Col>
               <Col className="ContainerProfile pt-4">
                 <ProfileVehicle />
               </Col>
               <Col>
-                <h3 className="text-white mb-3">Bentornato, {user.name}. Ecco le tue prenotazioni</h3>
+                <h3 className="text-white mb-3">Le tue prenotazioni</h3>
               </Col>
               <Col className="d-flex ContainerProfile ContainerProfileWhite py-4 justify-content-center">
                 <Container className="d-flex justify-content-center flex-grow-1">

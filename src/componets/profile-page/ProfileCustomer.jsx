@@ -1,12 +1,9 @@
 import { Button, Col, Container, Image, Nav, NavbarBrand, Offcanvas, Row, Spinner } from "react-bootstrap";
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNotifiche, fetchPrenotazioni, fetchVehicleCustomerPage } from "../../redux/actions/fetchActions";
-
 import SideBar from "../../componets/stucture/SideBar";
 import FormAddPost from "../blog-post/FormAddPost";
-
 import VanCustomerPage from "../results-page/VanCustomerPage";
 import MyPosts from "../blog-post/MyPosts";
 import Prenotazione from "./Prenotazione";
@@ -195,6 +192,9 @@ const ProfileCustomer = () => {
                       <Image
                         src={user.avatar}
                         rounded
+                        width={50}
+                        height={50}
+                        style={{ objectFit: "cover" }}
                       />
                     </Button>
                   </NavbarBrand>
@@ -204,7 +204,7 @@ const ProfileCustomer = () => {
                 <h3 className="text-white my-3">Bentornato, {user.name}. Ecco le tue prenotazioni</h3>
               </Col>
               <Col className="d-flex ContainerProfile ContainerProfileWhite py-4 justify-content-center">
-                <Container className="d-flex justify-content-center flex-grow-1">
+                <Container className="d-flex flex-grow-1">
                   <Row className="d-flex flex-nowrap overflow-x-scroll oV">
                     {loadingPre ? (
                       <Col className="d-flex justify-content-center">

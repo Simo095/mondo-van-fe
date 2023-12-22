@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import Calendar from "react-calendar";
 import { MdEventAvailable } from "react-icons/md";
 import { CgUnavailable } from "react-icons/cg";
@@ -64,43 +64,39 @@ const Calendario = () => {
     <Container
       fluid
       className="p-0">
-      <Row className="row-cols-1 d-flex">
-        <Col className="flex-grow-1">
-          <Calendar
-            value={selectedDate}
-            onClickDay={DateClick}
-            tileClassName={({ date }) =>
-              selectedDate && date.toDateString() === selectedDate.toDateString()
-                ? "selected"
-                : events.some(event => event.date === date.toLocaleDateString("fr-CA"))
-                ? "event-marked"
-                : ""
-            }
-            tileContent={({ date, view }) => {
-              return (
-                view === "month" &&
-                events.map((event, i) => {
-                  return date.toLocaleDateString("fr-CA") === event.date ? (
-                    event.title === "AVAILABLE" ? (
-                      <p
-                        key={event.id}
-                        style={{ fontSize: "0.8em", color: "green" }}>
-                        Disponibile
-                      </p>
-                    ) : (
-                      <p
-                        key={event.id}
-                        style={{ fontSize: "0.8em", color: "red" }}>
-                        Occupato
-                      </p>
-                    )
-                  ) : null;
-                })
-              );
-            }}
-          />
-        </Col>
-      </Row>
+      <Calendar
+        value={selectedDate}
+        onClickDay={DateClick}
+        tileClassName={({ date }) =>
+          selectedDate && date.toDateString() === selectedDate.toDateString()
+            ? "selected"
+            : events.some(event => event.date === date.toLocaleDateString("fr-CA"))
+            ? "event-marked"
+            : ""
+        }
+        tileContent={({ date, view }) => {
+          return (
+            view === "month" &&
+            events.map((event, i) => {
+              return date.toLocaleDateString("fr-CA") === event.date ? (
+                event.title === "AVAILABLE" ? (
+                  <p
+                    key={event.id}
+                    style={{ fontSize: "0.8em", color: "green" }}>
+                    Disponibile
+                  </p>
+                ) : (
+                  <p
+                    key={event.id}
+                    style={{ fontSize: "0.8em", color: "red" }}>
+                    Occupato
+                  </p>
+                )
+              ) : null;
+            })
+          );
+        }}
+      />
       <div className="event-container">
         {events.length > 0 && selectedDate && (
           <>
@@ -114,7 +110,9 @@ const Calendario = () => {
                       <Col className="event-card-header">
                         <Row className="d-flex flex-column gap-2">
                           <Col>
-                            <span className="event-date"> {new Date(event.date).toString().substr(0, 15)} </span>
+                            <span className="event-date">
+                              {new Date(event.date).toLocaleDateString("it-IT", { dateStyle: "full" })}
+                            </span>
                           </Col>
                           <Col className="event-card-body">
                             {event.title === "AVAILABLE" ? (
@@ -123,7 +121,9 @@ const Calendario = () => {
                               <p style={{ fontSize: "1.4em", color: "red" }}> OCCUPATO </p>
                             ) : null}
                           </Col>
-                          <Col className="d-flex justify-content-between">
+                          <Col
+                            style={{ zIndex: 9999999999 }}
+                            className="d-flex justify-content-between">
                             {event.title === "AVAILABLE" ? (
                               <CgUnavailable
                                 className="update-btn"
@@ -135,12 +135,12 @@ const Calendario = () => {
                                 onClick={() => UpdateEvent(event.id)}
                               />
                             ) : null}
+
                             <VscSaveAs
                               className="update-btn"
                               onClick={ModifyFetch}
                             />
                           </Col>
-                          <Col></Col>
                         </Row>
                       </Col>
                     </Row>

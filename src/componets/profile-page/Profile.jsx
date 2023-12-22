@@ -83,34 +83,34 @@ const Profile = () => {
                   </NavbarBrand>
                 </Nav>
               </Col>
+              <h3 className="text-white my-3">Profilo di {userVisit.name}</h3>
               <Col className=" ContainerProfile p-0">
-                <h3 className="text-black my-3">Profilo di NOME UTENTE</h3>
                 <Col
+                  className="ContainerProfile"
                   style={{
                     height: "350px",
                     backgroundImage: `url(${userVisit.cover})`,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center"
-                  }}>
-                  COVER CHE VEDRANNO GLI UTENTI
-                </Col>
+                  }}></Col>
               </Col>
 
-              <Col className="ContainerProfileMain  my-3"></Col>
-              <Col>
-                {vehicle && (
-                  <>
-                    <h4 className="text-white">VEHICOLO</h4>
+              {vehicle && (
+                <>
+                  <Col className="ContainerProfileMain my-3">
+                    <h4 className="text-white">Veicolo</h4>
+                  </Col>
+                  <Col className="p-3 ContainerProfile">
                     <VehicleProfile
                       vehicle={vehicle}
                       token={token}
                     />
-                  </>
-                )}
-              </Col>
-              <Col className="ContainerProfileMain  my-3">
-                <h4 className="text-white">TITOLO POST DEL UTENTE E DEGLI AMICI</h4>
+                  </Col>
+                </>
+              )}
+              <Col className="ContainerProfileMain my-3">
+                <h4 className="text-white">Racconti di {userVisit.name}</h4>
               </Col>
 
               <Col className="ContainerProfileWhite ContainerProfile">

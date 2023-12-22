@@ -1,8 +1,6 @@
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
-
 import ModaleAddPost from "./ModaleAddPost";
 import { useState } from "react";
-// import { BsBlockquoteLeft, BsCalendar3, BsImageFill } from "react-icons/bs";
 
 const FormAddPost = ({ user }) => {
   const [postText, setPostText] = useState();
@@ -17,7 +15,7 @@ const FormAddPost = ({ user }) => {
       <Container className="mt-4">
         <Row className="border rounded-3 border-1 shadow mb-3 gy-3 bg-light">
           <Col className="">
-            <Row>
+            <Row className="d-flex align-items-center mb-3">
               <Col xs="auto">
                 <Image
                   src={user.avatar}
@@ -42,10 +40,10 @@ const FormAddPost = ({ user }) => {
               </Col>
             </Row>
           </Col>
-          <Col
+          {/* <Col
             xs={12}
             className="">
-            {/* <Row>
+            <Row>
               <Col
                 xs={12}
                 md={5}>
@@ -78,8 +76,8 @@ const FormAddPost = ({ user }) => {
                   <span style={{ color: "grey", fontSize: "14px" }}>Scrivi un articolo</span>
                 </p>
               </Col>
-            </Row> */}
-          </Col>
+            </Row>
+          </Col> */}
         </Row>
         <ModaleAddPost
           handleClose={handleClose}

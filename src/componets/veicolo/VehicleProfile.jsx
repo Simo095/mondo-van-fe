@@ -29,7 +29,7 @@ const VehicleProfile = ({ vehicle, token }) => {
             vehicle={vehicle}
             cover={cover}
             token={token}
-            height={300}
+            height={600}
           />
         )}
         {interni &&
@@ -64,7 +64,7 @@ const VehicleProfile = ({ vehicle, token }) => {
               </Row>
             </Container>
           ))}
-        {creaAnnuncio && (
+        {creaAnnuncio && vehicle.announcement ? (
           <Container
             fluid
             style={{ backgroundColor: "#144658" }}
@@ -76,20 +76,26 @@ const VehicleProfile = ({ vehicle, token }) => {
                 <Col className="my-3">
                   <p>{vehicle.announcement}</p>
                 </Col>
-                <Col className="text-center">
-                  <Button
-                    type="submit"
-                    form="formModificaAnnuncio"
-                    className="bg-transparent border-0">
-                    <FaPenToSquare
-                      style={{ color: "#144658" }}
-                      fontSize={40}
-                    />
-                  </Button>
-                </Col>
               </Row>
             </Container>
           </Container>
+        ) : (
+          creaAnnuncio && (
+            <Container
+              fluid
+              style={{ backgroundColor: "#144658" }}
+              className="py-3">
+              <Container
+                className="bg-white"
+                style={{ borderRadius: "10px" }}>
+                <Row xs={1}>
+                  <Col className="my-3">
+                    <p className="text-center">Ops, l'utente non ha creato ancora nessun annuncio...</p>
+                  </Col>
+                </Row>
+              </Container>
+            </Container>
+          )
         )}
         {motorizzazione && (
           <Container

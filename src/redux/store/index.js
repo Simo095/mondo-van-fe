@@ -17,7 +17,6 @@ const persistConfig = {
   ]
 };
 const mainReducers = combineReducers({
-  //Qui scriverai i reducer di cui hai bisogno
   vehicles: vehiclesReducer,
   login: loginReducer,
   result: resultReducer,
