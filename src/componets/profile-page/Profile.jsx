@@ -78,6 +78,9 @@ const Profile = () => {
                       <Image
                         src={user.avatar}
                         rounded
+                        width={50}
+                        height={50}
+                        style={{ objectFit: "cover" }}
                       />
                     </Button>
                   </NavbarBrand>

@@ -6,8 +6,6 @@ import { useSelector } from "react-redux";
 import { FaArrowRight, FaEuroSign } from "react-icons/fa";
 import { GiPositionMarker } from "react-icons/gi";
 const VanCustomerPage = ({ elem }) => {
-  console.log("me");
-  console.log(elem);
   const token = useSelector(state => state.login.token);
   return (
     <Container>

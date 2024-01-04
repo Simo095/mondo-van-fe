@@ -274,13 +274,19 @@ const ProfileCustomer = () => {
                   {vehicleSuggest && vehicleSuggest.length !== 0 ? (
                     <div className="d-flex overflow-x-scroll oV gap-3">
                       {vehicleSuggest.map((elem, i) => (
-                        <VanCustomerPage elem={elem} />
+                        <VanCustomerPage
+                          key={i}
+                          elem={elem}
+                        />
                       ))}
                     </div>
                   ) : (
                     <div className="d-flex overflow-x-scroll oV gap-3">
                       {placeHolder.map((elem, i) => (
-                        <VanCustomerPage elem={elem} />
+                        <VanCustomerPage
+                          key={i}
+                          elem={elem}
+                        />
                       ))}
                     </div>
                   )}

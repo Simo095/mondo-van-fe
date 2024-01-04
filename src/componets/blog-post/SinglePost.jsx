@@ -1,136 +1,71 @@
-import { Col, Image, Modal, Row } from "react-bootstrap";
-import { BsDashLg, BsPencilFill, BsPlusLg, BsTrash } from "react-icons/bs";
+import { Col, Image, Row } from "react-bootstrap";
+import { BsPencilFill, BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAddFriend, fetchDeleteFriend } from "../../redux/actions/fetchActions";
 import { fetchDeletePost, fetchProfileUser } from "../../redux/actions";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+import ModaleShowPost from "./ModaleShowPost";
+import ModaleModificaPost from "./ModaleModificaPost";
+
 const SinglePost = ({ elem, profile }) => {
   const list = useSelector(state => state.login.user.friends);
   const token = useSelector(state => state.login.token);
   const [showModale, setShowModale] = useState(false);
-  const [postText, setPostText] = useState();
+
+  const [postText, setPostText] = useState("");
   const [modifica, setModifica] = useState(false);
   const [idPost, setIdPost] = useState("");
-  const [show, setShow] = useState(false);
-  const handleCloseQ = () => setShowModale(false);
+  const [titlePost, setTitlePost] = useState("");
+
+  const handleCloseModale = () => setShowModale(false);
   const handleshowModale = () => setShowModale(true);
+  const handleCloseModaleModifica = () => setModifica(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const calcolaData = () => {
-    const createdate = new Date(elem.createdAt);
-    const createMin = createdate.getMinutes();
-    const createOre = createdate.getHours();
-    const createGiorni = createdate.getDay();
-    const createMesi = createdate.getMonth();
-    const createAnno = createdate.getFullYear();
-    const actualdate = new Date();
-    const actualMin = actualdate.getMinutes();
-    const actualOre = actualdate.getHours();
-    const actualGiorni = actualdate.getDay();
-    const actualMesi = actualdate.getMonth();
-    const actualAnno = actualdate.getFullYear();
-    if (actualAnno === createAnno) {
-      if (actualMesi === createMesi) {
-        if (actualGiorni === createGiorni) {
-          if (actualOre === createOre) {
-            if (actualMin === createMin) {
-              return "adesso";
-            } else return `${actualMin - createMin} ${actualMin - createMin === 1 ? "minuto fa" : "minuti fa"}`;
-          } else return `${actualOre - createOre} ${actualOre - createOre === 1 ? "ora fa" : "ore fa"}`;
-        } else return `${actualGiorni - createGiorni} ${actualGiorni - createGiorni === 1 ? "giorno fa" : "giorni fa"}`;
-      } else return `${actualMesi - createMesi} ${actualMesi - createMesi === 1 ? "mese fa" : "mesi fa"}`;
-    } else return `${actualAnno - createAnno} ${actualAnno - createAnno === 1 ? "anno fa" : "anni fa"}`;
+    if (elem.updateAt) {
+      const update = new Date(elem.updateAt);
+      return update.toLocaleDateString("it-IT");
+    } else {
+      const createDate = new Date(elem.createdAt);
+      return createDate.toLocaleDateString("it-IT");
+    }
   };
 
   return (
     elem &&
     profile && (
       <div className="border SinglePostAll border-1 rounded-3 shadow my-3 p-3 bg-light">
-        <Modal
-          show={showModale}
-          onHide={handleCloseQ}
-          fullscreen={"lg-down"}
-          size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>{elem.title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Row className="mb-2">
-              <Col xs={2}>
-                <Image
-                  src={elem.author.avatar}
-                  alt="profileImg"
-                  width="80px"
-                  height="80px"
-                  roundedCircle
-                  style={{ objectFit: "cover", cursor: "pointer" }}
-                  onClick={() => {
-                    dispatch(fetchProfileUser(token, elem.author.id));
-                    navigate(`/profile/${elem.author.id}`);
-                  }}
-                />
-              </Col>
-              <Col
-                sm={5}
-                lg={7}
-                className=" order-5 order-sm-0">
-                <div className="d-flex flex-column">
-                  <h6>
-                    {elem.author.name} {elem.author.surname}
-                  </h6>
-                  <p className="w-100 mb-0">{elem.title}</p>
-                  <p style={{ fontWeight: "300", fontSize: "12px" }}> {calcolaData()}</p>
-                </div>
-              </Col>
-              <Col
-                xs={12}
-                sm={3}
-                className="text-primary text-end ">
-                {profile.id === elem.author.id && (
-                  <>
-                    <BsPencilFill
-                      onClick={() => {
-                        setIdPost(elem.id);
-
-                        setModifica(true);
-                        setPostText(elem.text);
-                      }}
-                      style={{ cursor: "pointer", color: "red" }}
-                    />
-                    <BsTrash
-                      className="text-danger ms-2"
-                      onClick={() => {
-                        dispatch(fetchDeletePost(token, elem.id));
-                      }}
-                      style={{ cursor: "pointer", color: "red" }}
-                    />
-                  </>
-                )}
-              </Col>
-              <p
-                style={{ cursor: "pointer" }}
-                onClick={handleshowModale}>
-                {elem.text}
-              </p>
-              <Col className="d-flex justify-content-center">
-                <Image
-                  src={elem.img ? elem.img : ""}
-                  className="rounded-4 shadow"
-                  width="100%"
-                  style={{ objectFit: "cover" }}
-                />
-              </Col>
-            </Row>
-          </Modal.Body>
-          <Modal.Footer></Modal.Footer>
-        </Modal>
+        <ModaleShowPost
+          showModale={showModale}
+          handleCloseQ={handleCloseModale}
+          elem={elem}
+          calcolaData={calcolaData}
+          profile={profile}
+          setModifica={setModifica}
+          setIdPost={setIdPost}
+          setTitlePost={setTitlePost}
+          setPostText={setPostText}
+        />
+        <ModaleModificaPost
+          modifica={modifica}
+          handleCloseModaleModifica={handleCloseModaleModifica}
+          elem={elem}
+          setTitlePost={setTitlePost}
+          titlePost={titlePost}
+          setPostText={setPostText}
+          postText={postText}
+          idPost={idPost}
+          calcolaData={calcolaData}
+          token={token}
+        />
 
         <Row
           style={{ width: "400px" }}
           className="mb-2">
-          <Col>
+          <Col xs={2}>
             <Image
               src={elem.author.avatar}
               alt="profileImg"
@@ -146,15 +81,15 @@ const SinglePost = ({ elem, profile }) => {
           <Col
             style={{ cursor: "pointer" }}
             onClick={handleshowModale}
-            sm={5}
-            lg={7}
-            className=" order-5 order-sm-0">
+            sm={10}
+            className="order-5 order-sm-0">
             <div className="d-flex flex-column">
               <h6>
-                {elem.author.name} {elem.author.surname}
+                {elem.author.name} {elem.author.surname} -{" "}
+                {elem.author.role === "CUSTOMER" ? "Viaggiatore" : "Noleggiatore e Viaggiatore"}
               </h6>
               <p
-                className="w-100 mb-0"
+                className="mb-0"
                 style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden", fontSize: "14px" }}>
                 {elem.title}
               </p>
@@ -162,18 +97,18 @@ const SinglePost = ({ elem, profile }) => {
             </div>
           </Col>
           <Col
-            xs={12}
-            sm={3}
-            className="text-primary d-flex justify-content-between flex-grow-1">
-            <p>
-              {elem.category === "TRAVELERS_STORY"
-                ? "Storie di viaggi"
-                : elem.category === "RECOMMENDED_TRIPS"
-                ? "Viaggi raccomandati"
-                : elem.category === "MY_VAN"
-                ? "Il mio van"
-                : ""}
-            </p>
+            xs={10}
+            className="d-flex justify-content-between flex-grow-1">
+            {elem.category === "TRAVELERS_STORY" ? (
+              <p style={{ color: "#be311a", fontSize: "1.1em", fontWeight: "bolder" }}>Storie di viaggi</p>
+            ) : elem.category === "RECOMMENDED_TRIPS" ? (
+              <p style={{ color: "#ecc654", fontSize: "1.1em", fontWeight: "bolder" }}>Viaggi raccomandati</p>
+            ) : elem.category === "MY_VAN" ? (
+              <p style={{ color: "#9dca6a", fontSize: "1.1em", fontWeight: "bolder" }}>Il mio Van</p>
+            ) : (
+              ""
+            )}
+
             {profile.id !== elem.author.id &&
               (list.find(x => x === elem.author.id) ? (
                 <div
@@ -181,8 +116,7 @@ const SinglePost = ({ elem, profile }) => {
                   onClick={() => {
                     dispatch(fetchDeleteFriend(token, elem.author.id));
                   }}>
-                  <BsDashLg className="me-2" />
-                  <span className="d-none d-sm-inline-block">SEGUI GIA'</span>
+                  <span className="border p-1 border-secondary rounded-5 d-sm-inline-block">Smetti di seguire</span>
                 </div>
               ) : (
                 <div
@@ -191,19 +125,17 @@ const SinglePost = ({ elem, profile }) => {
                     console.log(elem);
                     dispatch(fetchAddFriend(token, elem.author.id));
                   }}>
-                  <BsPlusLg className="me-2" />
-                  <span className="d-none d-sm-inline-block">SEGUI</span>
+                  <span className="border p-1 border-secondary rounded-5 d-sm-inline-block">Segui</span>
                 </div>
               ))}
 
             {profile.id === elem.author.id && (
               <div>
-                {console.log(profile.id)}
                 <BsPencilFill
                   onClick={() => {
-                    setIdPost(elem.id);
-
                     setModifica(true);
+                    setIdPost(elem.id);
+                    setTitlePost(elem.title);
                     setPostText(elem.text);
                   }}
                   style={{ cursor: "pointer", color: "red" }}

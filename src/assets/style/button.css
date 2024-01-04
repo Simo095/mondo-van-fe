@@ -80,6 +80,7 @@
 .animated-button:hover svg {
   fill: #212121;
 }
+
 .animated-button:active {
   scale: 0.95;
   box-shadow: 0 0 0 4px #cad9ba;

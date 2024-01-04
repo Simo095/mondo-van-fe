@@ -4,7 +4,6 @@ import {
   ADD_STARTDATE,
   BEDS,
   LOGGED,
-  PRICE,
   PROVINCE,
   RESET_RESULT,
   VEHICLE_CUSTOMER_PROFILE
@@ -15,7 +14,6 @@ const initialState = {
   logged: false,
   startDate: null,
   endDate: null,
-  price: null,
   province: "",
   beds: "",
   vehicleCustomerProfile: []
@@ -56,11 +54,6 @@ const resultReducer = (state = initialState, action) => {
       return {
         ...state,
         beds: action.payload
-      };
-    case PRICE:
-      return {
-        ...state,
-        price: action.payload
       };
     case RESET_RESULT:
       return {

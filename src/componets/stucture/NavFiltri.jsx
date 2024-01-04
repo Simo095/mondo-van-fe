@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Col, Container, Form, FormGroup, FormLabel, FormSelect, Nav, Row } from "react-bootstrap";
+import { Alert, Container, Form, FormSelect, Nav } from "react-bootstrap";
+import { IoMdSearch } from "react-icons/io";
 import ReactDatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { addBeds, addProvince, addResult } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { addBeds, addProvince, addResult } from "../../redux/actions";
 
-const FiltriSideBar = () => {
+const NavFiltri = () => {
   const startDateState = useSelector(state => state.result.startDate);
   const endDateState = useSelector(state => state.result.endDate);
   const provinceState = useSelector(state => state.result.province);
@@ -22,25 +22,13 @@ const FiltriSideBar = () => {
   const [isValidBad, setIsValidBed] = useState(false);
   const [isValidPrice, setIsValidPrice] = useState(false);
   const [error, setError] = useState(false);
+  const [changePrice, setChangePrice] = useState(false);
+  const [changeProvince, setChangeProvince] = useState(false);
+  const [changeBeds, setChangeBeds] = useState(false);
+  const [changeDate, setChangeDate] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const onChange = async dates => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-  };
-
-  const handleProvinceClick = async e => {
-    const risposta = await fetch("http://localhost:8080/sign_in/prov", {
-      method: "GET"
-    });
-    if (risposta.ok) {
-      const data = await risposta.json();
-      setProvinces(data.content);
-    }
-  };
 
   const handlerSubmit = async e => {
     e.preventDefault();
@@ -195,6 +183,22 @@ const FiltriSideBar = () => {
     }
   };
 
+  const onChange = async dates => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+  const handleProvinceClick = async e => {
+    const risposta = await fetch("http://localhost:8080/sign_in/prov", {
+      method: "GET"
+    });
+    if (risposta.ok) {
+      const data = await risposta.json();
+      setProvinces(data.content);
+    }
+  };
+
   useEffect(() => {
     handleProvinceClick();
     setIsValid(province ? true : false);
@@ -205,104 +209,157 @@ const FiltriSideBar = () => {
     if (newBeds === "Qualsiasi posto letto") {
       setIsValidBed(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div
-      className="FiltriSideBar"
-      onClick={() => setError(false)}>
-      {error ? <Alert variant="danger">Non ci sono disponibilita</Alert> : <></>}
-      <Container>
-        <Row className="d-flex py-3 flex-column">
-          <Col>
-            <Row className="Titles row-cols-1 px-4 d-flex gap-5">
-              <Col className="d-flex flex-column">
-                <FormLabel>Cambia date</FormLabel>
-                <FormGroup>
-                  <ReactDatePicker
-                    selected={startDate}
-                    id="giorni"
-                    name="giorni"
-                    autoComplete="off"
-                    className="form-control btn-radius-start-0 btn-radius-end-0"
-                    onChange={onChange}
-                    startDate={startDate}
-                    endDate={endDate}
-                    dateFormat={"dd-MM-yyyy"}
-                    selectsRange
-                    selectsDisabledDaysInRange></ReactDatePicker>
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormLabel>Cambia luogo</FormLabel>
-                <Form.Group>
-                  <FormSelect
-                    className="btn-radius-end-0"
-                    name="province"
-                    value={province}
-                    required
-                    onClick={() => setError(false)}
-                    onChange={handleProvinceChange}>
-                    <option value={"Tutte le province"}>Tutte le province</option>
-                    {provinces ? (
-                      provinces.map((province, index) => (
-                        <option
-                          key={index}
-                          value={province.abbreviation}>
-                          {province.name}
-                        </option>
-                      ))
-                    ) : (
-                      <></>
-                    )}
-                  </FormSelect>
-                </Form.Group>
-              </Col>
-              <Col>
-                <FormLabel>Cambia posti letto</FormLabel>
-                <FormGroup>
-                  <FormSelect
-                    value={newBeds}
-                    onChange={handlerBeds}
-                    onClick={() => setError(false)}>
-                    <option value={0}>cambia i posti letto</option>
-                    <option value={2}>2 letti</option>
-                    <option value={3}>3 letti</option>
-                    <option value={4}>4 letti</option>
-                    <option value={5}>5 letti</option>
-                    <option value={6}>6 letti</option>
-                  </FormSelect>
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormLabel>Cambia prezzo: {prezzo}€</FormLabel>
-                <Form.Range
-                  value={prezzo}
-                  max={500}
-                  onChange={handlerPrezzo}
-                />
-                <div className="d-flex justify-content-between">
-                  <p>0€</p>
-                  <p>500€</p>
-                </div>
-              </Col>
-              <div
-                className="navItemsVehicle buttonCard"
-                onClick={handlerSubmit}>
-                <p
-                  style={{
-                    zIndex: 99999,
-                    fontFamily: "Rowdies, sans-serif"
-                  }}
-                  className="text-decoration-none m-0 text-white">
-                  Modifica
-                </p>
-              </div>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
+    <div className="MediaQueryFiltri">
+      <Nav
+        className="d-flex justify-content-center  border-0"
+        variant="tabs"
+        defaultActiveKey="#first">
+        <Nav.Item
+          className="navItemsVehicle  d-flex rounded flex-column"
+          onClick={() => {
+            setChangeBeds(false);
+            setChangeDate(!changeDate);
+            setChangePrice(false);
+            setChangeProvince(false);
+          }}>
+          <Nav.Link className="text-decoration-none  border-0 text-white">Cambia Date</Nav.Link>
+        </Nav.Item>
+
+        <Nav.Item
+          className="navItemsVehicle "
+          onClick={() => {
+            setChangeBeds(false);
+            setChangeDate(false);
+            setChangePrice(false);
+            setChangeProvince(!changeProvince);
+          }}>
+          <Nav.Link className="text-decoration-none border-0 text-white">Cambia Provincia</Nav.Link>
+        </Nav.Item>
+        <Nav.Item
+          className="navItemsVehicle "
+          onClick={() => {
+            setChangeBeds(!changeBeds);
+            setChangeDate(false);
+            setChangePrice(false);
+            setChangeProvince(false);
+          }}>
+          <Nav.Link className="text-decoration-none border-0 text-white">Cambia Posti Letto</Nav.Link>
+        </Nav.Item>
+        <Nav.Item
+          className="navItemsVehicle "
+          onClick={() => {
+            setChangeBeds(false);
+            setChangeDate(false);
+            setChangePrice(!changePrice);
+            setChangeProvince(false);
+          }}>
+          <Nav.Link className="text-decoration-none border-0 text-white">Cambia Prezzo</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <IoMdSearch
+            color="white"
+            fontSize={30}
+            style={{ cursor: "pointer" }}
+            onClick={handlerSubmit}
+          />
+        </Nav.Item>
+      </Nav>
+
+      {changeDate && (
+        <Container
+          onClick={() => setError(false)}
+          className="mt-3"
+          style={{ width: "260px" }}>
+          <ReactDatePicker
+            selected={startDate}
+            id="giorni"
+            name="giorni"
+            autoComplete="off"
+            className="form-control btn-radius-start-0 btn-radius-end-0"
+            onChange={onChange}
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat={"dd-MM-yyyy"}
+            selectsRange
+            selectsDisabledDaysInRange
+          />
+        </Container>
+      )}
+
+      {changeProvince && (
+        <Container
+          className="mt-3"
+          style={{ width: "260px" }}
+          onClick={() => setError(false)}>
+          <FormSelect
+            className="btn-radius-end-0"
+            name="province"
+            value={province}
+            required
+            onChange={handleProvinceChange}>
+            <option value={"Tutte le province"}>Tutte le province</option>
+            {provinces ? (
+              provinces.map((province, index) => (
+                <option
+                  key={index}
+                  value={province.abbreviation}>
+                  {province.name}
+                </option>
+              ))
+            ) : (
+              <></>
+            )}
+          </FormSelect>
+        </Container>
+      )}
+      {changeBeds && (
+        <Container
+          className="mt-3"
+          style={{ width: "260px" }}
+          onClick={() => setError(false)}>
+          <FormSelect
+            value={newBeds}
+            onChange={handlerBeds}>
+            <option value={0}>cambia i posti letto</option>
+            <option value={2}>2 letti</option>
+            <option value={3}>3 letti</option>
+            <option value={4}>4 letti</option>
+            <option value={5}>5 letti</option>
+            <option value={6}>6 letti</option>
+          </FormSelect>
+        </Container>
+      )}
+      {changePrice && (
+        <Container
+          className="mt-3"
+          style={{ width: "260px" }}>
+          <Form.Range
+            value={prezzo}
+            max={500}
+            onClick={() => setError(false)}
+            onChange={handlerPrezzo}
+          />
+          <div className="d-flex text-white justify-content-between">
+            <p>0€</p>
+            <p>{prezzo}€</p>
+            <p>500€</p>
+          </div>
+        </Container>
+      )}
+      {error ? (
+        <Alert
+          className="mt-4"
+          variant="danger">
+          Non ci sono disponibilita
+        </Alert>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
-export default FiltriSideBar;
+export default NavFiltri;

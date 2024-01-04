@@ -12,6 +12,7 @@ import { GiPositionMarker } from "react-icons/gi";
 import cover from "../../assets/img/user_placeholder.png";
 import CaruselVehicle from "../veicolo/CaruselVehicle";
 import { addEndDate, addStartDate } from "../../redux/actions";
+import NavFiltri from "../stucture/NavFiltri";
 
 const ResultPage = () => {
   const token = useSelector(state => state.login.token);
@@ -38,12 +39,11 @@ const ResultPage = () => {
             />
           </div>
         </div>
-        <Row
-          sm={1}
-          className="d-flex justify-content-center gap-4">
+        <NavFiltri />
+        <Row className="d-flex justify-content-center gap-4">
           <Col
             sm={3}
-            className="Col SidebarFiltri"
+            className="FiltriSideBar"
             style={{ width: "300px" }}>
             <FiltriSideBar />
           </Col>
@@ -104,7 +104,6 @@ const ResultPage = () => {
                             </Col>
                             <Col className="item d-flex flex-column align-items-center pe-3">
                               <GiPositionMarker fontSize={18} />
-
                               <span className="regular-text m-0">{elem.province}</span>
                             </Col>
                           </Row>

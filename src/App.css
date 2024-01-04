@@ -4,6 +4,7 @@
 body {
   font-family: "Rethink Sans", sans-serif;
 }
+
 body::-webkit-scrollbar {
   color: #00000000;
   width: 0;
@@ -16,13 +17,19 @@ body::-webkit-scrollbar {
 .carousel-control-next {
   top: 10%;
 }
+
 .carousel-control-prev {
   top: 11%;
+}
+
+textarea {
+  border: none !important;
 }
 
 .cardSpecialPrenotazioni:hover {
   scale: 1.02;
 }
+
 .cardSpecialPrenotazioni {
   height: 430px;
   width: 270px;
@@ -43,6 +50,7 @@ body::-webkit-scrollbar {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
+
 .btn-radius-end-0 {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
@@ -55,10 +63,12 @@ body::-webkit-scrollbar {
   /* background: linear-gradient(180deg, #1976d2, #2196f3); */
   background: linear-gradient(180deg, #144658, #a8d47900);
 }
+
 .color-link-nav {
   color: white;
   font-weight: bold;
 }
+
 .logo {
   font-family: "Rowdies", sans-serif;
   font-size: 1.4em;
@@ -71,6 +81,7 @@ body::-webkit-scrollbar {
 .nav-toggler {
   border-color: aliceblue;
 }
+
 .navItemsVehicle {
   font-family: "Rowdies", sans-serif;
   margin-inline: 0.4rem;
@@ -78,11 +89,13 @@ body::-webkit-scrollbar {
   background-color: #144658;
   overflow: hidden;
 }
+
 .navItemsVehicle:hover {
   font-family: "Rowdies", sans-serif;
   background-color: #144658;
   overflow: hidden;
 }
+
 /* --------------Navbar-------------- */
 
 .buttonCard {
@@ -145,13 +158,16 @@ body::-webkit-scrollbar {
 .DDHome {
   background: linear-gradient(180deg, #2196f3, #65b0ee);
 }
+
 .ContainerProfileMain {
   background: linear-gradient(180deg, #144658, #144658);
 }
+
 .ContainerProfileWhite {
   /* background: linear-gradient(180deg, #14465850, #14465850); */
   background-color: rgba(255, 255, 255);
 }
+
 .containerBlog {
   width: 100%;
   height: 100%;
@@ -160,54 +176,61 @@ body::-webkit-scrollbar {
   background-size: 30px 30px;
   background-position: -5px -5px;
 }
+
 .sidebarCircle {
   max-width: 320px;
   background: linear-gradient(180deg, #144658, #144658);
 }
+
 .ResultPage {
   background: linear-gradient(180deg, #144658, #144658);
 }
+
 .Result {
   background: linear-gradient(180deg, #144658, #144658);
 }
+
 .BtnPrenotazione {
   background: linear-gradient(180deg, #144658, #144658);
 }
+
 .FiltriSideBar {
   max-width: 320px;
   background-color: white;
   border-radius: 20px;
 }
+
 .NavProfile {
   background: linear-gradient(180deg, #144658, #144658);
   height: 60px;
   font-weight: bolder;
 }
+
 .ContainerProfile {
   border-radius: 20px;
   background-color: white;
 }
+
 .Profile {
   background: linear-gradient(180deg, #144658, #144658);
+}
+
+.Titles {
+  font-family: "Rowdies", sans-serif;
 }
 
 .SinglePostAll:hover {
   scale: 1.01;
 }
 
-.SinglePost {
-  /* font-family: "Rethink Sans", sans-serif; */
-}
+
+
 .SinglePostER {
   text-decoration: none;
   color: black;
   font-family: "Rethink Sans", sans-serif;
 }
 
-/* .shadow-p {
-  box-shadow: inset 0px 0px 100px -1px #0000007b;
-  border-radius: 5px;
-} */
 
 .registerButton {
   max-width: 100px;
@@ -220,47 +243,66 @@ body::-webkit-scrollbar {
   scale: 1.005;
 }
 
-.event-container {
-}
+.event-container {}
+
+
+
 
 /* MEDIA SCREEN---------------------------- */
-@media (min-width: 990px) {
-  .btn-nav-none {
-    display: none !important;
+
+@media (max-width: 531px) {
+  .NavProfileLinkImg {
+    display: none;
   }
 }
-@media (max-width: 996px) {
-  .RegisterRow {
-    display: flex !important;
-    flex-direction: column !important;
+
+@media (max-width: 575px) {
+  .Register {
+    height: 155vh !important;
+    font-size: 0.8em;
   }
-  .ColRegisterForm {
-    margin-block: 2.5rem;
+
+  .ImgFooter {
+    display: block;
+  }
+
+  .Register textarea {
+    width: 300px !important;
+  }
+
+  .p-stile {
+    position: unset !important;
+    top: unset !important;
+  }
+
+  .col-stile {
+    background-image: unset !important;
   }
 }
-@media (max-width: 990px) {
-  .btn-nav {
-    display: none !important;
-  }
-}
-@media screen and (max-width: 768px) {
+
+@media (max-width: 768px) {
   .container {
     flex-direction: column;
   }
+
   .FormHome {
     display: block !important;
   }
+
   .btn-Form {
     width: 100%;
   }
+
   .btn-radius-start-0 {
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
   }
+
   .btn-radius-end-0 {
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
   }
+
   .shadow-p {
     display: none;
   }
@@ -271,104 +313,107 @@ body::-webkit-scrollbar {
     margin-bottom: 2rem;
   }
 }
-@media (max-width: 531px) {
-  .NavProfileLinkImg {
-    display: none;
-  }
-}
-@media (max-width: 575px) {
-  .Register {
-    height: 155vh !important;
-    font-size: 0.8em;
-  }
-  .Register textarea {
-    width: 300px !important;
-  }
-  .p-stile {
-    position: unset !important;
-    top: unset !important;
-  }
-  .col-stile {
-    background-image: unset !important;
-  }
-}
+
 @media (max-width: 800px) {
   .Register {
     font-size: 0.9em;
   }
 }
+
+@media (max-width: 996px) {
+  .RegisterRow {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .ColRegisterForm {
+    margin-block: 2.5rem;
+  }
+}
+
+@media (max-width: 990px) {
+  .btn-nav {
+    display: none !important;
+  }
+}
+
 @media (max-width: 1000px) {
   .Register textarea {
     height: 100px !important;
   }
+
   .ImgFooter {
     display: none;
   }
+
   .FiltriSideBar {
     display: none;
   }
-}
-@media (max-width: 576px) {
-  .ImgFooter {
-    display: block;
-  }
-}
-@media (max-width: 1382px) {
+
   .QueryCenterResult {
     justify-content: center;
   }
 }
+
 @media (max-width: 1240px) {
-  /* .FiltriSideBar {
-    display: none;
-  } */
   .sidebarCircle {
     display: none !important;
   }
+
   .ComeFunziona {
     height: 200vh;
   }
+
   .ColSidebarFiltri {
     display: none;
   }
 }
-@media (min-width: 1240px) {
-  .NavProfileLink {
-    display: none;
-  }
-  .mediaQueryCalendario {
-    display: none;
-  }
-}
-/* @media (min-width: 1400px) {
-  .Result {
-    display: flex !important;
-    flex-direction: row !important;
-  }
-} */
+
 @media (min-width: 700px) {
   .ColArrangement {
     display: flex;
     flex-direction: column;
   }
+
   .FormArrangement {
     display: flex;
     max-height: 45vh;
   }
 }
 
-textarea {
-  border: none !important;
+@media (min-width: 990px) {
+  .btn-nav-none {
+    display: none !important;
+  }
 }
+
+@media (min-width: 1000px) {
+  .MediaQueryFiltri {
+    display: none;
+  }
+}
+
+@media (min-width: 1240px) {
+  .NavProfileLink {
+    display: none;
+  }
+
+  .mediaQueryCalendario {
+    display: none;
+  }
+}
+
 /* ---------------------------- */
 
 /* ----------CALENDAR REACT------------------ */
 .react-datepicker__input-container {
   width: 100%;
 }
+
 .react-datepicker-wrapper {
   width: 100%;
 }
+
 .react-calendar {
   width: inherit !important;
   max-width: inherit !important;
@@ -391,7 +436,7 @@ textarea {
   margin: -0.5em;
 }
 
-.react-calendar--doubleView .react-calendar__viewContainer > * {
+.react-calendar--doubleView .react-calendar__viewContainer>* {
   width: 50%;
   margin: 0.5em;
 }
@@ -606,4 +651,5 @@ textarea {
   background-color: #ff4081;
   color: rgb(0, 0, 0);
 }
+
 /* ---------------------------- */

@@ -57,8 +57,9 @@ const ModaleAvatar = ({ show, setShow }) => {
                     <MdOutlineCloudUpload fontSize={100} />
                     <p>Clicca per cercare</p>
                     <p>oppure</p>
+                    <p>Trascina l'immagine</p>
                   </div>
-                  <label class="footerDrop">{acceptedFiles[0] ? acceptedFiles[0].path : "Trascina l'immagine"}</label>
+                  <label class="footerDrop">{acceptedFiles[0] ? acceptedFiles[0].path : ""}</label>
                 </div>
 
                 {loading ? (

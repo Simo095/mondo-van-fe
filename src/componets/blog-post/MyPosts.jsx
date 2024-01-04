@@ -16,28 +16,7 @@ const MyPosts = ({ elem, token, profile }) => {
   const dispatch = useDispatch();
   const calcolaData = () => {
     const createdate = new Date(elem.createdAt);
-    const createMin = createdate.getMinutes();
-    const createOre = createdate.getHours();
-    const createGiorni = createdate.getDay();
-    const createMesi = createdate.getMonth();
-    const createAnno = createdate.getFullYear();
-    const actualdate = new Date();
-    const actualMin = actualdate.getMinutes();
-    const actualOre = actualdate.getHours();
-    const actualGiorni = actualdate.getDay();
-    const actualMesi = actualdate.getMonth();
-    const actualAnno = actualdate.getFullYear();
-    if (actualAnno === createAnno) {
-      if (actualMesi === createMesi) {
-        if (actualGiorni === createGiorni) {
-          if (actualOre === createOre) {
-            if (actualMin === createMin) {
-              return "adesso";
-            } else return `${actualMin - createMin} ${actualMin - createMin === 1 ? "minuto fa" : "minuti fa"}`;
-          } else return `${actualOre - createOre} ${actualOre - createOre === 1 ? "ora fa" : "ore fa"}`;
-        } else return `${actualGiorni - createGiorni} ${actualGiorni - createGiorni === 1 ? "giorno fa" : "giorni fa"}`;
-      } else return `${actualMesi - createMesi} ${actualMesi - createMesi === 1 ? "mese fa" : "mesi fa"}`;
-    } else return `${actualAnno - createAnno} ${actualAnno - createAnno === 1 ? "anno fa" : "anni fa"}`;
+    return createdate.toLocaleDateString("it-IT");
   };
 
   return (
@@ -82,7 +61,6 @@ const MyPosts = ({ elem, token, profile }) => {
                 className="text-primary text-end ">
                 {profile.id === elem.author.id && (
                   <>
-                    {console.log(profile.id)}
                     <BsPencilFill
                       onClick={() => {
                         setIdPost(elem.id);

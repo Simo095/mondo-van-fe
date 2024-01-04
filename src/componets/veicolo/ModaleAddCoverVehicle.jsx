@@ -52,10 +52,9 @@ const ModaleAddCoverVehicle = ({ show, handleClose, token }) => {
                       <MdOutlineCloudUpload fontSize={100} />
                       <p>Clicca per cercare</p>
                       <p>oppure</p>
+                      <p>Trascina l'immagine</p>
                     </div>
-                    <label className="footerDrop">
-                      {acceptedFiles[0] ? acceptedFiles[0].path : "Trascina l'immagine"}
-                    </label>
+                    <label className="footerDrop">{acceptedFiles[0] ? acceptedFiles[0].path : ""}</label>
                   </div>
                   {loading ? (
                     <Row className="d-flex flex-grow-1 justify-content-center align-items-center">

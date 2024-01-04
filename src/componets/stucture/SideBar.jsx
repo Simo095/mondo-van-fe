@@ -25,8 +25,6 @@ const SideBar = () => {
   const [showNotifiche, setShowNotifiche] = useState(false);
   const handleCloseNotifiche = () => setShowNotifiche(false);
   const handleShowNotifiche = () => {
-    console.log("notifiche");
-    console.log(notifiche);
     setShowNotifiche(true);
   };
 
