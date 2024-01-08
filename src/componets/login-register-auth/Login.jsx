@@ -164,7 +164,7 @@ const Login = () => {
               <Row className="d-flex flex-column">
                 <Col className="d-flex justify-content-center mb-5">
                   {loading ? (
-                    <div class="spinnerLogin ">
+                    <div className="spinnerLogin ">
                       <div></div>
                       <div></div>
                       <div></div>

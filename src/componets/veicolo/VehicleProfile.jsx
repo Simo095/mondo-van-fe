@@ -6,7 +6,6 @@ import cover from "../../assets/img/user_placeholder.png";
 import CardInterni from "./CardInterni";
 import { useNavigate } from "react-router";
 import { IoAddCircle } from "react-icons/io5";
-import { FaPenToSquare } from "react-icons/fa6";
 import Motorizzazione from "./Motorizzazione";
 
 const VehicleProfile = ({ vehicle, token }) => {

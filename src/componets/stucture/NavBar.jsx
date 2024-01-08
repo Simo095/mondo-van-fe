@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { BsSignpost2 } from "react-icons/bs";
+
 const NavBar = () => {
   const user = useSelector(state => state.login.user);
   return (

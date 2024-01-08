@@ -10,6 +10,7 @@ const ChangeVehicle = () => {
   useEffect(() => {
     dispatch(fetchVehicle(token));
     navigate("/profile_owner");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <></>;
 };

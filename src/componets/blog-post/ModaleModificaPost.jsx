@@ -36,6 +36,7 @@ const ModaleModificaPost = ({
   const [categoria, setCategoria] = useState(elem.category);
   const category = ["TRAVELERS_STORY", "RECOMMENDED_TRIPS", "MY_VAN"];
   const [checked, setChecked] = useState([false, false, false]);
+  // eslint-disable-next-line no-unused-vars
   const [image, setImage] = useState(null);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

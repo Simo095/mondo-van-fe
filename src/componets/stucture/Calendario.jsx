@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Button, Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import Calendar from "react-calendar";
 import { MdEventAvailable } from "react-icons/md";
 import { CgUnavailable } from "react-icons/cg";
@@ -18,6 +18,14 @@ const Calendario = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const renderTooltipSave = props => (
+    <Tooltip
+      id="button-tooltip"
+      {...props}>
+      Salva le disponibilità modificate
+    </Tooltip>
+  );
 
   const DateClick = date => {
     setSelectedDate(date);
@@ -39,6 +47,7 @@ const Calendario = () => {
 
   const ModifyFetch = async e => {
     const idEventi = [];
+    // eslint-disable-next-line array-callback-return
     array.map((elem, i) => {
       const split = elem.split(",");
       console.log(split[1] === events[i].date && split[0] !== events[i].title);
@@ -135,11 +144,17 @@ const Calendario = () => {
                                 onClick={() => UpdateEvent(event.id)}
                               />
                             ) : null}
-
-                            <VscSaveAs
-                              className="update-btn"
-                              onClick={ModifyFetch}
-                            />
+                            <OverlayTrigger
+                              placement="left"
+                              delay={{ show: 250, hide: 400 }}
+                              overlay={renderTooltipSave}>
+                              <Button style={{ background: "#00000000", border: "none" }}>
+                                <VscSaveAs
+                                  className="update-btn"
+                                  onClick={ModifyFetch}
+                                />
+                              </Button>
+                            </OverlayTrigger>
                           </Col>
                         </Row>
                       </Col>
