@@ -13,7 +13,7 @@ import { addVehicle } from "../../redux/actions";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { IoArrowRedo } from "react-icons/io5";
 import { GrFormNextLink } from "react-icons/gr";
-import { fetchVehicle } from "../../redux/actions/fetchActions";
+import { fetchDisponibilita, fetchVehicle } from "../../redux/actions/fetchActions";
 
 const RegisterVehicle = () => {
   const typeForm = ["Camper", "Van", "Jeep attrezzata", "Macchina rooftop", "Altro"];
@@ -73,6 +73,7 @@ const RegisterVehicle = () => {
       if (richiesta.ok) {
         const vehicle = await richiesta.json();
         dispatch(addVehicle(vehicle));
+        dispatch(fetchDisponibilita(token));
         setRispOk(true);
         setLoading(false);
       }
@@ -170,8 +171,6 @@ const RegisterVehicle = () => {
                 <ReactCardFlip
                   isFlipped={flip}
                   containerClassName="d-flex "
-                  containerStyle={{}}
-                  cardStyles={{}}
                   flipDirection="horizontal">
                   <div
                     className="d-flex "

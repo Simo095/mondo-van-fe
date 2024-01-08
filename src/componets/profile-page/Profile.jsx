@@ -88,21 +88,19 @@ const Profile = () => {
               </Col>
               <h3 className="text-white my-3">Profilo di {userVisit.name}</h3>
               <Col className=" ContainerProfile p-0">
-                <Col
-                  className="ContainerProfile"
-                  style={{
-                    height: "350px",
-                    backgroundImage: `url(${userVisit.cover})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center"
-                  }}></Col>
+                <Image
+                  className="w-100"
+                  src={userVisit.cover}
+                  height={350}
+                  style={{ objectFit: "cover" }}
+                  rounded
+                />
               </Col>
 
               {vehicle && (
                 <>
                   <Col className="ContainerProfileMain my-3">
-                    <h4 className="text-white">Veicolo</h4>
+                    <h4 className="text-white">Veicolo di {userVisit.name}</h4>
                   </Col>
                   <Col className="p-3 ContainerProfile">
                     <VehicleProfile

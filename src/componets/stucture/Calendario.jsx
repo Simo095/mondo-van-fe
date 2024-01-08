@@ -150,6 +150,7 @@ const Calendario = () => {
                               overlay={renderTooltipSave}>
                               <Button style={{ background: "#00000000", border: "none" }}>
                                 <VscSaveAs
+                                  color="black"
                                   className="update-btn"
                                   onClick={ModifyFetch}
                                 />
