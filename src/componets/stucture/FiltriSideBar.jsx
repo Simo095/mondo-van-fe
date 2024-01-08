@@ -16,9 +16,9 @@ const FiltriSideBar = () => {
   const [startDate, setStartDate] = useState(new Date(startDateState));
   const [endDate, setEndDate] = useState(new Date(endDateState));
   const [provinces, setProvinces] = useState();
-  const [province, setProvince] = useState(provinceState);
+  const [province, setProvince] = useState(provinceState === null ? "Tutte le province" : provinceState);
   const [prezzo, setPrezzo] = useState(0);
-  const [newBeds, setNewBeds] = useState(bedsState);
+  const [newBeds, setNewBeds] = useState(bedsState === null ? "Qualsiasi posto letto" : bedsState);
   const [typeVan, setTypeVan] = useState("Tutti i tipi");
   const [supplyVan, setSupplyVan] = useState("Tutti i tipi");
   const [isValid, setIsValid] = useState(false);
