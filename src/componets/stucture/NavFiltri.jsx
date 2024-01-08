@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { Alert, Container, Form, FormSelect, Nav } from "react-bootstrap";
 import { IoMdSearch } from "react-icons/io";
 import ReactDatePicker from "react-datepicker";
-import { addBeds, addProvince, addResult } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { resultConditions } from "../../redux/actions/fetchResultsConditions";
 
 const NavFiltri = () => {
   const startDateState = useSelector(state => state.result.startDate);
   const endDateState = useSelector(state => state.result.endDate);
   const provinceState = useSelector(state => state.result.province);
   const bedsState = useSelector(state => state.result.beds);
+  const token = useSelector(state => state.login.token);
 
   const [startDate, setStartDate] = useState(new Date(startDateState));
   const [endDate, setEndDate] = useState(new Date(endDateState));
@@ -40,141 +41,47 @@ const NavFiltri = () => {
     e.preventDefault();
     const startForm = startDate.toLocaleDateString("fr-CA");
     const endForm = endDate.toLocaleDateString("fr-CA");
-    if (!isValid && !isValidBad && !isValidPrice) {
-      const pageble = await fetch(`http://localhost:8080/sign_in/date?start=${startForm}&end=${endForm}`, {
-        method: "GET"
-      });
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page`);
-      } else {
-        setError(true);
-      }
-    }
-    if (!isValid && !isValidBad && isValidPrice) {
-      const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_price?start=${startForm}&end=${endForm}&price=${prezzo}`,
-        {
-          method: "GET"
-        }
-      );
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        dispatch(addProvince("Tutte le province"));
-        dispatch(addBeds(null));
-        navigate(`/results_page`);
-      } else {
-        setError(true);
-      }
-    }
-    if (isValid && isValidBad && isValidPrice) {
-      const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_prov_beds_price?start=${startForm}&end=${endForm}&beds=${newBeds}&province=${province}&price=${prezzo}`,
-        {
-          method: "GET"
-        }
-      );
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page`);
-      } else {
-        setError(true);
-      }
-    }
-    if (!isValid && isValidBad && !isValidPrice) {
-      const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_beds?start=${startForm}&end=${endForm}&beds=${newBeds}`,
-        {
-          method: "GET"
-        }
-      );
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page`);
-      } else {
-        setError(true);
-      }
-    }
-    if (isValid && !isValidBad && !isValidPrice) {
-      const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_province?start=${startForm}&end=${endForm}&province=${province}`,
-        {
-          method: "GET"
-        }
-      );
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page`);
-      } else {
-        setError(true);
-      }
-    }
-    if (isValid && !isValidBad && isValidPrice) {
-      const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_province_price?start=${startForm}&end=${endForm}&province=${province}&price=${prezzo}`,
-        {
-          method: "GET"
-        }
-      );
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page`);
-      } else {
-        setError(true);
-      }
-    }
-    if (!isValid && isValidBad && isValidPrice) {
-      const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_beds_price?start=${startForm}&end=${endForm}&beds=${newBeds}&price=${prezzo}`,
-        {
-          method: "GET"
-        }
-      );
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page`);
-      } else {
-        setError(true);
-      }
-    }
-    if (isValid && isValidBad && !isValidPrice) {
-      const pageble = await fetch(
-        `http://localhost:8080/sign_in/date_prov_beds?start=${startForm}&end=${endForm}&beds=${newBeds}&province=${province}`,
-        {
-          method: "GET"
-        }
-      );
-      if (pageble.ok) {
-        const content = await pageble.json();
-        dispatch(addResult(content.content));
-        navigate(`/results_page`);
-      } else {
-        setError(true);
-      }
-    }
+    dispatch(
+      resultConditions(
+        startForm,
+        endForm,
+        prezzo,
+        province,
+        newBeds,
+        supplyVan,
+        typeVan,
+        token,
+        navigate,
+        setError,
+        isValid,
+        isValidBad,
+        isValidPrice,
+        isValidSupply,
+        isValidType
+      )
+    );
   };
 
+  const handleProvinceClick = async e => {
+    const risposta = await fetch("http://localhost:8080/sign_in/prov", {
+      method: "GET"
+    });
+    if (risposta.ok) {
+      const data = await risposta.json();
+      setProvinces(data.content);
+    }
+  };
+  const onChange = async dates => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
   const handlerBeds = e => {
     setNewBeds(e.target.value);
     if (e.target.value === "0") {
       setIsValidBed(false);
     } else {
       setIsValidBed(true);
-    }
-  };
-  const handlerPrezzo = e => {
-    if (e.target.value === 0) {
-      setIsValidPrice(false);
-    } else {
-      setIsValidPrice(true);
-      setPrezzo(e.target.value);
     }
   };
   const handlerTypeVan = e => {
@@ -193,28 +100,20 @@ const NavFiltri = () => {
       setIsValidSupply(true);
     }
   };
+  const handlerPrezzo = e => {
+    if (e.target.value === "0") {
+      setIsValidPrice(false);
+    } else {
+      setPrezzo(e.target.value);
+      setIsValidPrice(true);
+    }
+  };
   const handleProvinceChange = event => {
     setProvince(event.target.value);
     if (event.target.value === "Tutte le province" || event.target.value === null) {
       setIsValid(false);
     } else {
       setIsValid(true);
-    }
-  };
-
-  const onChange = async dates => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-  };
-
-  const handleProvinceClick = async e => {
-    const risposta = await fetch("http://localhost:8080/sign_in/prov", {
-      method: "GET"
-    });
-    if (risposta.ok) {
-      const data = await risposta.json();
-      setProvinces(data.content);
     }
   };
 
