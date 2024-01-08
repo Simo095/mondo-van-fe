@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, CardTitle, Col, Container, Image, Row } from "react-bootstrap";
+import { Button, Card, CardBody, CardFooter, Col, Container, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import FiltriSideBar from "../../componets/stucture/FiltriSideBar";

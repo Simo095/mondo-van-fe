@@ -121,6 +121,7 @@ const FiltriSideBar = () => {
     if (newBeds === "Qualsiasi posto letto") {
       setIsValidBed(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

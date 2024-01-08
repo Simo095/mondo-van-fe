@@ -10,7 +10,6 @@ import FlipCard from "../../componets/stucture/FlipCard";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addVehicle } from "../../redux/actions";
-import { useNavigate } from "react-router";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { IoArrowRedo } from "react-icons/io5";
 import { GrFormNextLink } from "react-icons/gr";
@@ -32,7 +31,6 @@ const RegisterVehicle = () => {
   const token = useSelector(state => state.login.token);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handlerFlip = e => {
     setFlip(!flip);
@@ -41,8 +39,6 @@ const RegisterVehicle = () => {
   const handlerForm = async e => {
     e.preventDefault();
     setLoading(true);
-    console.log("ciao");
-    console.log(typeServer);
     if (errorFirstForm) {
       setErrorTypeServer(true);
       setLoading(false);
@@ -85,8 +81,6 @@ const RegisterVehicle = () => {
 
   const handlerFirstForm = e => {
     e.preventDefault();
-    console.log("ciao");
-    console.log(typeServer);
     if (typeServer === "") {
       setErrorTypeServer(true);
     }
