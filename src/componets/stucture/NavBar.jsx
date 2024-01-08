@@ -72,7 +72,7 @@ const NavBar = () => {
                     <Nav.Link
                       className="color-link-nav"
                       href="/blogpost">
-                      Blogpost
+                      I racconti della Comunity
                     </Nav.Link>
                   </NavItem>
                   <Container className="d-flex justify-content-center">
@@ -99,7 +99,7 @@ const NavBar = () => {
                     <Nav.Link
                       className="color-link-nav"
                       href="/blogpost">
-                      Blogpost
+                      I racconti della Comunity
                     </Nav.Link>
                   </NavItem>
                   <Container className="d-flex justify-content-center">

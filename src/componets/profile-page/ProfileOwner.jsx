@@ -9,7 +9,7 @@ import FormAddPost from "../blog-post/FormAddPost";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchPrenotazioniOwner } from "../../redux/actions/fetchActions";
+import { fetchNotifiche, fetchPrenotazioniOwner } from "../../redux/actions/fetchActions";
 
 const ProfileOwner = () => {
   const user = useSelector(state => state.login.user);
@@ -28,6 +28,7 @@ const ProfileOwner = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPrenotazioniOwner(token, setPrenotazioni, setLoadingPre));
+    dispatch(fetchNotifiche(token, setNotifiche));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -75,7 +76,7 @@ const ProfileOwner = () => {
                     <Nav.Link
                       href="/blogpost"
                       className="text-decoration-none text-white">
-                      BlogPost
+                      I racconti della Comunity
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>

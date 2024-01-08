@@ -7,8 +7,8 @@ const SinglePostEm = ({ elem }) => {
       <div className="SinglePostER border border-1 rounded-3 shadow my-3 p-3 bg-light">
         <Row className="mb-2 d-flex align-items-center">
           <Col
-            sm={2}
-            className="me-3">
+            sm={12}
+            className="me-3 d-flex">
             <Image
               src={"https://api.dicebear.com/7.x/personas/svg"}
               alt="profileImg"
@@ -17,11 +17,6 @@ const SinglePostEm = ({ elem }) => {
               roundedCircle
               style={{ objectFit: "cover" }}
             />
-          </Col>
-          <Col
-            sm={5}
-            lg={7}
-            className=" order-5 order-sm-0">
             <div className="d-flex flex-column align-items-center">
               <Link
                 className="SinglePostER"

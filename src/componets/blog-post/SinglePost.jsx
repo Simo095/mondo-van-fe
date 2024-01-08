@@ -65,7 +65,9 @@ const SinglePost = ({ elem, profile }) => {
         <Row
           style={{ width: "400px" }}
           className="mb-2">
-          <Col xs={2}>
+          <Col
+            xs={12}
+            className="d-flex">
             <Image
               src={elem.author.avatar}
               alt="profileImg"
@@ -77,25 +79,25 @@ const SinglePost = ({ elem, profile }) => {
                 dispatch(fetchProfileUser(token, elem.author.id, navigate));
               }}
             />
-          </Col>
-          <Col
-            style={{ cursor: "pointer" }}
-            onClick={handleshowModale}
-            sm={10}
-            className="order-5 order-sm-0">
-            <div className="d-flex flex-column">
-              <h6>
-                {elem.author.name} {elem.author.surname} -{" "}
-                {elem.author.role === "CUSTOMER" ? "Viaggiatore" : "Noleggiatore e Viaggiatore"}
-              </h6>
-              <p
-                className="mb-0"
-                style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden", fontSize: "14px" }}>
-                {elem.title}
-              </p>
-              <p style={{ fontWeight: "300", fontSize: "12px" }}> {calcolaData()}</p>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={handleshowModale}
+              className="">
+              <div className="d-flex flex-column">
+                <h6>
+                  {elem.author.name} {elem.author.surname} -{" "}
+                  {elem.author.role === "CUSTOMER" ? "Viaggiatore" : "Noleggiatore e Viaggiatore"}
+                </h6>
+                <p
+                  className="mb-0"
+                  style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden", fontSize: "14px" }}>
+                  {elem.title}
+                </p>
+                <p style={{ fontWeight: "300", fontSize: "12px" }}> {calcolaData()}</p>
+              </div>
             </div>
           </Col>
+
           <Col
             xs={10}
             className="d-flex justify-content-between flex-grow-1">

@@ -13,8 +13,8 @@ const SinglePostHome = ({ elem }) => {
           onClick={() => navigate(logged ? "/blogpost" : "/register")}>
           <Col
             style={{ cursor: "pointer" }}
-            sm={2}
-            className="me-3">
+            sm={12}
+            className="me-3 d-flex">
             <Image
               src={
                 elem ? elem.author.avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
@@ -25,11 +25,6 @@ const SinglePostHome = ({ elem }) => {
               roundedCircle
               style={{ objectFit: "cover" }}
             />
-          </Col>
-          <Col
-            sm={5}
-            lg={7}
-            className=" order-5 order-sm-0">
             <div className="d-flex flex-column">
               <p
                 className="w-100 mb-0"

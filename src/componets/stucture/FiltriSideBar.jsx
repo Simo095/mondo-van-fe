@@ -132,16 +132,16 @@ const FiltriSideBar = () => {
       <Container>
         <Row className="d-flex py-3 flex-column">
           <Col>
-            <Row className="Titles row-cols-1 px-4 d-flex gap-5">
+            <Row className="row-cols-1 px-4 d-flex gap-3">
               <Col className="d-flex flex-column">
-                <FormLabel>Cambia date</FormLabel>
+                <FormLabel className="Titles">Cambia date</FormLabel>
                 <FormGroup>
                   <ReactDatePicker
                     selected={startDate}
                     id="giorni"
                     name="giorni"
                     autoComplete="off"
-                    className="form-control btn-radius-start-0 btn-radius-end-0"
+                    className="form-control"
                     onChange={onChange}
                     startDate={startDate}
                     endDate={endDate}
@@ -151,10 +151,9 @@ const FiltriSideBar = () => {
                 </FormGroup>
               </Col>
               <Col>
-                <FormLabel>Cambia luogo</FormLabel>
+                <FormLabel className="Titles">Cambia luogo</FormLabel>
                 <Form.Group>
                   <FormSelect
-                    className="btn-radius-end-0"
                     name="province"
                     value={province}
                     required
@@ -176,7 +175,7 @@ const FiltriSideBar = () => {
                 </Form.Group>
               </Col>
               <Col>
-                <FormLabel>Cambia posti letto</FormLabel>
+                <FormLabel className="Titles">Cambia posti letto</FormLabel>
                 <FormGroup>
                   <FormSelect
                     value={newBeds}
@@ -192,7 +191,7 @@ const FiltriSideBar = () => {
                 </FormGroup>
               </Col>
               <Col>
-                <FormLabel>Cambia tipo di mezzo</FormLabel>
+                <FormLabel className="Titles">Cambia tipo di mezzo</FormLabel>
                 <FormGroup>
                   <FormSelect
                     value={typeVan}
@@ -208,7 +207,7 @@ const FiltriSideBar = () => {
                 </FormGroup>
               </Col>
               <Col>
-                <FormLabel>Cambia tipo di carburante</FormLabel>
+                <FormLabel className="Titles">Cambia tipo di carburante</FormLabel>
                 <FormGroup>
                   <FormSelect
                     value={supplyVan}
@@ -224,7 +223,7 @@ const FiltriSideBar = () => {
                 </FormGroup>
               </Col>
               <Col>
-                <FormLabel>Cambia prezzo: {prezzo}€</FormLabel>
+                <FormLabel className="Titles">Cambia prezzo: {prezzo}€</FormLabel>
                 <Form.Range
                   value={prezzo}
                   min={0}
@@ -237,12 +236,13 @@ const FiltriSideBar = () => {
                 </div>
               </Col>
               <div
-                className="navItemsVehicle buttonCard"
+                className="navItemsVehicle text-center"
                 onClick={handlerSubmit}>
                 <p
                   style={{
                     zIndex: 99999,
-                    fontFamily: "Rowdies, sans-serif"
+                    fontFamily: "Rowdies, sans-serif",
+                    cursor: "pointer"
                   }}
                   className="text-decoration-none m-0 text-white">
                   Modifica
