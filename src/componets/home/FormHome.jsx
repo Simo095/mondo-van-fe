@@ -124,6 +124,11 @@ const FormHome = () => {
 
   useEffect(() => {
     handleProvinceClick();
+    dispatch(addResult(null));
+    dispatch(addStartDate(null));
+    dispatch(addEndDate(null));
+    dispatch(addProvince(null));
+    dispatch(addBeds(null));
     setIsValid(province ? true : false);
     setIsValidBed(beds ? true : false);
     if (province === "Tutte le province") {

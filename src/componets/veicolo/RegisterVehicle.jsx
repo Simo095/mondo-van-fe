@@ -346,6 +346,8 @@ const RegisterVehicle = () => {
                                 <option value="GASOLINE">Benzina</option>
                                 <option value="DIESEL">Diesel</option>
                                 <option value="LPG_DIESEL">GPL e Diesel</option>
+                                <option value="ELECTRIC">Elettrico</option>
+                                <option value="HYBRID">Ibrido</option>
                               </Form.Select>
                             </Form.Group>
                           </Col>

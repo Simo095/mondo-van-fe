@@ -22,6 +22,8 @@ export const RESET_LOGIN = "RESET_LOGIN";
 export const RESET_POST = "RESET_POST";
 export const RESET_RESULT = "RESET_RESULT";
 export const RESET_VEHICLE = "RESET_VEHICLE";
+export const MODIFY_CATEGORY = " MODIFY_CATEGORY";
+export const STRING_CATEGORY = " STRING_CATEGORY";
 
 export const addToken = token => ({ type: ADD_TOKEN, payload: token });
 export const addRole = role => ({ type: ADD_ROLE, payload: role });
@@ -47,11 +49,31 @@ export const resetLogin = () => ({ type: RESET_LOGIN, payload: null });
 export const resetPost = () => ({ type: RESET_POST, payload: null });
 export const resetResult = () => ({ type: RESET_RESULT, payload: null });
 export const resetVehicle = () => ({ type: RESET_VEHICLE, payload: null });
+export const categoryView = condition => ({ type: MODIFY_CATEGORY, payload: condition });
+export const categoryString = str => ({ type: STRING_CATEGORY, payload: str });
 
-export const fetchPost = token => {
+export const fetchPost = (token, page) => {
   return async dispatch => {
     try {
-      const risp = await fetch("http://localhost:8080/posts", {
+      const risp = await fetch(`http://localhost:8080/posts?page=${page}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+      if (risp.ok) {
+        const data = await risp.json();
+        dispatch(addPosts(data.content));
+      }
+    } catch (error) {
+      console.log("si e' verificato un errore", error.message);
+    }
+  };
+};
+export const fetchPostCategory = (token, page, category) => {
+  return async dispatch => {
+    try {
+      const risp = await fetch(`http://localhost:8080/posts/category/${category}?page=${page}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token

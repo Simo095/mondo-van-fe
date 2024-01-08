@@ -22,6 +22,33 @@ const ResultPage = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const convertType = elem => {
+    return elem.type === "CAMPERIZED_JEEP"
+      ? "Jeep attrezzata"
+      : elem.type === "ROOFTOOP_CAR"
+      ? "Macchina attrezzata"
+      : elem.type === "VAN"
+      ? "Van"
+      : elem.type === "CAMPER"
+      ? "Camper"
+      : elem.type === "OTHER"
+      ? "Altro"
+      : "";
+  };
+
+  const convertSupply = elem => {
+    return elem.supply === "GASOLINE"
+      ? "Benzina"
+      : elem.supply === "DIESEL"
+      ? "Diesel"
+      : elem.supply === "LPG_DIESEL"
+      ? "Diesel e GPL"
+      : elem.supply === "ELECTRIC"
+      ? "Elettrico"
+      : elem.supply === "HYBRID"
+      ? "Ibrido"
+      : "";
+  };
 
   return (
     <div className="ResultPage">
@@ -68,8 +95,9 @@ const ResultPage = () => {
                           vehicle={elem}
                           cover={cover}
                           token={token}
-                          height={230}
+                          height={200}
                         />
+                        {console.log(elem)}
                         <Button
                           onClick={() => {
                             dispatch(addStartDate(startDateState));
@@ -84,7 +112,14 @@ const ResultPage = () => {
                         </Button>
 
                         <CardBody>
-                          <CardTitle className="titlo mt-3 mb-0 mx-2">{elem.name + " - " + elem.desc}</CardTitle>
+                          <b>
+                            <p className="m-0 p-0">{elem.name + " - " + elem.brand}</p>
+                          </b>
+                          <p className="text-end m-0 p-0 paragrafSpecial">
+                            {convertType(elem) + " con " + elem.beds + " letti"}
+                          </p>
+                          <p className="mt-2 p-0 mb-0"> {elem.desc}</p>
+                          <p className="text-end m-0 p-0 paragrafSpecial">{convertSupply(elem)}</p>
                         </CardBody>
                         <CardFooter className="bottom-section">
                           <Row className="row row1">

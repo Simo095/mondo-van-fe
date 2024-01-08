@@ -6,7 +6,9 @@ import {
   ADD_POST_USER_VISIT,
   ADD_USER_VISIT,
   ADD_VEHICLE_VISIT,
-  RESET_POST
+  MODIFY_CATEGORY,
+  RESET_POST,
+  STRING_CATEGORY
 } from "../actions";
 
 const initialState = {
@@ -16,7 +18,9 @@ const initialState = {
   myPost: [],
   visitUser: null,
   visitVehicle: null,
-  postUserVisit: null
+  postUserVisit: null,
+  categoryString: "",
+  category: false
 };
 
 const postReducers = (state = initialState, action) => {
@@ -55,6 +59,16 @@ const postReducers = (state = initialState, action) => {
       return {
         ...state,
         em: action.payload
+      };
+    case MODIFY_CATEGORY:
+      return {
+        ...state,
+        category: action.payload
+      };
+    case STRING_CATEGORY:
+      return {
+        ...state,
+        categoryString: action.payload
       };
     case RESET_POST:
       return {

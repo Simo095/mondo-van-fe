@@ -1,6 +1,8 @@
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import ModaleAddPost from "./ModaleAddPost";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { categoryString, categoryView, fetchPost, fetchPostCategory } from "../../redux/actions";
 
 const FormAddPost = ({ user }) => {
   const [postText, setPostText] = useState();
@@ -9,6 +11,8 @@ const FormAddPost = ({ user }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.login.token);
 
   return (
     <Container className="mt-4">
@@ -42,19 +46,44 @@ const FormAddPost = ({ user }) => {
 
         <Container className="d-flex justify-content-center gap-5">
           <span
+            onClick={() => {
+              dispatch(categoryView(true));
+              dispatch(fetchPostCategory(token, 0, "RECOMMENDED_TRIPS"));
+              dispatch(categoryString("RECOMMENDED_TRIPS"));
+            }}
             className="me-2"
             style={{ color: "#ecc654", fontSize: "1.1em", fontWeight: "bolder", cursor: "pointer" }}>
             Viaggi raccomandati
           </span>
           <span
+            onClick={() => {
+              dispatch(categoryView(true));
+              dispatch(fetchPostCategory(token, 0, "MY_VAN"));
+              dispatch(categoryString("MY_VAN"));
+            }}
             style={{ color: "#9dca6a", fontSize: "1.1em", fontWeight: "bolder", cursor: "pointer" }}
             className="me-2">
             Il mio Van
           </span>
           <span
+            onClick={() => {
+              dispatch(categoryView(true));
+              dispatch(fetchPostCategory(token, 0, "TRAVELERS_STORY"));
+              dispatch(categoryString("TRAVELERS_STORY"));
+            }}
             className="me-2"
             style={{ color: "#be311a", fontSize: "1.1em", fontWeight: "bolder", cursor: "pointer" }}>
             Storie di Viaggi
+          </span>
+          <span
+            onClick={() => {
+              dispatch(categoryView(false));
+              dispatch(fetchPost(token, 0));
+              dispatch(categoryString(""));
+            }}
+            className="me-2"
+            style={{ color: "#144658", fontSize: "1.1em", fontWeight: "bolder", cursor: "pointer" }}>
+            Tutti i post
           </span>
         </Container>
       </Row>

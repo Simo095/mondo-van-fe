@@ -11,7 +11,7 @@ const BlogPost = () => {
   const token = useSelector(state => state.login.token);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchPost(token));
+    dispatch(fetchPost(token, 0));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

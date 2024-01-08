@@ -2,16 +2,16 @@
   padding: 10px 5px;
   position: relative;
 }
+
 .cardSpecial {
-  height: 430px;
+  height: 480px;
   width: 270px;
   min-width: 270px;
   box-shadow: 0px 0px 50px -30px #000000;
 }
 
-.titlo {
-  height: 45px;
-  font-size: 1em;
+.paragrafSpecial {
+  font-size: 0.8em;
   color: rgb(0, 0, 0);
 }
 
@@ -43,6 +43,7 @@
   border-left: 1px solid rgba(255, 255, 255, 0.126);
   border-right: 1px solid rgba(255, 255, 255, 0.126);
 }
+
 @media (max-width: 1200px) {
   .titlo {
     font-size: small;

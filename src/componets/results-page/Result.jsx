@@ -51,7 +51,33 @@ const Result = () => {
       setDiff(diff);
     }
   };
+  const convertType = elem => {
+    return elem.type === "CAMPERIZED_JEEP"
+      ? "Jeep attrezzata"
+      : elem.type === "ROOFTOOP_CAR"
+      ? "Macchina attrezzata"
+      : elem.type === "VAN"
+      ? "Van"
+      : elem.type === "CAMPER"
+      ? "Camper"
+      : elem.type === "OTHER"
+      ? "Altro"
+      : "";
+  };
 
+  const convertSupply = elem => {
+    return elem.supply === "GASOLINE"
+      ? "Benzina"
+      : elem.supply === "DIESEL"
+      ? "Diesel"
+      : elem.supply === "LPG_DIESEL"
+      ? "Diesel e GPL"
+      : elem.supply === "ELECTRIC"
+      ? "Elettrico"
+      : elem.supply === "HYBRID"
+      ? "Ibrido"
+      : "";
+  };
   useEffect(() => {
     vehicleFetchDetail();
     if (startDate && endDate) {
@@ -73,15 +99,15 @@ const Result = () => {
               {vehicle.name}
               {" - "}
               {vehicle.type === "CAMPERIZED_JEEP"
-                ? "JEEP ATTREZZATA"
+                ? "Jeep attrezzata"
                 : vehicle.type === "ROOFTOOP_CAR"
-                ? "MACCHINA ATTREZZATA"
+                ? "Macchina attrezzata"
                 : vehicle.type === "VAN"
-                ? "VAN"
+                ? "Van"
                 : vehicle.type === "CAMPER"
-                ? "CAMPER"
+                ? "Camper"
                 : vehicle.type === "OTHER"
-                ? "ALTRO"
+                ? "Altro"
                 : ""}
               {" - "}
               {vehicle.shortDescriptions ? vehicle.shortDescriptions : ""}

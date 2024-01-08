@@ -18,14 +18,20 @@ const NavFiltri = () => {
   const [province, setProvince] = useState(provinceState);
   const [prezzo, setPrezzo] = useState(0);
   const [newBeds, setNewBeds] = useState(bedsState);
+  const [typeVan, setTypeVan] = useState("Tutti i tipi");
+  const [supplyVan, setSupplyVan] = useState("Tutti i tipi");
   const [isValid, setIsValid] = useState(false);
   const [isValidBad, setIsValidBed] = useState(false);
   const [isValidPrice, setIsValidPrice] = useState(false);
+  const [isValidType, setIsValidType] = useState(false);
+  const [isValidSupply, setIsValidSupply] = useState(false);
   const [error, setError] = useState(false);
   const [changePrice, setChangePrice] = useState(false);
   const [changeProvince, setChangeProvince] = useState(false);
   const [changeBeds, setChangeBeds] = useState(false);
   const [changeDate, setChangeDate] = useState(false);
+  const [changeType, setChangeType] = useState(false);
+  const [changeSupply, setChangeSupply] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -63,7 +69,6 @@ const NavFiltri = () => {
         setError(true);
       }
     }
-
     if (isValid && isValidBad && isValidPrice) {
       const pageble = await fetch(
         `http://localhost:8080/sign_in/date_prov_beds_price?start=${startForm}&end=${endForm}&beds=${newBeds}&province=${province}&price=${prezzo}`,
@@ -79,7 +84,6 @@ const NavFiltri = () => {
         setError(true);
       }
     }
-
     if (!isValid && isValidBad && !isValidPrice) {
       const pageble = await fetch(
         `http://localhost:8080/sign_in/date_beds?start=${startForm}&end=${endForm}&beds=${newBeds}`,
@@ -110,7 +114,6 @@ const NavFiltri = () => {
         setError(true);
       }
     }
-
     if (isValid && !isValidBad && isValidPrice) {
       const pageble = await fetch(
         `http://localhost:8080/sign_in/date_province_price?start=${startForm}&end=${endForm}&province=${province}&price=${prezzo}`,
@@ -174,6 +177,22 @@ const NavFiltri = () => {
       setPrezzo(e.target.value);
     }
   };
+  const handlerTypeVan = e => {
+    setTypeVan(e.target.value);
+    if (e.target.value === "Tutti i tipi") {
+      setIsValidType(false);
+    } else {
+      setIsValidType(true);
+    }
+  };
+  const handlerSupplyVan = e => {
+    setSupplyVan(e.target.value);
+    if (e.target.value === "Tutti i tipi") {
+      setIsValidSupply(false);
+    } else {
+      setIsValidSupply(true);
+    }
+  };
   const handleProvinceChange = event => {
     setProvince(event.target.value);
     if (event.target.value === "Tutte le province" || event.target.value === null) {
@@ -225,6 +244,8 @@ const NavFiltri = () => {
             setChangeDate(!changeDate);
             setChangePrice(false);
             setChangeProvince(false);
+            setChangeType(false);
+            setChangeSupply(false);
           }}>
           <Nav.Link className="text-decoration-none  border-0 text-white">Cambia Date</Nav.Link>
         </Nav.Item>
@@ -232,6 +253,8 @@ const NavFiltri = () => {
         <Nav.Item
           className="navItemsVehicle "
           onClick={() => {
+            setChangeType(false);
+            setChangeSupply(false);
             setChangeBeds(false);
             setChangeDate(false);
             setChangePrice(false);
@@ -242,6 +265,8 @@ const NavFiltri = () => {
         <Nav.Item
           className="navItemsVehicle "
           onClick={() => {
+            setChangeType(false);
+            setChangeSupply(false);
             setChangeBeds(!changeBeds);
             setChangeDate(false);
             setChangePrice(false);
@@ -252,12 +277,38 @@ const NavFiltri = () => {
         <Nav.Item
           className="navItemsVehicle "
           onClick={() => {
+            setChangeType(false);
+            setChangeSupply(false);
             setChangeBeds(false);
             setChangeDate(false);
             setChangePrice(!changePrice);
             setChangeProvince(false);
           }}>
           <Nav.Link className="text-decoration-none border-0 text-white">Cambia Prezzo</Nav.Link>
+        </Nav.Item>
+        <Nav.Item
+          className="navItemsVehicle "
+          onClick={() => {
+            setChangeSupply(false);
+            setChangeBeds(false);
+            setChangeDate(false);
+            setChangeType(!changeType);
+            setChangePrice(false);
+            setChangeProvince(false);
+          }}>
+          <Nav.Link className="text-decoration-none border-0 text-white">Cambia Tipo</Nav.Link>
+        </Nav.Item>
+        <Nav.Item
+          className="navItemsVehicle "
+          onClick={() => {
+            setChangeType(false);
+            setChangePrice(false);
+            setChangeBeds(false);
+            setChangeDate(false);
+            setChangeSupply(!changeSupply);
+            setChangeProvince(false);
+          }}>
+          <Nav.Link className="text-decoration-none border-0 text-white">Cambia Carburante</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <IoMdSearch
@@ -272,7 +323,7 @@ const NavFiltri = () => {
       {changeDate && (
         <Container
           onClick={() => setError(false)}
-          className="mt-3"
+          className="my-3"
           style={{ width: "260px" }}>
           <ReactDatePicker
             selected={startDate}
@@ -292,11 +343,11 @@ const NavFiltri = () => {
 
       {changeProvince && (
         <Container
-          className="mt-3"
+          className="my-3"
           style={{ width: "260px" }}
           onClick={() => setError(false)}>
           <FormSelect
-            className="btn-radius-end-0"
+            className=""
             name="province"
             value={province}
             required
@@ -318,13 +369,14 @@ const NavFiltri = () => {
       )}
       {changeBeds && (
         <Container
-          className="mt-3"
+          className="my-3"
           style={{ width: "260px" }}
           onClick={() => setError(false)}>
           <FormSelect
+            className="mb-3"
             value={newBeds}
             onChange={handlerBeds}>
-            <option value={0}>cambia i posti letto</option>
+            <option value={0}>Tutti i letti</option>
             <option value={2}>2 letti</option>
             <option value={3}>3 letti</option>
             <option value={4}>4 letti</option>
@@ -335,7 +387,7 @@ const NavFiltri = () => {
       )}
       {changePrice && (
         <Container
-          className="mt-3"
+          className="my-3"
           style={{ width: "260px" }}>
           <Form.Range
             value={prezzo}
@@ -350,11 +402,47 @@ const NavFiltri = () => {
           </div>
         </Container>
       )}
+      {changeType && (
+        <Container
+          className="my-3"
+          style={{ width: "260px" }}
+          onClick={() => setError(false)}>
+          <FormSelect
+            value={typeVan}
+            onChange={handlerTypeVan}
+            onClick={() => setError(false)}>
+            <option value={"Tutti i tipi"}>Tutti i tipi</option>
+            <option value={"CAMPER"}>Camper</option>
+            <option value={"VAN"}>Van</option>
+            <option value={"CAMPERIZED_JEEP"}>Jeep attrezzata</option>
+            <option value={"ROOFTOOP_CAR"}>Macchina attrezzata</option>
+            <option value={"OTHER"}>Altro</option>
+          </FormSelect>
+        </Container>
+      )}
+      {changeSupply && (
+        <Container
+          className="my-3"
+          style={{ width: "260px" }}
+          onClick={() => setError(false)}>
+          <FormSelect
+            value={supplyVan}
+            onChange={handlerSupplyVan}
+            onClick={() => setError(false)}>
+            <option value={"Tutti i tipi"}>Tutti i tipi</option>
+            <option value="GASOLINE">Benzina</option>
+            <option value="DIESEL">Diesel</option>
+            <option value="LPG_DIESEL">GPL e Diesel</option>
+            <option value="ELECTRIC">Elettrico</option>
+            <option value="HYBRID">Ibrido</option>
+          </FormSelect>
+        </Container>
+      )}
       {error ? (
         <Alert
-          className="mt-4"
+          className="my-4"
           variant="danger">
-          Non ci sono disponibilita
+          Non ci sono disponibilità
         </Alert>
       ) : (
         <></>

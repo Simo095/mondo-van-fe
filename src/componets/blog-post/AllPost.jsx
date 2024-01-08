@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import SinglePost from "../blog-post/SinglePost";
 import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
-import { fetchPost } from "../../redux/actions";
+import { fetchPost, fetchPostCategory } from "../../redux/actions";
 
 const AllPost = () => {
   const posts = useSelector(state => state.post.data);
   const user = useSelector(state => state.login.user);
   const token = useSelector(state => state.login.token);
+  const category = useSelector(state => state.post.category);
+  const cat = useSelector(state => state.post.categoryString);
 
   const [page, setPage] = useState();
 
@@ -48,15 +50,25 @@ const AllPost = () => {
                 <Pagination.Item
                   onClick={() => {
                     page > 1 && setPage(page - 1);
+                    if (category) {
+                      dispatch(fetchPostCategory(token, page - 2, cat));
+                    } else {
+                      dispatch(fetchPost(token, page - 2));
+                    }
                   }}>
                   <BsCaretLeft />
                 </Pagination.Item>
                 <Pagination.Item disabled>{page - 1 === 0 ? "..." : page - 1}</Pagination.Item>
                 <Pagination.Item active={true}>{page}</Pagination.Item>
-                <Pagination.Item disabled>{page === posts.length / 5 ? "..." : page + 1}</Pagination.Item>
+                <Pagination.Item disabled>{posts.length === 0 ? "..." : page + 1}</Pagination.Item>
                 <Pagination.Item
                   onClick={() => {
-                    page < posts.length / 10 && setPage(page + 1);
+                    if (category) {
+                      dispatch(fetchPostCategory(token, page, cat));
+                    } else {
+                      dispatch(fetchPost(token, page));
+                    }
+                    setPage(page + 1);
                   }}>
                   <BsCaretRight />
                 </Pagination.Item>
