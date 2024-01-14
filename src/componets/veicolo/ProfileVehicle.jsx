@@ -37,7 +37,7 @@ const ProfileVehicle = () => {
     <div className="ProfileVehicle">
       {vehicle ? (
         <Container fluid>
-          <h4 className="logo text-black my-2">
+          <h4 className="logo text-black my-2 text-start d-block">
             {vehicle.name}
             {" - "}
             {vehicle.type === "CAMPERIZED_JEEP"
@@ -51,19 +51,20 @@ const ProfileVehicle = () => {
               : vehicle.type === "OTHER"
               ? "ALTRO"
               : ""}
-            {" - "}
-            {vehicle.shortDescriptions ? vehicle.shortDescriptions : ""}
+            {" - " + vehicle.shortDescriptions}
           </h4>
 
           {vehicle && (
-            <Container>
+            <Container
+              fluid
+              style={{ minWidth: "469px" }}>
               <NavCardVehicle
                 setMotorizzazione={setMotorizzazione}
                 setInterni={setInterni}
                 setCreaAnnuncio={setCreaAnnuncio}
                 setFoto={setFoto}
               />
-              <Card>
+              <Card className="mb-3 border-0">
                 {foto && (
                   <CaruselVehicle
                     vehicle={vehicle}

@@ -126,7 +126,7 @@ const MyPosts = ({ elem, token, profile }) => {
           <Col
             xs={12}
             sm={3}
-            className="text-primary">
+            className="">
             <p>
               {elem.category === "TRAVELERS_STORY"
                 ? "Storie di viaggi"

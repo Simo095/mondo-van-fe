@@ -21,7 +21,8 @@
   height: 130px;
   outline: none;
   border: none;
-  border-radius: 130px 5px 5px 5px;
+  /* border-radius: 130px 5px 5px 5px; */
+  background-color: #00000000;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
 }
@@ -29,7 +30,7 @@
 .ImgCard {
   width: 130px;
   height: 130px;
-  border-radius: 130px 5px 5px 5px;
+  /* border-radius: 130px 5px 5px 5px; */
   object-fit: cover;
 }
 
@@ -40,7 +41,7 @@
   border: none;
   /* background-color: #efd68b; */
   background-color: white;
-  border-radius: 5px 130px 5px 5px;
+  /* border-radius: 5px 130px 5px 5px; */
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
 }
@@ -52,7 +53,7 @@
   border: none;
   /* background-color: #cad9ba; */
   background-color: white;
-  border-radius: 5px 5px 5px 130px;
+  /* border-radius: 5px 5px 5px 130px; */
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
 }
@@ -64,7 +65,7 @@
   border: none;
   /* background-color: #be311a; */
   background-color: white;
-  border-radius: 5px 5px 130px 5px;
+  /* border-radius: 5px 5px 130px 5px; */
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.2s ease-in-out;
 }
@@ -72,7 +73,7 @@
 .card1:hover {
   cursor: pointer;
   scale: 1.1;
-  background-color: #cad9ba;
+  background-color: #00000000;
 }
 
 .card2:hover {

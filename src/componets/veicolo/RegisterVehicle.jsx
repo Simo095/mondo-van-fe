@@ -101,8 +101,8 @@ const RegisterVehicle = () => {
   };
 
   return (
-    <Container style={{ height: "100vh" }}>
-      <Row className="d-flex justify-content-center align-items-center">
+    <Container>
+      <Row className="d-flex align-items-center justify-content-center">
         {rispOk && (
           <Modal
             show={rispOk}
@@ -121,13 +121,15 @@ const RegisterVehicle = () => {
             <Modal.Body style={{ background: "#051C12" }}>Registrazione del van avvenuta con successo</Modal.Body>
           </Modal>
         )}
-        <Col sm={5}>
+        <Col
+          sm={5}
+          className="py-3">
           {errorTypeServer ? <Alert variant="danger">Seleziona una tipologia...</Alert> : <></>}
-          <span>seleziona la tipologia del tuo van</span>
+          <h4>Seleziona la tipologia del tuo van</h4>
           <Row
             md={1}
             lg={2}
-            className="mt-3">
+            className="mt-3 m-auto">
             {typeForm.map((x, i) => (
               <Col
                 key={i}
@@ -150,7 +152,7 @@ const RegisterVehicle = () => {
           </Row>
         </Col>
         <Col
-          className="d-flex mt-5 justify-content-center align-items-center"
+          className="d-flex justify-content-center align-items-center"
           sm={7}>
           {loading && (
             <div className="d-flex flex-column">
@@ -160,14 +162,12 @@ const RegisterVehicle = () => {
                 className="loader"></Alert>
             </div>
           )}
-          <Container className="CardContainerRegister mt-5 ">
+          <Container className="CardContainerRegisterVehicle">
             <div className="circle1"></div>
             <div className="circle2"></div>
             <Container className="ContainerCard">
-              <Row className="log-cardRegister">
-                <Col className="d-flex flex-column align-items-center justify-content-center">
-                  <p>Dettagli del tuo mezzo</p>
-                </Col>
+              <Container className="log-cardVehicle">
+                <h4>Dettagli del tuo mezzo</h4>
                 <ReactCardFlip
                   isFlipped={flip}
                   containerClassName="d-flex "
@@ -179,7 +179,7 @@ const RegisterVehicle = () => {
                       border: "none"
                     }}>
                     <div>
-                      <Row className="d-flex flex-column">
+                      <Row>
                         <Form onSubmit={handlerFirstForm}>
                           <Col className="d-flex justify-content-center">
                             <Form.Group className="mb-3">
@@ -237,7 +237,7 @@ const RegisterVehicle = () => {
                           </Col>
                           <Col className="d-flex justify-content-center">
                             <Form.Group className="mb-3">
-                              <FormLabel>Anni del mezzo, inserisci data</FormLabel>
+                              <FormLabel>Anni del mezzo</FormLabel>
                               <Form.Control
                                 style={{ width: "205px" }}
                                 type="date"
@@ -270,7 +270,7 @@ const RegisterVehicle = () => {
                                 id="license"
                                 name="license"
                                 required>
-                                <option>Seleziona una patente</option>
+                                <option>Patente</option>
                                 <option value="B">B</option>
                                 <option value="B_96">B 96</option>
                                 <option value="C">C</option>
@@ -296,7 +296,8 @@ const RegisterVehicle = () => {
                     className="d-flex "
                     style={{
                       background: "#00000000",
-                      border: "none"
+                      border: "none",
+                      height: "500px"
                     }}>
                     <div>
                       <Row className="d-flex flex-column">
@@ -383,7 +384,7 @@ const RegisterVehicle = () => {
                                 name="shortDesc"
                                 id="shortDesc"
                                 type="text"
-                                placeholder="Breve descrizione...(mansardato, etc)"
+                                placeholder="Breve descrizione..."
                                 required
                               />
                             </Form.Group>
@@ -404,7 +405,7 @@ const RegisterVehicle = () => {
                     </div>
                   </div>
                 </ReactCardFlip>
-              </Row>
+              </Container>
             </Container>
           </Container>
         </Col>

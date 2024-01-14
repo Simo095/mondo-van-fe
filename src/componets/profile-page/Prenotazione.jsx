@@ -88,7 +88,7 @@ const Prenotazione = ({ pre, setPrenotazioni, setLoadingPre }) => {
                   ? "NON CONFERMATA"
                   : ""}
               </Card.Text>
-              {pre.state === "TAKING_CHARGE"
+              {/* {pre.state === "TAKING_CHARGE"
                 ? "CONFERMA"
                 : pre.state === "PENDING_PAYMENT"
                 ? "IN ATTESA DEL PAGAMENTO"
@@ -96,7 +96,7 @@ const Prenotazione = ({ pre, setPrenotazioni, setLoadingPre }) => {
                 ? "CONFERMATA"
                 : pre.state === "NOT_CONFIRMED"
                 ? "NON CONFERMATA"
-                : ""}
+                : ""} */}
             </Card.Body>
           </Card>
         )}

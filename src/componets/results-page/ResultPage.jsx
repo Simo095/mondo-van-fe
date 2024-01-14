@@ -11,7 +11,7 @@ import cintura from "../../assets/icone/cinturaSicurezza.png";
 import { GiPositionMarker } from "react-icons/gi";
 import cover from "../../assets/img/user_placeholder.png";
 import CaruselVehicle from "../veicolo/CaruselVehicle";
-import { addEndDate, addStartDate } from "../../redux/actions";
+import { addBeds, addEndDate, addProvince, addStartDate } from "../../redux/actions";
 import NavFiltri from "../stucture/NavFiltri";
 
 const ResultPage = () => {
@@ -59,6 +59,10 @@ const ResultPage = () => {
             <IoArrowBackCircleOutline
               onClick={() => {
                 navigate("/");
+                dispatch(addEndDate(null));
+                dispatch(addStartDate(null));
+                dispatch(addBeds(""));
+                dispatch(addProvince(""));
               }}
               color="white"
               className="fs-1"

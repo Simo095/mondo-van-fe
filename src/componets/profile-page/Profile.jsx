@@ -40,7 +40,7 @@ const Profile = () => {
                     <Nav.Link
                       href="/blogpost"
                       className="text-decoration-none text-white">
-                      BlogPost
+                      I racconti della Comunity
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>

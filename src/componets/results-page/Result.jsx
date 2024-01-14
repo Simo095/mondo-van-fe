@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import CardInterni from "../veicolo/CardInterni";
 import CaruselVehicle from "../veicolo/CaruselVehicle";
@@ -9,6 +9,7 @@ import { IoArrowBackCircleOutline } from "react-icons/io5";
 import NavResultVehicle from "./NavResultVehicle";
 import Motorizzazione from "../veicolo/Motorizzazione";
 import PrenotazioneSideBar from "../stucture/PrenotazioneSideBar";
+import { addBeds, addEndDate, addProvince, addStartDate } from "../../redux/actions";
 
 const Result = () => {
   const token = useSelector(state => state.login.token);
@@ -23,7 +24,7 @@ const Result = () => {
   const [annuncio, setAnnuncio] = useState(false);
   const [vehicle, setVehicle] = useState();
   const [diff, setDiff] = useState();
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const vehicleFetchDetail = async () => {

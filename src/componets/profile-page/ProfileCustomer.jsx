@@ -10,6 +10,7 @@ import Prenotazione from "./Prenotazione";
 import ModaleAvatar from "./ModaleAvatar";
 import Notifica from "./Notifica";
 import { FaRegPenToSquare } from "react-icons/fa6";
+import VanCustomerPagePlaceholder from "../results-page/VanCustomerPagePlaceholder";
 
 const ProfileCustomer = () => {
   const user = useSelector(state => state.login.user);
@@ -214,7 +215,7 @@ const ProfileCustomer = () => {
                       prenotazioni.map(pre => {
                         return (
                           <Col
-                            sm={4}
+                            sm={6}
                             key={pre.id}
                             className="">
                             <Prenotazione
@@ -283,7 +284,7 @@ const ProfileCustomer = () => {
                   ) : (
                     <div className="d-flex overflow-x-scroll oV gap-3">
                       {placeHolder.map((elem, i) => (
-                        <VanCustomerPage
+                        <VanCustomerPagePlaceholder
                           key={i}
                           elem={elem}
                         />

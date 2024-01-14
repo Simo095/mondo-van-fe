@@ -4,11 +4,31 @@
   background: transparent;
   position: relative;
 }
+
 .CardContainerRegister {
   width: 350px;
   height: 440px;
   background: transparent;
   position: relative;
+}
+
+.CardContainerRegisterVehicle {
+  width: 350px;
+  height: 640px;
+  background: transparent;
+  position: relative;
+}
+
+.log-cardVehicle {
+  font-family: "Rethink Sans", sans-serif;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .ContainerCard {
@@ -40,8 +60,7 @@
 }
 
 .log-card {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: "Rethink Sans", sans-serif;
   position: absolute;
   width: 300px;
   border-radius: 8px;
@@ -51,6 +70,7 @@
   backdrop-filter: blur(5px);
   padding: 20px;
 }
+
 .log-cardRegister {
   font-family: "Rethink Sans", sans-serif;
   letter-spacing: 0.001px;
@@ -144,6 +164,7 @@
 .btn-login:hover {
   background-color: #ffc007;
 }
+
 .no-account {
   font-size: 16px;
   font-weight: 400;
@@ -154,10 +175,12 @@
     display: none;
   }
 }
+
 @media (min-width: 750px) {
   .CardContainer {
     display: none;
   }
+
   .containerLogin {
     height: 0 !important;
   }

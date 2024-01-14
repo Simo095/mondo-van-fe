@@ -9,9 +9,10 @@ const VanCustomerPage = ({ elem }) => {
   const token = useSelector(state => state.login.token);
   return (
     <Container>
+      {console.log(elem)}
       <Card className="cardSpecial">
         <CaruselVehicle
-          vehicle={elem}
+          vehicle={elem.v}
           cover={cover}
           token={token}
           height={230}
@@ -30,7 +31,7 @@ const VanCustomerPage = ({ elem }) => {
         </Button>
 
         <CardBody>
-          <CardTitle className="titlo mt-3 mb-0 mx-2">{elem.name + " - " + elem.desc}</CardTitle>
+          <CardTitle className="titlo mt-3 mb-0 mx-2">{elem.v.name + " - " + elem.v.shortDescriptions}</CardTitle>
         </CardBody>
         <CardFooter className="bottom-section">
           <Row className="row row1">
@@ -39,19 +40,19 @@ const VanCustomerPage = ({ elem }) => {
                 src={cintura}
                 style={{ width: "20px" }}
               />
-              <span className="regular-text">{elem.sits}</span>
+              <span className="regular-text">{elem.v.sits}</span>
             </Col>
             <Col className="item d-flex flex-column align-items-center">
               <FaEuroSign
                 fontSize={15}
                 className="mb-1"
               />
-              <span className="regular-text m-0">{elem.pricePerDay} €/giorno</span>
+              <span className="regular-text m-0">{elem.v.pricePerDay} €/giorno</span>
             </Col>
             <Col className="item d-flex flex-column align-items-center pe-3">
               <GiPositionMarker fontSize={18} />
 
-              <span className="regular-text m-0">{elem.province}</span>
+              <span className="regular-text m-0">{elem.city}</span>
             </Col>
           </Row>
         </CardFooter>

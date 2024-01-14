@@ -29,7 +29,7 @@ const NavBar = () => {
           className="nav-toggler mb-2"
         />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="d-flex  flex-grow-1">
+          <Nav className="d-flex flex-grow-1">
             {user ? (
               <></>
             ) : (
@@ -68,11 +68,11 @@ const NavBar = () => {
             {user ? (
               user.role === "CUSTOMER" ? (
                 <div className="d-flex align-items-center">
-                  <NavItem>
+                  <NavItem className="w-100">
                     <Nav.Link
                       className="color-link-nav"
                       href="/blogpost">
-                      I racconti della Comunity
+                      I racconti della Community
                     </Nav.Link>
                   </NavItem>
                   <Container className="d-flex justify-content-center">
@@ -95,11 +95,11 @@ const NavBar = () => {
                 </div>
               ) : (
                 <div className="d-flex align-items-center">
-                  <NavItem>
+                  <NavItem className="w-100">
                     <Nav.Link
                       className="color-link-nav"
                       href="/blogpost">
-                      I racconti della Comunity
+                      I racconti della Community
                     </Nav.Link>
                   </NavItem>
                   <Container className="d-flex justify-content-center">

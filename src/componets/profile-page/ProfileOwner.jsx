@@ -70,19 +70,19 @@ const ProfileOwner = () => {
             <Row className="d-flex flex-column">
               <Col
                 sm={12}
-                className="NavProfile">
-                <Nav className="d-flex align-items-center mt-1">
+                className="NavProfile mt-4">
+                <Nav className="d-flex align-items-center">
                   <Nav.Item>
                     <Nav.Link
                       href="/blogpost"
-                      className="text-decoration-none text-white">
-                      I racconti della Comunity
+                      className="text-decoration-none text-white fs-5">
+                      I racconti della Community
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link
                       href="/"
-                      className="text-decoration-none text-white">
+                      className="text-decoration-none text-white fs-5">
                       Cerca un van
                     </Nav.Link>
                   </Nav.Item>
@@ -109,7 +109,6 @@ const ProfileOwner = () => {
                         user.role === "OWNER" ? "/profile_owner" : user.role === "CUSTOMER" ? "profile_customer" : ""
                       }
                       className="NavProfileLink NavProfileLinkImg bg-transparent border-0 justify-content-end">
-                      {" "}
                       <FaRegPenToSquare
                         className="m-0"
                         onClick={e => {
@@ -131,10 +130,8 @@ const ProfileOwner = () => {
                   </NavbarBrand>
                 </Nav>
               </Col>
-              <Col>
-                <h3 className="text-white mb-3">Bentornato, {user.name}.</h3>{" "}
-              </Col>
-              <Col className="ContainerProfile pt-4">
+
+              <Col className="ContainerProfile">
                 <ProfileVehicle />
               </Col>
               <Col>
@@ -151,7 +148,7 @@ const ProfileOwner = () => {
                       prenotazioni.map(pre => {
                         return (
                           <Col
-                            sm={4}
+                            sm={6}
                             key={pre.id}
                             className="">
                             <Prenotazione

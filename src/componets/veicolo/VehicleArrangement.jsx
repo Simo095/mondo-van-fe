@@ -1,4 +1,4 @@
-import { Button, Col, Container, Form, FormSelect, Modal, ModalHeader, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, FormSelect, Image, Modal, ModalHeader, Row } from "react-bootstrap";
 
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import logo from "../../assets/img/LogoVanWorld.png";
+import { ImCancelCircle } from "react-icons/im";
+import { FaFileUpload } from "react-icons/fa";
 const VehicleArrangement = () => {
   const [rispOk, setRispOk] = useState(false);
 
@@ -54,15 +56,17 @@ const VehicleArrangement = () => {
   };
 
   return (
-    <div className="RegisterVan">
+    <div
+      className="RegisterVan"
+      style={{ background: "linear-gradient(180deg, #144658, #144658)" }}>
       <div className="d-flex justify-content-between position-relative">
-        <h1>Allestimento del Van</h1>
-
+        <h1 className="text-white">Allestimento del Van</h1>
         <div className="d-flex align-items-center">
           <IoArrowBackCircleOutline
             onClick={() => {
-              navigate("/");
+              navigate(-1);
             }}
+            color="white"
             className="fs-1"
             style={{ cursor: "pointer", zIndex: "1" }}
           />
@@ -70,9 +74,15 @@ const VehicleArrangement = () => {
       </div>
       <Container fluid>
         {/* justify-content-center align-items-center */}
-        <Row
-          className=" d-flex   mt-5"
-          style={{ height: "100vh" }}>
+        <Container
+          className="d-flex con-stile"
+          fluid
+          style={{
+            backgroundImage: `url(${logo})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "1500px",
+            backgroundPosition: "center"
+          }}>
           {rispOk && (
             <Modal
               show={rispOk}
@@ -80,49 +90,43 @@ const VehicleArrangement = () => {
               style={{ color: "#75B798" }}
               onHide={() => {
                 setRispOk(false);
-                navigate("/");
+                navigate(-1);
               }}>
               <ModalHeader
                 style={{ background: "#051C12", borderColor: "green" }}
                 closeButton
                 closeVariant="white">
-                <Modal.Title>Bene, ora il Van ha delle descrizioni dettagliate!</Modal.Title>
+                <Modal.Title>Registrazione avvenuta con successo!</Modal.Title>
               </ModalHeader>
               <Modal.Body style={{ background: "#051C12", borderColor: "red" }}>
-                Registrazione avvenuta con successo, premi sulla "X" per tornare alla home
+                Bene, ora il Van ha delle descrizioni dettagliate!
               </Modal.Body>
             </Modal>
           )}
 
-          <Col
-            className="col-stile"
+          <Container
+            className="col-image-logo"
             style={{
               backgroundImage: `url(${logo})`,
               backgroundRepeat: "no-repeat",
-              backgroundSize: "contain",
-              position: "relative"
-            }}
-            sm={3}>
-            <p
-              className="p-stile"
-              style={{ position: "relative", top: "20vw" }}>
+              backgroundSize: "250px"
+            }}>
+            <p className="p-stile text-white">
               Descrivi in modo dettagliato e accattivante l'allestimento del tuo Van, rendendolo ancora più appetibile
               per i viaggiatori.<br></br>
               <br></br>Utilizza un linguaggio semplice e coinvolgente, raccontando le peculiarità del tuo Van e
               rendendolo il più desiderabile possibile per i viaggiatori.
             </p>
-          </Col>
-          <Col>
+          </Container>
+          <Container>
             <Form
               id="formArrangement"
-              onSubmit={handlerForm}
-              className="FormArrangement">
-              <Row
-                className="justify-content-center align-items-center"
-                xs={1}
-                md={2}>
+              onSubmit={handlerForm}>
+              <Row className="d-flex row-cols-2 justify-content-center fontRow">
                 <Col className="ColArrangement">
-                  <h4>Accessori</h4>
+                  <h4>
+                    <b>Accessori</b>
+                  </h4>
                   <p className="m-0 p-0">
                     Cita tutti gli accessori presenti nel tuo Van, sottolineando quelli più particolari o utili per i
                     viaggi.
@@ -143,15 +147,18 @@ const VehicleArrangement = () => {
                       name="accessoriesDescription"
                       id="accessoriesDescription"
                       as="textarea"
+                      className="fontRow rowSelect"
                       rows={5}
-                      style={{ background: "#00000000" }}
+                      style={{ background: "#ffffff90" }}
                       placeholder="Scrivi qui..."
                       required
                     />
                   </Form.Group>
                 </Col>
-                <Col className="ColArrangement">
-                  <h4>Disposizione notte</h4>
+                <Col className="ColArrangement ">
+                  <h4>
+                    <b>Disposizione notte</b>
+                  </h4>
                   <p className="m-0 p-0">
                     Illustra come sono disposti i letti all'interno del Van e il numero di persone che possono dormire.
                   </p>
@@ -162,6 +169,7 @@ const VehicleArrangement = () => {
                       value={bads}
                       onChange={e => setBeds(e.target.value)}
                       id="bads"
+                      className="fontRow"
                       required>
                       <option>Numero di letti</option>
                       <option value={2}>2 letti</option>
@@ -176,20 +184,23 @@ const VehicleArrangement = () => {
                       name="descriptionBeds"
                       id="descriptionBeds"
                       as="textarea"
-                      style={{ backgroundColor: "#00000000" }}
+                      style={{ backgroundColor: "#ffffff90" }}
                       rows={5}
+                      className="fontRow rowSelect"
                       placeholder="Scrivi qui..."
                       required
                     />
                   </Form.Group>
                 </Col>
                 <Col className="ColArrangement">
-                  <h4>Cucina</h4>
+                  <h4>
+                    <b>Cucina</b>
+                  </h4>
                   <p className="m-0 p-0">
                     Descrivi la cucina del tuo Van, specificando se è presente un frigo, un fornello a gas o altri
                     elettrodomestici utili per cucinare.
                   </p>
-                  <Form.Group className="mb-2 d-flex">
+                  <Form.Group className="mb-2 d-flex gap-3">
                     <Form.Check
                       type="switch"
                       id="kitchen"
@@ -222,18 +233,21 @@ const VehicleArrangement = () => {
                   </Form.Group>
                   <Form.Group className="d-flex">
                     <Form.Control
-                      style={{ backgroundColor: "#00000000" }}
+                      style={{ backgroundColor: "#ffffff90" }}
                       name="descriptionKitchen"
                       id="descriptionKitchen"
                       as="textarea"
                       rows={5}
+                      className="fontRow rowSelect"
                       required
                       placeholder="Scrivi qui...."
                     />
                   </Form.Group>
                 </Col>
                 <Col className="ColArrangement">
-                  <h4>Bagno</h4>
+                  <h4>
+                    <b>Bagno</b>
+                  </h4>
                   <p className="mb-4 p-0">
                     Indica se il tuo Van è dotato di bagno, WC, acqua calda o altri accessori per l'igiene personale.
                   </p>
@@ -272,26 +286,45 @@ const VehicleArrangement = () => {
                   </Form.Group>
                   <Form.Group className="d-flex">
                     <Form.Control
-                      style={{ backgroundColor: "#00000000" }}
+                      style={{ backgroundColor: "#ffffff90" }}
                       name="descriptionBathroom"
                       id="descriptionBathroom"
                       as="textarea"
                       rows={5}
+                      className="fontRow rowSelect"
                       required
                       placeholder="Scrivi qui...."
                     />
                   </Form.Group>
                 </Col>
-                <Button
-                  className="mt-5"
-                  type="submit"
-                  form="formArrangement">
-                  Crea
-                </Button>
+              </Row>
+              <Row>
+                <Col
+                  xs={4}
+                  className="text-end">
+                  <ImCancelCircle
+                    fontSize={50}
+                    onClick={() => navigate(-1)}
+                    style={{ cursor: "pointer", color: "#fff" }}
+                  />
+                </Col>
+                <Col
+                  xs={8}
+                  className="text-center">
+                  <Button
+                    style={{ background: "none", border: "none" }}
+                    type="submit"
+                    form="formArrangement">
+                    <FaFileUpload
+                      fontSize={50}
+                      style={{ cursor: "pointer", color: "#fff" }}
+                    />
+                  </Button>
+                </Col>
               </Row>
             </Form>
-          </Col>
-        </Row>
+          </Container>
+        </Container>
       </Container>
     </div>
   );

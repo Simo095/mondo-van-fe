@@ -1,5 +1,6 @@
 import { Col, Image, Row } from "react-bootstrap";
 import { BsPencilFill, BsTrash } from "react-icons/bs";
+import { RiUserFollowFill, RiUserUnfollowFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAddFriend, fetchDeleteFriend } from "../../redux/actions/fetchActions";
 import { fetchDeletePost, fetchProfileUser } from "../../redux/actions";
@@ -82,7 +83,7 @@ const SinglePost = ({ elem, profile }) => {
             <div
               style={{ cursor: "pointer" }}
               onClick={handleshowModale}
-              className="">
+              className="w-75">
               <div className="d-flex flex-column">
                 <h6>
                   {elem.author.name} {elem.author.surname} -{" "}
@@ -118,7 +119,7 @@ const SinglePost = ({ elem, profile }) => {
                   onClick={() => {
                     dispatch(fetchDeleteFriend(token, elem.author.id));
                   }}>
-                  <span className="border p-1 border-secondary rounded-5 d-sm-inline-block">Smetti di seguire</span>
+                  <RiUserUnfollowFill fontSize={30} />
                 </div>
               ) : (
                 <div
@@ -127,7 +128,7 @@ const SinglePost = ({ elem, profile }) => {
                     console.log(elem);
                     dispatch(fetchAddFriend(token, elem.author.id));
                   }}>
-                  <span className="border p-1 border-secondary rounded-5 d-sm-inline-block">Segui</span>
+                  <RiUserFollowFill fontSize={30} />
                 </div>
               ))}
 

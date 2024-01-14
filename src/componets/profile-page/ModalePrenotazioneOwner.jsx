@@ -7,7 +7,6 @@ const ModalePrenotazioneOwner = ({ show, handleClose, pre, setPrenotazioni, setL
   const dispatch = useDispatch();
   return (
     <>
-      {" "}
       {pre.state === "TAKING_CHARGE" ? (
         <Modal
           show={show}

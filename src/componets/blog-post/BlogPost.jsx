@@ -26,7 +26,7 @@ const BlogPost = () => {
         <h2
           className="text-center mb-5"
           style={{ fontWeight: "bold" }}>
-          I racconti della nostra comunity
+          I racconti della community
         </h2>
         <FormAddPost user={user} />
         <AllPost />

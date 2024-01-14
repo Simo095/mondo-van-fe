@@ -22,9 +22,11 @@
 .cardInterni div:hover {
   flex: 4;
 }
+
 .cardInterni div:hover div {
   display: block;
 }
+
 .cardInterni div div {
   display: none;
 }

@@ -67,12 +67,13 @@ const SideBar = () => {
           <Container
             fluid
             className="main">
-            <h2 className="text-center me-3 text-white">VAN WORLD</h2>
+            <h2 className="text-white m-4 mb-0">
+              <b>VAN WORLD</b>
+            </h2>
             <div className="up">
               <Button
                 href={user.role === "OWNER" ? "/profile_owner" : user.role === "CUSTOMER" ? "profile_customer" : ""}
                 className="card1 d-flex p-0 justify-content-end">
-                {" "}
                 <FaRegPenToSquare
                   className="m-0"
                   onClick={e => {
@@ -88,6 +89,7 @@ const SideBar = () => {
                 />
                 <Image
                   src={user.avatar}
+                  rounded
                   className="p-0 m-0 ImgCard"
                 />
               </Button>
@@ -100,14 +102,7 @@ const SideBar = () => {
               </Button>
             </div>
             <div className="down">
-              {notifiche && notifiche.find(elem => elem.state === "READ") ? (
-                <Button
-                  onClick={notifiche && handleShowNotifiche}
-                  className="card3 text-black d-flex align-items-start justify-content-end">
-                  <IoNotificationsSharp fontSize={40} />
-                  Notifiche
-                </Button>
-              ) : (
+              {notifiche && notifiche.find(elem => elem.state === "NOT_READ") ? (
                 <Button
                   onClick={notifiche && handleShowNotifiche}
                   className="card3 text-black d-flex align-items-start justify-content-end">
@@ -125,6 +120,13 @@ const SideBar = () => {
                     <IoNotificationsSharp fontSize={40} />
                     Notifiche
                   </div>
+                </Button>
+              ) : (
+                <Button
+                  onClick={notifiche && handleShowNotifiche}
+                  className="card3 text-black d-flex align-items-start justify-content-end">
+                  <IoNotificationsSharp fontSize={40} />
+                  Notifiche
                 </Button>
               )}
 

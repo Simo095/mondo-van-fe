@@ -18,10 +18,10 @@ const Footer = () => {
                   <Col>Informazioni utili</Col>
                   <Col>Contattaci</Col>
                   <Col>Termini e condizioni</Col>
-                  <Col>
+                  {/* <Col>
                     Gli itinerari dell'Emilia Romagna sono presi dal sito{" "}
                     <Link to="emiliaromagnaturimo.it">emiliaromagnaturismo.it</Link>
-                  </Col>
+                  </Col> */}
                 </Row>
               </Col>
               <Col>
@@ -29,14 +29,6 @@ const Footer = () => {
                   <Col>Seguici sui social</Col>
                   <Col>Facebook</Col>
                   <Col>Instagram</Col>
-                </Row>
-              </Col>
-              <Col>
-                <Row className="d-flex  flex-column">
-                  <Image
-                    className="ImgFooter"
-                    src={logo}
-                  />
                 </Row>
               </Col>
               <Col>

@@ -55,14 +55,13 @@ const Home = () => {
             </Col>
           </Row>
         </Col>
-
         <Col
           sm={4}
           style={{ width: "100vw" }}
           className="">
-          <Row className="row-cols-1 mt-5 ">
+          <Row className="row-cols-1  ">
             <Col className="ContainerTitle">
-              <h3>Alcuni post dei nostri Van Travelrs</h3>
+              <h3>Alcuni racconti dei nostri Van Travelrs</h3>
             </Col>
             <Col className="d-flex gap-3 overflow-y-scroll oV">
               {posts ? (
@@ -80,6 +79,7 @@ const Home = () => {
                 <></>
               )}
             </Col>
+            {/*
             <Col className="ContainerTitle">
               <h3>Qualche idea per un itinerario in Emilia Romagna</h3>
             </Col>
@@ -98,7 +98,7 @@ const Home = () => {
               ) : (
                 <></>
               )}
-            </Col>
+            </Col> */}
           </Row>
         </Col>
       </Row>

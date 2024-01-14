@@ -27,7 +27,7 @@ textarea {
 }
 
 .cardSpecialPrenotazioni:hover {
-  scale: 1.02;
+  scale: 1.01;
 }
 
 .cardSpecialPrenotazioni {
@@ -60,7 +60,6 @@ textarea {
 
 .NavBar {
   padding: 0;
-  /* background: linear-gradient(180deg, #1976d2, #2196f3); */
   background: linear-gradient(180deg, #144658, #a8d47900);
 }
 
@@ -84,8 +83,9 @@ textarea {
 
 .navItemsVehicle {
   font-family: "Rowdies", sans-serif;
-  margin-inline: 0.4rem;
   border-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   background-color: #144658;
   overflow: hidden;
 }
@@ -184,6 +184,7 @@ textarea {
 
 .ResultPage {
   background: linear-gradient(180deg, #144658, #144658);
+
 }
 
 .Result {
@@ -213,6 +214,10 @@ textarea {
 
 .Profile {
   background: linear-gradient(180deg, #144658, #144658);
+}
+
+.ProfileVehicle {
+  height: max-content;
 }
 
 .Titles {
@@ -245,7 +250,34 @@ textarea {
 
 .event-container {}
 
+.ColArrangement {
+  height: 330px;
+  width: 450px;
+  margin: 0.5rem;
+  background-color: #ffffff99;
+  border-radius: 5px;
+}
 
+.p-stile {
+  position: relative;
+  top: 200px;
+  font-weight: bold;
+}
+
+.fontRow {
+  font-weight: bold;
+}
+
+.col-image-logo {
+  width: 280px;
+  padding: 0;
+
+}
+
+.form-check-input:checked {
+  background-color: #144658;
+  border-color: #144658;
+}
 
 
 /* MEDIA SCREEN---------------------------- */
@@ -274,9 +306,37 @@ textarea {
     position: unset !important;
     top: unset !important;
   }
+}
 
-  .col-stile {
+@media (max-width:900px) {
+  .con-stile {
+    flex-direction: column;
+  }
+
+  .col-image-logo {
     background-image: unset !important;
+    width: unset;
+    padding: 0;
+    margin-block: 1.5rem;
+  }
+
+  .p-stile {
+    position: static;
+    top: unset;
+  }
+
+
+}
+
+@media (min-width:900px) {
+  .con-stile {
+    background: none !important;
+  }
+}
+
+@media (min-width:1205px) {
+  .rowSelect {
+    background: none !important;
   }
 }
 
@@ -375,10 +435,10 @@ textarea {
     flex-direction: column;
   }
 
-  .FormArrangement {
+  /* .FormArrangement {
     display: flex;
     max-height: 45vh;
-  }
+  } */
 }
 
 @media (min-width: 990px) {
